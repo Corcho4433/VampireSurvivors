@@ -40,7 +40,7 @@ class Bullet(MovableEntity, IBullet):
 
     def update(self, _: IGameWorld):
         # Move bullet towards the target direction
-        self.move(self.__dir_x, self.__dir_y)
+        self.move(self._dir)
 
     @property
     def damage_amount(self):

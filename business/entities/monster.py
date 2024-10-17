@@ -39,10 +39,10 @@ class Monster(MovableEntity, IMonster):
         x = direction.x
 
         if x != 0:
-            x = -x/x
+            x = -x // abs(x)
             
         if y != 0:
-            y = -y/y
+            y = -y // abs(y)
 
         return Vector2(x, y)
     

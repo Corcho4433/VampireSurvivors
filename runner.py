@@ -17,7 +17,7 @@ from presentation.sprite import PlayerSprite
 
 def initialize_player():
     """Initializes the player object"""
-    pos = pygame.Vector2(0, 0)
+    pos = pygame.Vector2(settings.WORLD_WIDTH // 2, settings.WORLD_HEIGHT // 2)
     return Player(pos, PlayerSprite(pos))
 
 
@@ -36,7 +36,7 @@ def main():
 
     # Logging configuration
     logging.basicConfig(
-        level=logging.DEBUG,  # Change between INFO, WARNING or DEBUG as needed
+        level=logging.INFO,  # Change between INFO, WARNING or DEBUG as needed
         format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     )
 
