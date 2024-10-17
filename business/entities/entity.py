@@ -2,6 +2,7 @@
 
 import logging
 from abc import abstractmethod
+from pygame import Vector2
 
 from business.entities.interfaces import ICanMove, IDamageable, IHasPosition, IHasSprite
 from business.world.interfaces import IGameWorld
@@ -11,9 +12,8 @@ from presentation.sprite import Sprite
 class Entity(IHasPosition, IHasSprite):
     """Base class for all entities in the game."""
 
-    def __init__(self, pos_x: float, pos_y: float, sprite: Sprite):
-        self._pos_x: float = pos_x
-        self._pos_y: float = pos_y
+    def __init__(self, pos: Vector2, sprite: Sprite):
+        self._pos: Vector2 = pos
         self._sprite: Sprite = sprite
         self._logger = logging.getLogger(self.__class__.__name__)
 
@@ -23,15 +23,13 @@ class Entity(IHasPosition, IHasSprite):
         Args:
             an_entity (IHasPosition): The entity to calculate the distance to.
         """
-        return ((self.pos_x - an_entity.pos_x) ** 2 + (self.pos_y - an_entity.pos_y) ** 2) ** 0.5
+
+        return self.pos.distance_to(an_entity.pos)
+        #((self.pos.x - an_entity.pos.x) ** 2 + (self.pos.y - an_entity.pos.y) ** 2) ** 0.5
 
     @property
-    def pos_x(self) -> float:
-        return self._pos_x
-
-    @property
-    def pos_y(self) -> float:
-        return self._pos_y
+    def pos(self) -> float:
+        return self._pos
 
     @property
     def sprite(self) -> Sprite:
@@ -49,23 +47,22 @@ class Entity(IHasPosition, IHasSprite):
 class MovableEntity(Entity, ICanMove):
     """Base class for all entities that can move."""
 
-    def __init__(self, pos_x: float, pos_y: float, speed: float, sprite: Sprite):
-        super().__init__(pos_x, pos_y, sprite)
-        self._pos_x: float = pos_x
-        self._pos_y: float = pos_y
+    def __init__(self, pos: Vector2, speed: float, sprite: Sprite):
+        super().__init__(pos, sprite)
+        self._pos: Vector2 =  pos
         self._speed: float = speed
         self._sprite: Sprite = sprite
 
-    def move(self, direction_x: float, direction_y: float):
-        self._pos_x += direction_x * self._speed
-        self._pos_y += direction_y * self._speed
+    def move(self, direction: Vector2):
+        self._pos += direction * self._speed
+        #self._pos_y += direction_y * self._speed
         self._logger.debug(
             "Moving in direction (%.2f, %.2f) with speed %.2f",
-            direction_x,
-            direction_y,
+            direction.x,
+            direction.y,
             self._speed,
         )
-        self.sprite.update_pos(self._pos_x, self._pos_y)
+        self.sprite.update_pos(self._pos)
 
     @property
     def speed(self) -> float:

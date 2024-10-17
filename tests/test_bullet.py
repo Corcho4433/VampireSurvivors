@@ -24,7 +24,7 @@ class TestBullet(unittest.TestCase):
         self.bullet = Bullet(0, 0, x_distance, y_distance, 1)
         self.bullet.update(None)
 
-        x, y = self.bullet.pos_x, self.bullet.pos_y
+        x, y = self.bullet.pos.x, self.bullet.pos.y
         self.assertAlmostEqual(x, 0.6)
         self.assertAlmostEqual(y, 0.8)
         self.assertAlmostEqual(x / x_distance, y / y_distance)
@@ -35,7 +35,7 @@ class TestBullet(unittest.TestCase):
         self.bullet = Bullet(0, 0, x_distance, y_distance, 1)
         self.bullet.update(None)
 
-        x, y = self.bullet.pos_x, self.bullet.pos_y
+        x, y = self.bullet.pos.x, self.bullet.pos.y
         self.assertAlmostEqual(x, 0)
         self.assertAlmostEqual(y, 1)
 
@@ -45,7 +45,7 @@ class TestBullet(unittest.TestCase):
         self.bullet = Bullet(0, 0, x_distance, y_distance, 1)
         self.bullet.update(None)
 
-        x, y = self.bullet.pos_x, self.bullet.pos_y
+        x, y = self.bullet.pos.x, self.bullet.pos.y
         self.assertAlmostEqual(x, 1)
         self.assertAlmostEqual(y, 0)
 
@@ -55,7 +55,7 @@ class TestBullet(unittest.TestCase):
         self.bullet = Bullet(src_x, src_y, dst_x, dst_y, 1)
         self.bullet.update(None)
 
-        x, y = self.bullet.pos_x, self.bullet.pos_y
+        x, y = self.bullet.pos.x, self.bullet.pos.y
         self.assertAlmostEqual(x, 5.707, 2)
         self.assertAlmostEqual(y, 5.707, 2)
 

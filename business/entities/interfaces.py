@@ -1,6 +1,7 @@
 """This module contains interfaces for the entities in the game."""
 
 from abc import ABC, abstractmethod
+from pygame import Vector2
 
 from presentation.sprite import Sprite
 
@@ -65,20 +66,11 @@ class IHasPosition(IHasSprite):
 
     @property
     @abstractmethod
-    def pos_x(self) -> float:
-        """The x-coordinate of the entity.
+    def pos(self) -> Vector2:
+        """The coordinates of the entity. (x, y)
 
         Returns:
-            float: The x-coordinate of the entity.
-        """
-
-    @property
-    @abstractmethod
-    def pos_y(self) -> float:
-        """The y-coordinate of the entity.
-
-        Returns:
-            float: The y-coordinate of the entity.
+            vector2: The coordinates of the entity (x, y)
         """
 
 

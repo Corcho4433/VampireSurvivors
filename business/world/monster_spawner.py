@@ -3,7 +3,7 @@
 import logging
 import random
 
-import pygame
+from pygame import Vector2
 
 import settings
 from business.entities.monster import Monster
@@ -21,8 +21,8 @@ class MonsterSpawner(IMonsterSpawner):
         self.spawn_monster(world)
 
     def spawn_monster(self, world: IGameWorld):
-        pos_x = random.randint(0, settings.WORLD_WIDTH)
-        pos_y = random.randint(0, settings.WORLD_HEIGHT)
-        monster = Monster(pos_x, pos_y, MonsterSprite(pos_x, pos_y))
+        pos = Vector2(random.randint(0, settings.WORLD_WIDTH), random.randint(0, settings.WORLD_HEIGHT))
+
+        monster = Monster(pos, MonsterSprite(pos))
         world.add_monster(monster)
-        self.__logger.debug("Spawning monster at (%d, %d)", pos_x, pos_y)
+        self.__logger.debug("Spawning monster at (%d, %d)", pos.x, pos.y)

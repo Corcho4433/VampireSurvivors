@@ -1,6 +1,7 @@
 """This module contains the Monster class, which represents a monster entity in the game."""
 
 from typing import List
+from pygame import Vector2
 
 from business.entities.entity import MovableEntity
 from business.entities.interfaces import IDamageable, IHasPosition, IHasSprite, IMonster
@@ -8,12 +9,11 @@ from business.handlers.cooldown_handler import CooldownHandler
 from business.world.interfaces import IGameWorld
 from presentation.sprite import Sprite
 
-
 class Monster(MovableEntity, IMonster):
     """A monster entity in the game."""
 
-    def __init__(self, src_x: int, src_y: int, sprite: Sprite):
-        super().__init__(src_x, src_y, 2, sprite)
+    def __init__(self, pos: Vector2, sprite: Sprite):
+        super().__init__(pos, 2, sprite)
         self.__health: int = 10
         self.__damage = 10
         self.__attack_range = 50
@@ -34,16 +34,18 @@ class Monster(MovableEntity, IMonster):
         return self.__damage
 
     def __get_direction_towards_the_player(self, world: IGameWorld):
-        direction_x = world.player.pos_x - self.pos_x
-        if direction_x != 0:
-            direction_x = direction_x // abs(direction_x)
+        direction: Vector2 = (self.pos - world.player.pos)
+        y = direction.y
+        x = direction.x
 
-        direction_y = world.player.pos_y - self.pos_y
-        if direction_y != 0:
-            direction_y = direction_y // abs(direction_y)
+        if x != 0:
+            x = -x/x
+            
+        if y != 0:
+            y = -y/y
 
-        return direction_x, direction_y
-
+        return Vector2(x, y)
+    
     def __movement_collides_with_entities(
         self, dx: float, dy: float, entities: List[IHasSprite]
     ) -> bool:
@@ -51,21 +53,21 @@ class Monster(MovableEntity, IMonster):
         return any(e.sprite.rect.colliderect(new_position) for e in entities)
 
     def update(self, world: IGameWorld):
-        direction_x, direction_y = self.__get_direction_towards_the_player(world)
-        if (direction_x, direction_y) == (0, 0):
+        direction = self.__get_direction_towards_the_player(world)
+        if direction.magnitude == 0:
             return
 
         monsters = [m for m in world.monsters if m != self]
-        dx, dy = direction_x * self.speed, direction_y * self.speed
+        dx, dy = direction.x * self.speed, direction.y * self.speed
         if not self.__movement_collides_with_entities(dx, dy, monsters):
-            self.move(direction_x, direction_y)
+            self.move(direction)
 
         self.attack(world.player)
 
         super().update(world)
 
     def __str__(self):
-        return f"Monster(hp={self.health}, pos={self.pos_x, self.pos_y})"
+        return f"Monster(hp={self.health}, pos={self.pos.x, self.pos.y})"
 
     @property
     def health(self) -> int:

@@ -34,14 +34,13 @@ class Sprite(pygame.sprite.Sprite):
         """
         return self._rect
 
-    def update_pos(self, pos_x: float, pos_y: float):
+    def update_pos(self, pos: pygame.Vector2):
         """Update the position of the sprite.
 
         Args:
-            pos_x (float): The x-coordinate of the sprite.
-            pos_y (float): The y-coordinate of the sprite.
+            pos (Vector2): The coordinates of the sprite 
         """
-        self._rect.center = (int(pos_x), int(pos_y))
+        self._rect.center = (int(pos.x), int(pos.y))
 
     def __restore_image(self):
         self._image = self.__original_image.copy()
@@ -74,10 +73,10 @@ class PlayerSprite(Sprite):
 
     ASSET = "./assets/adventurer-idle-00.png"
 
-    def __init__(self, pos_x: float, pos_y: float):
+    def __init__(self, pos: pygame.Vector2):
         image: pygame.Surface = pygame.image.load(PlayerSprite.ASSET).convert_alpha()
         image = pygame.transform.scale(image, settings.TILE_DIMENSION)
-        rect: pygame.Rect = image.get_rect(center=(int(pos_x), int(pos_y)))
+        rect: pygame.Rect = image.get_rect(center=(int(pos.x), int(pos.y)))
 
         super().__init__(image, rect)
 
@@ -87,10 +86,10 @@ class MonsterSprite(Sprite):
 
     ASSET = "./assets/monster.png"
 
-    def __init__(self, pos_x: float, pos_y: float):
+    def __init__(self, pos: pygame.Vector2):
         image: pygame.Surface = pygame.image.load(MonsterSprite.ASSET).convert_alpha()
         image = pygame.transform.scale(image, settings.TILE_DIMENSION)
-        rect: pygame.rect = image.get_rect(center=(int(pos_x), int(pos_y)))
+        rect: pygame.rect = image.get_rect(center=(int(pos.x), int(pos.y)))
 
         super().__init__(image, rect)
 
@@ -98,10 +97,10 @@ class MonsterSprite(Sprite):
 class BulletSprite(Sprite):
     """A class representing the bullet sprite."""
 
-    def __init__(self, pos_x: float, pos_y: float):
+    def __init__(self, pos: pygame.Vector2):
         image = pygame.Surface((5, 5), pygame.SRCALPHA)  # pylint: disable=E1101
         pygame.draw.circle(image, (255, 255, 0), (2, 2), 5)
-        rect: pygame.rect = image.get_rect(center=(int(pos_x), int(pos_y)))
+        rect: pygame.rect = image.get_rect(center=(int(pos.x), int(pos.y)))
 
         super().__init__(image, rect)
 
@@ -111,11 +110,11 @@ class ExperienceGemSprite(Sprite):
 
     ASSET = "./assets/experience_gems.png"
 
-    def __init__(self, pos_x: float, pos_y: float):
+    def __init__(self, pos: pygame.Vector2):
         tileset = Tileset(
             ExperienceGemSprite.ASSET, settings.TILE_HEIGHT, settings.TILE_HEIGHT, 2, 2
         )
         image: pygame.Surface = tileset.get_tile(0)
-        rect: pygame.Rect = image.get_rect(center=(int(pos_x), int(pos_y)))
+        rect: pygame.Rect = image.get_rect(center=(int(pos.x), int(pos.y)))
 
         super().__init__(image, rect)

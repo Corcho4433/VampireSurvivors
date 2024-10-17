@@ -17,8 +17,8 @@ from presentation.sprite import PlayerSprite
 
 def initialize_player():
     """Initializes the player object"""
-    x, y = 0, 0
-    return Player(x, y, PlayerSprite(x, y))
+    pos = pygame.Vector2(0, 0)
+    return Player(pos, PlayerSprite(pos))
 
 
 def initialize_game_world():

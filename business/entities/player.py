@@ -2,6 +2,7 @@
 
 import pygame
 
+
 from business.entities.bullet import Bullet
 from business.entities.entity import MovableEntity
 from business.entities.experience_gem import ExperienceGem
@@ -19,8 +20,8 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
     BASE_DAMAGE = 5
     BASE_SHOOT_COOLDOWN = 2000
 
-    def __init__(self, pos_x: int, pos_y: int, sprite: Sprite):
-        super().__init__(pos_x, pos_y, 5, sprite)
+    def __init__(self, pos: pygame.Vector2, sprite: Sprite):
+        super().__init__(pos, 5, sprite)
 
         self.__health: int = 100
         self.__last_shot_time = pygame.time.get_ticks()
@@ -29,7 +30,7 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
         self._logger.debug("Created %s", self)
 
     def __str__(self):
-        return f"Player(hp={self.__health}, xp={self.__experience}, lvl={self.__level}, pos=({self._pos_x}, {self._pos_y}))"
+        return f"Player(hp={self.__health}, xp={self.__experience}, lvl={self.__level}, pos=({self._pos.x}, {self._pos.y}))"
 
     @property
     def experience(self):
@@ -71,13 +72,11 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
         # Find the nearest monster
         monster = min(
             world.monsters,
-            key=lambda monster: (
-                (monster.pos_x - self.pos_x) ** 2 + (monster.pos_y - self.pos_y) ** 2
-            ),
+            key=lambda monster: (monster.pos.distance_to(self.pos)),
         )
 
         # Create a bullet towards the nearest monster
-        bullet = Bullet(self.pos_x, self.pos_y, monster.pos_x, monster.pos_y, 10)
+        bullet = Bullet(self.pos, monster.pos, 10)
         world.add_bullet(bullet)
 
     @property

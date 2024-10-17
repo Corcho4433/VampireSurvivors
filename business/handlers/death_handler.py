@@ -12,9 +12,9 @@ class DeathHandler:
     @staticmethod
     def __is_entity_within_world_boundaries(entity):
         return (
-            0 <= entity.pos_x <= settings.WORLD_WIDTH and 0 <= entity.pos_y <= settings.WORLD_HEIGHT
+            0 <= entity.pos.x <= settings.WORLD_WIDTH and 0 <= entity.pos.y <= settings.WORLD_HEIGHT
         )
-
+    
     @staticmethod
     def check_deaths(world: IGameWorld):
         """Check if any entities have died and remove them from the game world.
