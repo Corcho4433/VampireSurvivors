@@ -14,7 +14,6 @@ class Bullet(MovableEntity, IBullet):
 
     def __init__(self, source, enemy_pos, speed):
         super().__init__(source, speed, BulletSprite(enemy_pos))
-        #self.__dir_x, self.__dir_y = self.__calculate_direction(dst_x - src_x, dst_y - src_y)
         self._logger.debug("Created %s", self)
         self._dir =  self.__calculate_direction(source, enemy_pos)
 
@@ -32,7 +31,7 @@ class Bullet(MovableEntity, IBullet):
         return Vector2(x, y)
 
     @property
-    def health(self) -> int:
+    def hits_remaining(self) -> int:
         pass
 
     def take_damage(self, amount):

@@ -12,19 +12,25 @@ class InputHandler(IInputHandler):
     def __init__(self, world: GameWorld):
         self.__world = world
 
-    def __example_method(self, keys):
+    def __get_player_direction_inputs(self, keys):
+        dx, dy = 0, 0
+
         if keys[pygame.K_w]:
-            print("Key W")
+            dy -= 1
 
         if keys[pygame.K_s]:
-            print("Key S")
+            dy += 1
 
         if keys[pygame.K_a]:
-            print("Key A")
+            dx -= 1
             
         if keys[pygame.K_d]:
-            print("Key D")
+            dx += 1
+
+        return pygame.Vector2(dx, dy)
 
     def process_input(self):
         keys = pygame.key.get_pressed()
-        self.__example_method(keys)
+        dir = self.__get_player_direction_inputs(keys)
+
+        self.__world.player.move(dir)
