@@ -1,6 +1,6 @@
 """Module for a bullet entity that moves towards a target direction."""
 
-import math
+import settings
 
 from pygame import Vector2
 from business.entities.entity import MovableEntity
@@ -17,6 +17,7 @@ class Bullet(MovableEntity, IBullet):
         self._logger.debug("Created %s", self)
         self._dir =  self.__calculate_direction(source, enemy_pos)
         self._charges = 1 # que se determine la cantidad internamente
+        self.__damage = 5
 
     def __calculate_direction(self, source, enemy_pos):
         direction = source - enemy_pos
@@ -24,10 +25,10 @@ class Bullet(MovableEntity, IBullet):
         x = direction.x
 
         if x != 0:
-            x = -x//abs(x)
-            
+            x = -x / abs(x)
+
         if y != 0:
-            y = -y//abs(y)
+            y = -y / abs(y)
 
         return Vector2(x, y)
 
@@ -37,12 +38,10 @@ class Bullet(MovableEntity, IBullet):
 
     @property
     def damage_amount(self):
-        self._logger.debug("Bullet damage is None")
+        return self.__damage
 
-        return 99
-
-    def deal_hit(self, charges=1):
-        self._charges -= charges
+    def use_charge(self, amount=1):
+        self._charges -= amount
 
     def update(self, world: IGameWorld):
         # Move bullet towards the target direction
@@ -51,4 +50,4 @@ class Bullet(MovableEntity, IBullet):
         super().update(world)
 
     def __str__(self):
-        return f"Bullet(pos=({self._pos.x, self._pos.y}), dir=({self.__dir_x, self.__dir_y}))"
+        return f"Bullet(pos=({self._pos.x, self._pos.y}), dir=({self._dir.x, self._dir.y}))"

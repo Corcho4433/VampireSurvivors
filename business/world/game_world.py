@@ -14,7 +14,7 @@ class GameWorld(IGameWorld):
         self.__monsters: list[IMonster] = []
         self.__bullets: list[IBullet] = []
         self.__experience_gems: list[IExperienceGem] = []
-        self.__monster_spawner_cooldown: CooldownHandler = CooldownHandler(200)
+        self.__monster_spawner_cooldown: CooldownHandler = CooldownHandler(600)
 
         # Initialize the tile map
         self.tile_map: ITileMap = tile_map

@@ -34,18 +34,18 @@ class Monster(MovableEntity, IMonster):
         return self.__damage
 
     def __get_direction_towards_the_player(self, world: IGameWorld):
-        direction: Vector2 = (self.pos - world.player.pos)
+        direction: Vector2 = self.pos - world.player.pos
         y = direction.y
         x = direction.x
 
         if x != 0:
             x = -x // abs(x)
-            
+
         if y != 0:
             y = -y // abs(y)
 
         return Vector2(x, y)
-    
+
     def __movement_collides_with_entities(
         self, dx: float, dy: float, entities: List[IHasSprite]
     ) -> bool:
@@ -57,10 +57,10 @@ class Monster(MovableEntity, IMonster):
         if direction.magnitude == 0:
             return
 
-        monsters = [m for m in world.monsters if m != self]
-        dx, dy = direction.x * self.speed, direction.y * self.speed
-        if not self.__movement_collides_with_entities(dx, dy, monsters):
-            self.move(direction)
+        #monsters = [m for m in world.monsters if m != self]
+        #dx, dy = direction.x * self.speed, direction.y * self.speed
+        #if not self.__movement_collides_with_entities(dx, dy, monsters):
+        self.move(direction)
 
         self.attack(world.player)
 

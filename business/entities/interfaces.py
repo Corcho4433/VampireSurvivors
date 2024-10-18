@@ -103,12 +103,14 @@ class IMonster(IUpdatable, ICanMove, IDamageable, ICanDealDamage):
 
 
 class IHasCharges:
+    """Interface that determines that an object"""
+
     @property
     @abstractmethod
-    def charges_remaining():
+    def charges_remaining(self):
         """The remaining amount of charges"""
 
-    def use_charge(amount: int):
+    def use_charge(self, amount: int):
         """Reduces the amount of charges by 1 or amount"""
 
 class IBullet(IUpdatable, ICanMove, IHasCharges, ICanDealDamage):

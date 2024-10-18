@@ -2,7 +2,6 @@
 
 import pygame
 
-
 from business.entities.bullet import Bullet
 from business.entities.entity import MovableEntity
 from business.entities.experience_gem import ExperienceGem
@@ -18,7 +17,7 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
     """
 
     BASE_DAMAGE = 5
-    BASE_SHOOT_COOLDOWN = 2000
+    BASE_SHOOT_COOLDOWN = 0
 
     def __init__(self, pos: pygame.Vector2, sprite: Sprite):
         super().__init__(pos, 5, sprite)
