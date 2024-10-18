@@ -1,6 +1,6 @@
 """Module for a bullet entity that moves towards a target direction."""
 
-import settings
+import math
 
 from pygame import Vector2
 from business.entities.entity import MovableEntity
@@ -20,17 +20,14 @@ class Bullet(MovableEntity, IBullet):
         self.__damage = 5
 
     def __calculate_direction(self, source, enemy_pos):
-        direction = source - enemy_pos
-        y = direction.y
-        x = direction.x
+        direction = -(source - enemy_pos)
+        mag = math.hypot(direction.x, direction.y)
 
-        if x != 0:
-            x = -x / abs(x)
+        print(type(mag))
+        if mag != 0:
+            return Vector2(direction.x / mag, direction.y / mag)
 
-        if y != 0:
-            y = -y / abs(y)
-
-        return Vector2(x, y)
+        return Vector2(0, 0)
 
     @property
     def charges_remaining(self) -> int:
