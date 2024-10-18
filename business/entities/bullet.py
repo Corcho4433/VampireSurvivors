@@ -16,6 +16,7 @@ class Bullet(MovableEntity, IBullet):
         super().__init__(source, speed, BulletSprite(enemy_pos))
         self._logger.debug("Created %s", self)
         self._dir =  self.__calculate_direction(source, enemy_pos)
+        self._charges = 1 # que se determine la cantidad internamente
 
     def __calculate_direction(self, source, enemy_pos):
         direction = source - enemy_pos
@@ -23,27 +24,31 @@ class Bullet(MovableEntity, IBullet):
         x = direction.x
 
         if x != 0:
-            x = -x/x
+            x = -x//abs(x)
             
         if y != 0:
-            y = -y/y
+            y = -y//abs(y)
 
         return Vector2(x, y)
 
     @property
-    def hits_remaining(self) -> int:
-        pass
-
-    def take_damage(self, amount):
-        pass
-
-    def update(self, _: IGameWorld):
-        # Move bullet towards the target direction
-        self.move(self._dir)
+    def charges_remaining(self) -> int:
+        return self._charges
 
     @property
     def damage_amount(self):
-        pass
+        self._logger.debug("Bullet damage is None")
+
+        return 99
+
+    def deal_hit(self, charges=1):
+        self._charges -= charges
+
+    def update(self, world: IGameWorld):
+        # Move bullet towards the target direction
+        self.move(self._dir)
+
+        super().update(world)
 
     def __str__(self):
         return f"Bullet(pos=({self._pos.x, self._pos.y}), dir=({self.__dir_x, self.__dir_y}))"

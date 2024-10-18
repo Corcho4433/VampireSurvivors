@@ -19,7 +19,7 @@ class CollisionHandler:
             for monster in monsters:
                 if CollisionHandler.__collides_with(bullet, monster):
                     monster.take_damage(bullet.damage_amount)
-                    bullet.take_damage(bullet.damage_amount)
+                    bullet.use_charge()
 
     @staticmethod
     def __handle_monsters(monsters: List[IMonster], player: IPlayer):

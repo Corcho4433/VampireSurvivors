@@ -102,7 +102,16 @@ class IMonster(IUpdatable, ICanMove, IDamageable, ICanDealDamage):
     """Interface for monster entities."""
 
 
-class IBullet(IUpdatable, ICanMove, IDamageable, ICanDealDamage):
+class IHasCharges:
+    @property
+    @abstractmethod
+    def charges_remaining():
+        """The remaining amount of charges"""
+
+    def use_charge(amount: int):
+        """Reduces the amount of charges by 1 or amount"""
+
+class IBullet(IUpdatable, ICanMove, IHasCharges, ICanDealDamage):
     """Interface for bullet entities."""
 
 

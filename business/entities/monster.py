@@ -74,5 +74,5 @@ class Monster(MovableEntity, IMonster):
         return self.__health
 
     def take_damage(self, amount):
-        self.__health = max(0, self.__health - amount)
+        self.__health = max(0, self.__health - abs(amount))
         self.sprite.take_damage()

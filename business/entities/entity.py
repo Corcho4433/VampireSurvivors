@@ -28,8 +28,8 @@ class Entity(IHasPosition, IHasSprite):
         #((self.pos.x - an_entity.pos.x) ** 2 + (self.pos.y - an_entity.pos.y) ** 2) ** 0.5
 
     @property
-    def pos(self) -> float:
-        return self._pos
+    def pos(self) -> Vector2:
+        return Vector2(self._pos.x, self._pos.y)
 
     @property
     def sprite(self) -> Sprite:

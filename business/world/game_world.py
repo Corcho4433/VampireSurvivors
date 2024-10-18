@@ -2,6 +2,7 @@
 
 from business.entities.interfaces import IBullet, IExperienceGem, IMonster, IPlayer
 from business.world.interfaces import IGameWorld, IMonsterSpawner, ITileMap
+from business.handlers.cooldown_handler import CooldownHandler
 
 
 class GameWorld(IGameWorld):
@@ -13,6 +14,7 @@ class GameWorld(IGameWorld):
         self.__monsters: list[IMonster] = []
         self.__bullets: list[IBullet] = []
         self.__experience_gems: list[IExperienceGem] = []
+        self.__monster_spawner_cooldown: CooldownHandler = CooldownHandler(200)
 
         # Initialize the tile map
         self.tile_map: ITileMap = tile_map
@@ -26,7 +28,13 @@ class GameWorld(IGameWorld):
         for monster in self.monsters:
             monster.update(self)
 
-        self.__monster_spawner.update(self)
+        for bullet in self.bullets:
+            bullet.update(self)
+
+        if self.__monster_spawner_cooldown.is_action_ready():
+            self.__monster_spawner_cooldown.put_on_cooldown()
+
+            self.__monster_spawner.update(self)
 
     def add_monster(self, monster: IMonster):
         self.__monsters.append(monster)
@@ -41,10 +49,10 @@ class GameWorld(IGameWorld):
         pass
 
     def add_bullet(self, bullet: IBullet):
-        pass
+        self.__bullets.append(bullet)
 
     def remove_bullet(self, bullet: IBullet):
-        pass
+        self.__bullets.remove(bullet)
 
     @property
     def player(self) -> IPlayer:
