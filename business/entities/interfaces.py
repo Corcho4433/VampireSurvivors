@@ -18,6 +18,24 @@ class ICanDealDamage(ABC):
             int: The amount of damage the entity can deal.
         """
 
+class IPickeable(ABC):
+    """Interface for entities that can be picked."""
+
+    @property
+    @abstractmethod
+    def is_picked(self) -> int:
+        """Whether the entity has been picked up or not.
+
+        Returns:
+            bool: Picked or not picked.
+        """
+
+    @property
+    @abstractmethod
+    def pick(self) -> None:
+        """Set the entity as picked.
+        
+        """
 
 class IDamageable(ABC):
     """Interface for entities that can take damage."""
@@ -117,7 +135,7 @@ class IBullet(IUpdatable, ICanMove, IHasCharges, ICanDealDamage):
     """Interface for bullet entities."""
 
 
-class IExperienceGem(IUpdatable, IHasPosition):
+class IExperienceGem(IUpdatable, IHasPosition, IPickeable):
     """Interface for experience gem entities."""
 
     @property
@@ -128,6 +146,9 @@ class IExperienceGem(IUpdatable, IHasPosition):
         Returns:
             int: The amount of experience the gem gives.
         """
+
+class IInventory():
+    pass
 
 
 class IPlayer(IUpdatable, ICanMove, IDamageable, ICanDealDamage):

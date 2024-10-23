@@ -1,7 +1,9 @@
 """Player entity module."""
 
 import pygame
+import settings
 
+from business.handlers.cooldown_handler import CooldownHandler
 from business.entities.bullet import Bullet
 from business.entities.entity import MovableEntity
 from business.entities.experience_gem import ExperienceGem
@@ -9,6 +11,12 @@ from business.entities.interfaces import ICanDealDamage, IDamageable, IPlayer
 from business.world.interfaces import IGameWorld
 from presentation.sprite import Sprite
 
+class Inventory:
+    """Is the player's inventory."""
+
+    def __init__(self):
+        pass
+   
 
 class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
     """Player entity.
@@ -17,13 +25,14 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
     """
 
     BASE_DAMAGE = 5
-    BASE_SHOOT_COOLDOWN = 0
+    BASE_SHOOT_COOLDOWN = 1
 
     def __init__(self, pos: pygame.Vector2, sprite: Sprite):
         super().__init__(pos, 5, sprite)
 
         self.__health: int = 100
         self.__last_shot_time = pygame.time.get_ticks()
+        self.__inventory = []
         self.__experience = 0
         self.__level = 1
         self._logger.debug("Created %s", self)
@@ -37,7 +46,7 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
 
     @property
     def experience_to_next_level(self):
-        return 1
+        return round(self.__level ** settings.EXPERIENCE_PER_LEVEL_RATIO)
 
     @property
     def level(self):
@@ -56,6 +65,7 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
         self.sprite.take_damage()
 
     def pickup_gem(self, gem: ExperienceGem):
+        print(gem.amount)
         self.__gain_experience(gem.amount)
 
     def __gain_experience(self, amount: int):
@@ -86,6 +96,10 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
         super().update(world)
 
         current_time = pygame.time.get_ticks()
-        if current_time - self.__last_shot_time >= self.__shoot_cooldown:
+        if current_time - self.__last_shot_time >= self.__shoot_cooldown and world.simulation_speed > 0:
             self.__shoot_at_nearest_enemy(world)
             self.__last_shot_time = current_time
+
+
+
+    

@@ -1,5 +1,5 @@
 # Display
-GAME_TITLE = "Generic Game"
+GAME_TITLE = "Vampoilets Surboilers"
 FPS = 60
 
 # Tile dimensions
@@ -26,3 +26,6 @@ BG_COLOR = (0, 0, 0)  # Black
 GRID_COLOR = (150, 150, 150)  # Grey
 PLAYER_BG_COLOR = (0, 255, 0)  # Green
 MONSTER_BG_COLOR = (255, 0, 0)  # Red
+
+# Game
+EXPERIENCE_PER_LEVEL_RATIO = 1.61803398875

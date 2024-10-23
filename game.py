@@ -33,6 +33,9 @@ class Game:
             if event.type == pygame.QUIT:  # pylint: disable=E1101
                 self.__logger.debug("QUIT event detected")
                 self.__running = False
+            
+            self.__input_handler.reset_events()
+            self.__input_handler.add_event(event)
 
     def run(self):
         """Starts the game loop."""

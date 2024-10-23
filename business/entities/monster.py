@@ -35,8 +35,8 @@ class Monster(MovableEntity, IMonster):
 
     def __get_direction_towards_the_player(self, world: IGameWorld):
         direction: Vector2 = self.pos - world.player.pos
-        y = direction.y
-        x = direction.x
+        y = direction.y * world.simulation_speed
+        x = direction.x * world.simulation_speed
 
         if x != 0:
             x = -x // abs(x)

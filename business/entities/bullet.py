@@ -23,7 +23,6 @@ class Bullet(MovableEntity, IBullet):
         direction = -(source - enemy_pos)
         mag = math.hypot(direction.x, direction.y)
 
-        print(type(mag))
         if mag != 0:
             return Vector2(direction.x / mag, direction.y / mag)
 
@@ -42,7 +41,9 @@ class Bullet(MovableEntity, IBullet):
 
     def update(self, world: IGameWorld):
         # Move bullet towards the target direction
-        self.move(self._dir)
+        direction = self._dir * world.simulation_speed
+
+        self.move(direction)
 
         super().update(world)
 

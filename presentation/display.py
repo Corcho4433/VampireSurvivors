@@ -7,6 +7,7 @@ from business.world.game_world import GameWorld
 from presentation.camera import Camera
 from presentation.interfaces import IDisplay
 from presentation.tileset import Tileset
+from presentation.handlers.userinterface_handler import UserInterfaceHandler
 
 
 class Display(IDisplay):
@@ -14,6 +15,7 @@ class Display(IDisplay):
 
     def __init__(self):
         # Set the window display mode
+        self.__interface_handler = UserInterfaceHandler()
         self.__screen = pygame.display.set_mode(settings.SCREEN_DIMENSION)
 
         # Set the window title

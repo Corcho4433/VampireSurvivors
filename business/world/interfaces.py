@@ -74,6 +74,15 @@ class IGameWorld(ABC):
 
     @property
     @abstractmethod
+    def simulation_speed(self) -> int:
+        """Gets the current simulation speed
+        
+        Returns:
+            int: The speed of the simulation
+        """
+
+    @property
+    @abstractmethod
     def monsters(self) -> list[IMonster]:
         """Gets the list of monsters in the world.
 
@@ -98,6 +107,11 @@ class IGameWorld(ABC):
         Returns:
             list[IExperienceGem]: A copy of the list of experience gems in the world.
         """
+
+    @property 
+    @abstractmethod
+    def toggle_pause(self) -> None:
+        """Toggles the game pause state from true to false or viceversa"""
 
 
 class IUpdatable(ABC):
