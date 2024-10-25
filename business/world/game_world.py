@@ -5,13 +5,13 @@ from business.entities.interfaces import IBullet, IExperienceGem, IMonster, IPla
 from business.world.interfaces import IGameWorld, IMonsterSpawner, ITileMap
 from business.handlers.cooldown_handler import CooldownHandler
 from business.world.gem_spawner import ExperienceGemFactory
-
+from presentation.interfaces import IDisplay
 
 class GameWorld(IGameWorld):
     """Represents the game world."""
     DEFAULT_MONSTER_SPAWN_TIME = 0.6
 
-    def __init__(self, spawner: IMonsterSpawner, tile_map: ITileMap, player: IPlayer):
+    def __init__(self, spawner: IMonsterSpawner, tile_map: ITileMap, player: IPlayer, display: IDisplay):
         # Initialize the player and lists for monsters, bullets and gems
         self.__player: IPlayer = player
         self.__monsters: list[IMonster] = []
@@ -20,6 +20,7 @@ class GameWorld(IGameWorld):
         self.__monster_spawner_cooldown: CooldownHandler = CooldownHandler(self.DEFAULT_MONSTER_SPAWN_TIME)
         self.__world_simulation_speed: int = 1
         self.__gem_factory = ExperienceGemFactory()
+        self.__display: IDisplay = display
 
         # Initialize the tile map
         self.tile_map: ITileMap = tile_map
@@ -68,14 +69,16 @@ class GameWorld(IGameWorld):
 
     def __pause(self):
         self.__world_simulation_speed = 0
-    
+
     def __resume(self):
         self.__world_simulation_speed = 1
 
     def toggle_pause(self):
         if self.__world_simulation_speed > 0:
+            self.__display.get_menu("Pause").set_active(True)
             self.__pause()
         else:
+            self.__display.get_menu("Pause").set_active(False)
             self.__resume()
 
 

@@ -1,6 +1,8 @@
 """Contains the base classes for all entities in the game."""
 
 import logging
+import settings
+
 from abc import abstractmethod
 from pygame import Vector2
 
@@ -54,7 +56,7 @@ class MovableEntity(Entity, ICanMove):
         self._sprite: Sprite = sprite
 
     def move(self, direction: Vector2):
-        self._pos += direction * self._speed
+        self._pos += direction * self._speed * (1/settings.FPS)
         #self._pos_y += direction_y * self._speed
         self._logger.debug(
             "Moving in direction (%.2f, %.2f) with speed %.2f",

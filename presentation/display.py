@@ -3,11 +3,13 @@
 import pygame
 
 import settings
-from business.world.game_world import GameWorld
+from business.world.interfaces import IGameWorld
 from presentation.camera import Camera
 from presentation.interfaces import IDisplay
 from presentation.tileset import Tileset
 from presentation.handlers.userinterface_handler import UserInterfaceHandler
+from presentation.menus.pause import PauseMenu
+from presentation.menus.hud import HUD
 
 
 class Display(IDisplay):
@@ -25,7 +27,11 @@ class Display(IDisplay):
         self.camera = Camera()
 
         self.__ground_tileset = self.__load_ground_tileset()
-        self.__world: GameWorld = None
+        self.__world: IGameWorld = None
+
+    @property
+    def screen(self):
+        return self.__screen
 
     def __load_ground_tileset(self):
         return Tileset(
@@ -58,7 +64,7 @@ class Display(IDisplay):
     def __draw_player_health_bar(self):
         # Get the player's health
         player = self.__world.player
-        
+
         # Define the health bar dimensions
         bar_width = settings.TILE_WIDTH
         bar_height = 5
@@ -81,17 +87,17 @@ class Display(IDisplay):
 
         self.__draw_player_health_bar()
 
-        # Draw the experience text
-        font = pygame.font.SysFont(None, 48)
-        experience_text = font.render(
-            f"XP: {self.__world.player.experience}/{self.__world.player.experience_to_next_level}",
-            True,
-            (255, 255, 255),
-        )
-        self.__screen.blit(experience_text, (10, 10))
+    def __show_interface(self):
+        self.__interface_handler.update(self)
 
-    def load_world(self, world: GameWorld):
+    def load_world(self, world: IGameWorld):
         self.__world = world
+
+        self.__interface_handler.add_menu(HUD(self.__world))
+        self.__interface_handler.add_menu(PauseMenu(self.__world))
+
+    def get_menu(self, name: str):
+        return self.__interface_handler.get_menu(name)
 
     def render_frame(self):
         # Update the camera to follow the player
@@ -120,6 +126,9 @@ class Display(IDisplay):
 
         # Draw the player
         self.__draw_player()
+
+        # Draw the user interface
+        self.__show_interface()
 
         # Update the display
         pygame.display.flip()

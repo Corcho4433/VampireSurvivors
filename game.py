@@ -6,7 +6,7 @@ import pygame
 
 import settings
 from business.exceptions import DeadPlayerException
-from business.handlers.colission_handler import CollisionHandler
+from business.handlers.collision_handler import CollisionHandler
 from business.handlers.death_handler import DeathHandler
 from business.world.interfaces import IGameWorld
 from presentation.interfaces import IDisplay, IInputHandler
@@ -28,13 +28,14 @@ class Game:
         self.__running = True
 
     def __process_game_events(self):
+        self.__input_handler.reset_events()
+
         for event in pygame.event.get():
             # pygame.QUIT event means the user clicked X to close your window
             if event.type == pygame.QUIT:  # pylint: disable=E1101
                 self.__logger.debug("QUIT event detected")
                 self.__running = False
-            
-            self.__input_handler.reset_events()
+
             self.__input_handler.add_event(event)
 
     def run(self):

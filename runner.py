@@ -21,18 +21,18 @@ def initialize_player():
     return Player(pos, PlayerSprite(pos))
 
 
-def initialize_game_world():
+def initialize_game_world(display):
     """Initializes the game world"""
     monster_spawner = MonsterSpawner()
     tile_map = TileMap()
     player = initialize_player()
-    return GameWorld(monster_spawner, tile_map, player)
+    return GameWorld(monster_spawner, tile_map, player, display)
 
 
 def main():
     """Main function to run the game"""
     # Initialize pygame
-    pygame.init()
+    pygame.init() #pylint: disable=E1101
 
     # Logging configuration
     logging.basicConfig(
@@ -42,7 +42,7 @@ def main():
 
     # Initialize the game objects
     display = Display()
-    world = initialize_game_world()
+    world = initialize_game_world(display)
     display.load_world(world)
     input_handler = InputHandler(world)
 
@@ -51,7 +51,7 @@ def main():
     game.run()
 
     # Properly quit Pygame
-    pygame.quit()
+    pygame.quit() #pylint: disable=E1101
 
 
 if __name__ == "__main__":

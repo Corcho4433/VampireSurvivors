@@ -108,7 +108,6 @@ class IGameWorld(ABC):
             list[IExperienceGem]: A copy of the list of experience gems in the world.
         """
 
-    @property 
     @abstractmethod
     def toggle_pause(self) -> None:
         """Toggles the game pause state from true to false or viceversa"""
@@ -159,3 +158,10 @@ class ITileMap(ABC):
         Returns:
             int: The tile at the specified row and column.
         """
+
+
+class IGemFactory(ABC):
+
+    @abstractmethod
+    def create_gem(self, monster: IMonster, world: IGameWorld):
+        """Create a gem based on the monster and the world"""

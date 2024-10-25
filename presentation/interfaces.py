@@ -4,19 +4,28 @@ from abc import ABC, abstractmethod
 
 from business.world.interfaces import IGameWorld
 
-class IUserInterfaceHandler(ABC):
+class IComponentHolder(ABC):
     """A user interface handler, which controls all component"""
 
     @abstractmethod
-    def add_component(self) -> None:
+    def update(self, display: "IDisplay") -> None:
+        """Updates all the data for the buttons on screen"""
+
+    @abstractmethod
+    def add_component(self, component: "IUIComponent") -> None:
         """Adds a component to the user screen"""
 
     @abstractmethod
-    def remove_component(self) -> None:
+    def remove_component(self, component: "IUIComponent") -> None:
         """Removes a component from the screen"""
 
 class IDisplay(ABC):
     """Interface for displaying the game world."""
+
+    @property
+    @abstractmethod
+    def screen(self):
+        """The pygame screen in which everything is rendered"""
 
     @abstractmethod
     def load_world(self, world: IGameWorld):
@@ -30,26 +39,77 @@ class IDisplay(ABC):
     def render_frame(self):
         """Render the current frame."""
 
+    @abstractmethod
+    def get_menu(self, name: str) -> "IMenu":
+        """Gets one of the screen menus
+        
+            Return:
+                IMenu: A screen menu
+        """
+
+    @property
+    @abstractmethod
+    def screen(self):
+        """The screen of the display"""
+
 
 class IInputHandler(ABC):
     """Interface for handling user input."""
 
     @abstractmethod
+    def add_event(self, event):
+        """Adds an event to the queue for this frame"""
+
+    @abstractmethod
+    def reset_events(self):
+        """Resets all the queued events"""
+
+    @abstractmethod
     def process_input(self):
         """Process the input from the user."""
 
-class IUIComponent(ABC):
-    """A component of the user's visual interface"""
-    
-    @abstractmethod
-    def update(self):
-        """Update the frame on the screen"""
+class IRootComponent(ABC):
+    """Root for all component types"""
 
+    @abstractmethod
+    def update(self, display: "IDisplay"):
+        """Update the frame on the screen"""
 
     @abstractmethod
     def set_active(self, state: bool):
         """CHanges the state of the UI Component to either be drawn or not on screen"""
 
+    @property
+    @abstractmethod
+    def active(self) -> bool:
+        """Whether or not the ui component is to be drawn on screen
+        
+            Returns:
+                bool: The state of the UI
+        """
+
+class IUIComponent(IRootComponent):
+    """A component of the user's visual interface"""
+
+    @property
+    @abstractmethod
+    def rect(self):
+        """The ui component's rect
+        
+            Returns:
+                pygame.Rect: The rect hitbox containing the ui component
+        """
+
+class IDynamicUIComponent(IUIComponent):
+    """UI component with position and """
+
+    @abstractmethod
+    def move(self, pos):
+        """Move the object to a part of the screen"""
+
+    @abstractmethod
+    def resize(self, size):
+        """Change the size of the UI element"""
 
     @property
     @abstractmethod
@@ -69,21 +129,66 @@ class IUIComponent(ABC):
                 Vector2: The size of the element on the screen
         """
 
+class IMenu(IComponentHolder):
+    """A general menu for interfaces"""
+
     @property
     @abstractmethod
-    def active(self) -> bool:
-        """Whether or not the ui component is to be drawn on screen
-        
+    def name(self) -> str:
+        """The name of the menu
+
             Returns:
-                bool: The state of the UI
+                str: The menu of the menu
         """
+
+    @abstractmethod
+    def draw(self):
+        """Draws all of the menu's components"""
+
+    @abstractmethod
+    def set_active(self, state: bool) -> None:
+        """Sets whether or not the menu is active"""
 
 class IClickable(ABC):
     """Can be clicked when the mouse is inside object"""
 
     @abstractmethod
-    def clicked(self):
+    def is_clicked(self):
         """Method that runs once the button is clicked"""
 
-class IButton(IUIComponent, IClickable):
+class IUserInterfaceHandler(ABC):
+    """A general user interface handler"""
+
+    @abstractmethod
+    def update(self, display: IDisplay):
+        """Update all the screen ui elements"""
+
+    @abstractmethod
+    def add_menu(self, menu: IMenu) -> None:
+        """Adds a menu to the screen"""
+
+    @abstractmethod
+    def remove_menu(self, menu: IMenu) -> None:
+        """Adds a menu to the screen"""
+
+    @abstractmethod
+    def get_menu(self, name: str) -> IMenu:
+        """Gets a saved menu component"""
+
+
+class IText(IRootComponent):
+    """A screen text that can be applied to any part of the screen"""
+
+    @abstractmethod
+    def change(self, text: str) -> None:
+        """Changes the displayed text"""
+
+class IButton(IDynamicUIComponent, IClickable):
     """A UI button used in menus"""
+
+    @abstractmethod
+    def attach_text(self, text: IText):
+        """Attach a text to the button"""
+
+class IDynamicText(IDynamicUIComponent):
+    """A text with a background object"""

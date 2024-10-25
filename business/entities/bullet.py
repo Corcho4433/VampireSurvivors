@@ -4,6 +4,7 @@ import math
 
 from pygame import Vector2
 from business.entities.entity import MovableEntity
+from business.progression.interfaces import IPlayerStats
 from business.entities.interfaces import IBullet
 from business.world.interfaces import IGameWorld
 from presentation.sprite import BulletSprite
@@ -12,12 +13,12 @@ from presentation.sprite import BulletSprite
 class Bullet(MovableEntity, IBullet):
     """A bullet that moves towards a target direction."""
 
-    def __init__(self, source, enemy_pos, speed):
-        super().__init__(source, speed, BulletSprite(enemy_pos))
+    def __init__(self, source, enemy_pos, player_stats: IPlayerStats):
+        super().__init__(source, 600, BulletSprite(enemy_pos))
         self._logger.debug("Created %s", self)
         self._dir =  self.__calculate_direction(source, enemy_pos)
         self._charges = 1 # que se determine la cantidad internamente
-        self.__damage = 5
+        self.__player_stats = player_stats
 
     def __calculate_direction(self, source, enemy_pos):
         direction = -(source - enemy_pos)
@@ -33,8 +34,8 @@ class Bullet(MovableEntity, IBullet):
         return self._charges
 
     @property
-    def damage_amount(self):
-        return self.__damage
+    def damage(self):
+        return self.__player_stats.attack_damage
 
     def use_charge(self, amount=1):
         self._charges -= amount

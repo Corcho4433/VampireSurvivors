@@ -1,0 +1,46 @@
+"""Class that defines all of the buttons inside the """
+
+from pygame import Vector2
+import settings
+
+from presentation.menus.menu import Menu
+from presentation.userinterface.uicomponent import UIComponent
+from presentation.userinterface.button import Button
+from presentation.userinterface.text import Text
+from presentation.userinterface.dynamic_text import DynamicText
+
+class PauseMenu(Menu):
+    """A pause menu for the game"""
+
+    def __init__(self, world):
+        super().__init__("Pause")
+
+        self.__quit_button: Button = None
+        self.__resume_button: Button = None
+        self.__world = world
+
+        self.set_active(False)
+        self.draw()
+
+    def update(self, display):
+        super().update(display)
+
+        if self.__quit_button.is_clicked():
+            quit()
+
+        if self.__resume_button.is_clicked():
+            self.__world.toggle_pause()
+
+    def draw(self):
+        title = DynamicText("PAUSE MENU", Vector2(0, 0), Vector2(settings.SCREEN_WIDTH, 50))
+        background = UIComponent(Vector2(), Vector2(settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT), (0, 0, 10), 90)
+        self.__quit_button = Button(Vector2(settings.SCREEN_WIDTH // 2 - 125, 100), Vector2(250, 60), (100, 100, 110))
+        self.__resume_button = Button(Vector2(settings.SCREEN_WIDTH // 2 - 125, 200), Vector2(250, 60), (100, 100, 110))
+
+        self.__quit_button.attach_text(Text("Close", self.__quit_button))
+        self.__resume_button.attach_text(Text("Continue", self.__resume_button))
+        
+        self.add_component(background)
+        self.add_component(self.__quit_button)
+        self.add_component(self.__resume_button)
+        self.add_component(title)

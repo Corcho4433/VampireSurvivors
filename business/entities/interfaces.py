@@ -11,7 +11,7 @@ class ICanDealDamage(ABC):
 
     @property
     @abstractmethod
-    def damage_amount(self) -> int:
+    def damage(self) -> int:
         """The amount of damage the entity can deal.
 
         Returns:
@@ -147,10 +147,6 @@ class IExperienceGem(IUpdatable, IHasPosition, IPickeable):
             int: The amount of experience the gem gives.
         """
 
-class IInventory():
-    pass
-
-
 class IPlayer(IUpdatable, ICanMove, IDamageable, ICanDealDamage):
     """Interface for the player entity."""
 
@@ -160,6 +156,20 @@ class IPlayer(IUpdatable, ICanMove, IDamageable, ICanDealDamage):
 
         Args:
             gem (IExperienceGem): The experience gem to pick up.
+        """
+
+    @property
+    @abstractmethod
+    def luck(self) -> int:
+        """The luck level of the player"""
+
+    @property
+    @abstractmethod
+    def inventory(self):
+        """The player's inventory, holding items/perks
+
+            Returns:
+                Inventory: the player's inventory
         """
 
     @property

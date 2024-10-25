@@ -8,12 +8,13 @@ from business.entities.interfaces import IDamageable, IHasPosition, IHasSprite, 
 from business.handlers.cooldown_handler import CooldownHandler
 from business.world.interfaces import IGameWorld
 from presentation.sprite import Sprite
+from business.handlers.collision_handler import CollisionHandler
 
 class Monster(MovableEntity, IMonster):
     """A monster entity in the game."""
 
     def __init__(self, pos: Vector2, sprite: Sprite):
-        super().__init__(pos, 2, sprite)
+        super().__init__(pos, 120, sprite)
         self.__health: int = 10
         self.__damage = 10
         self.__attack_range = 50
@@ -26,11 +27,11 @@ class Monster(MovableEntity, IMonster):
             return
 
         if self._get_distance_to(target) < self.__attack_range:
-            target.take_damage(self.damage_amount)
+            target.take_damage(self.damage)
             self.__attack_cooldown.put_on_cooldown()
 
     @property
-    def damage_amount(self):
+    def damage(self):
         return self.__damage
 
     def __get_direction_towards_the_player(self, world: IGameWorld):
@@ -57,10 +58,21 @@ class Monster(MovableEntity, IMonster):
         if direction.magnitude == 0:
             return
 
-        #monsters = [m for m in world.monsters if m != self]
-        #dx, dy = direction.x * self.speed, direction.y * self.speed
-        #if not self.__movement_collides_with_entities(dx, dy, monsters):
-        self.move(direction)
+        colliding_pairs = CollisionHandler.get_monster_colliding_pairs(world)
+        colliding_monsters = [monster for pair in colliding_pairs for monster in pair]
+
+        if not self in colliding_monsters:
+            self.move(direction)
+        elif self in colliding_monsters:
+            for monster, other in colliding_pairs:
+                if monster == self or other == self:
+                    monster = min(
+                        [monster, other],
+                        key=lambda monster: (monster.pos.distance_to(other.pos)),
+                    )
+
+                    monster.move(direction)
+
 
         self.attack(world.player)
 

@@ -98,8 +98,10 @@ class BulletSprite(Sprite):
     """A class representing the bullet sprite."""
 
     def __init__(self, pos: pygame.Vector2):
-        image = pygame.Surface((5, 5), pygame.SRCALPHA)  # pylint: disable=E1101
-        pygame.draw.circle(image, (255, 255, 0), (2, 2), 5)
+        size = 15
+
+        image = pygame.Surface((size, size), pygame.SRCALPHA)  # pylint: disable=E1101
+        pygame.draw.circle(image, (255, 255, 0), (size // 2, size // 2), size // 2)
         rect: pygame.rect = image.get_rect(center=(int(pos.x), int(pos.y)))
 
         super().__init__(image, rect)

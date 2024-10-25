@@ -9,40 +9,37 @@ from business.entities.entity import MovableEntity
 from business.entities.experience_gem import ExperienceGem
 from business.entities.interfaces import ICanDealDamage, IDamageable, IPlayer
 from business.world.interfaces import IGameWorld
+from business.progression.inventory import Inventory
+from business.progression.player_stats import PlayerStats
 from presentation.sprite import Sprite
-
-class Inventory:
-    """Is the player's inventory."""
-
-    def __init__(self):
-        pass
-   
 
 class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
     """Player entity.
 
-    The player is the main character of the game. It can move around the game world and shoot at monsters.
+        The player is the main character of the game. 
+        It can move around the game world and shoot at monsters.
     """
 
-    BASE_DAMAGE = 5
-    BASE_SHOOT_COOLDOWN = 1
-
     def __init__(self, pos: pygame.Vector2, sprite: Sprite):
-        super().__init__(pos, 5, sprite)
+        super().__init__(pos, 300, sprite)
 
-        self.__health: int = 100
-        self.__last_shot_time = pygame.time.get_ticks()
-        self.__inventory = []
+        self.__stats = PlayerStats()
+        self.__last_shot_time = CooldownHandler(self.__stats.cooldown)
+        self.__inventory = Inventory()
         self.__experience = 0
         self.__level = 1
         self._logger.debug("Created %s", self)
 
     def __str__(self):
-        return f"Player(hp={self.__health}, xp={self.__experience}, lvl={self.__level}, pos=({self._pos.x}, {self._pos.y}))"
+        return f"Player(hp={self.__stats.health}, xp={self.__experience}, lvl={self.__level}, pos=({self._pos.x}, {self._pos.y}))" #pylint: disable=C0301
 
     @property
     def experience(self):
         return self.__experience
+
+    @property
+    def inventory(self):
+        return self.__inventory
 
     @property
     def experience_to_next_level(self):
@@ -53,19 +50,22 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
         return self.__level
 
     @property
-    def damage_amount(self):
-        return Player.BASE_DAMAGE
+    def damage(self):
+        return self.__stats.attack_damage
+
+    @property
+    def luck(self):
+        return self.__stats.luck
 
     @property
     def health(self) -> int:
-        return self.__health
+        return self.__stats.health
 
     def take_damage(self, amount):
-        self.__health = max(0, self.__health - amount)
+        self.__stats.health = max(0, self.health - amount)
         self.sprite.take_damage()
 
     def pickup_gem(self, gem: ExperienceGem):
-        print(gem.amount)
         self.__gain_experience(gem.amount)
 
     def __gain_experience(self, amount: int):
@@ -74,7 +74,7 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
             self.__experience -= self.experience_to_next_level
             self.__level += 1
 
-    def __shoot_at_nearest_enemy(self, world: IGameWorld):
+    def __attack_at_nearest_enemy(self, world: IGameWorld):
         if not world.monsters:
             return  # No monsters to shoot at
 
@@ -85,21 +85,12 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
         )
 
         # Create a bullet towards the nearest monster
-        bullet = Bullet(self.pos, monster.pos, 10)
+        bullet = Bullet(self.pos, monster.pos, self.__stats)
         world.add_bullet(bullet)
-
-    @property
-    def __shoot_cooldown(self):
-        return Player.BASE_SHOOT_COOLDOWN
 
     def update(self, world: IGameWorld):
         super().update(world)
 
-        current_time = pygame.time.get_ticks()
-        if current_time - self.__last_shot_time >= self.__shoot_cooldown and world.simulation_speed > 0:
-            self.__shoot_at_nearest_enemy(world)
-            self.__last_shot_time = current_time
-
-
-
-    
+        if self.__last_shot_time.is_action_ready() and world.simulation_speed > 0:
+            self.__attack_at_nearest_enemy(world)
+            self.__last_shot_time.put_on_cooldown()
