@@ -4,7 +4,6 @@ import math
 
 from pygame import Vector2
 from business.entities.entity import MovableEntity
-from business.progression.interfaces import IPlayerStats
 from business.entities.interfaces import IBullet
 from business.world.interfaces import IGameWorld
 from presentation.sprite import BulletSprite
