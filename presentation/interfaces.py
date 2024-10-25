@@ -47,11 +47,6 @@ class IDisplay(ABC):
                 IMenu: A screen menu
         """
 
-    @property
-    @abstractmethod
-    def screen(self):
-        """The screen of the display"""
-
 
 class IInputHandler(ABC):
     """Interface for handling user input."""
@@ -98,6 +93,23 @@ class IUIComponent(IRootComponent):
         
             Returns:
                 pygame.Rect: The rect hitbox containing the ui component
+        """
+
+    @property
+    @abstractmethod
+    def color(self):
+        """The color of the UI component, by default white
+        
+            Returns:
+                tuple[int, int, int]: The color in RGB
+        """
+
+    @abstractmethod
+    def change_color(self, new_color: tuple[int, int, int]):
+        """Change the color of the UI button to a new one
+
+            Args:
+                new_color: tuple[int, int, int]
         """
 
 class IDynamicUIComponent(IUIComponent):
@@ -189,6 +201,14 @@ class IButton(IDynamicUIComponent, IClickable):
     @abstractmethod
     def attach_text(self, text: IText):
         """Attach a text to the button"""
+
+    @abstractmethod
+    def is_hovering(self) -> bool:
+        """Whether the user is or isn't hovering over the button
+        
+            Returns:
+                bool: being hovered or not
+        """
 
 class IDynamicText(IDynamicUIComponent):
     """A text with a background object"""

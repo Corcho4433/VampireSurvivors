@@ -11,9 +11,9 @@ class UIComponent(IDynamicUIComponent):
     def __init__(self, pos: Vector2, size: Vector2, color: tuple[int, int, int], opacity: int):
         self.__pos = pos
         self.__size = size
+        self.__color = color
         self.__active = True
         self.__opacity = opacity
-        self.__color = color
 
         self.__make_rect()
 
@@ -35,6 +35,9 @@ class UIComponent(IDynamicUIComponent):
         self.__size = size
         self.__make_rect()
 
+    def change_color(self, new_color):
+        self.__color = new_color
+
     @property
     def active(self) -> bool:
         return self.__active
@@ -46,6 +49,10 @@ class UIComponent(IDynamicUIComponent):
     @property
     def size(self) -> Vector2:
         return Vector2(self.__size.x, self.__size.y)
+
+    @property
+    def color(self) -> tuple[int, int, int]:
+        return self.__color
 
     @property
     def rect(self) -> Rect:
