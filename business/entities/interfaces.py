@@ -158,6 +158,19 @@ class IPlayer(IUpdatable, ICanMove, IDamageable, ICanDealDamage):
             gem (IExperienceGem): The experience gem to pick up.
         """
 
+    @abstractmethod
+    def give_weapon(self, weapon):
+        """Give the player a weapon to use"""
+
+    @property
+    @abstractmethod
+    def stats(self):
+        """The stats of the player generalized
+        
+            Returns:
+                PlayerStats: the player stats object
+        """
+
     @property
     @abstractmethod
     def luck(self) -> int:

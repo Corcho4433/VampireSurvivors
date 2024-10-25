@@ -16,6 +16,7 @@ class Button(UIComponent, IButton):
         self.__text: IText = None
         self.__clicked = False
         self.__released = True
+        self.__hover_frame = 0
         self.__hovering = False
 
     def update(self, display):
@@ -26,7 +27,10 @@ class Button(UIComponent, IButton):
 
         mouse_pos = pygame.mouse.get_pos()
         if self.rect.collidepoint(mouse_pos):
-            self.__hovering = True
+            if not self.__hovering:
+                self.__hovering = True
+                self.__hover_frame = pygame.time.get_ticks()
+
 
             if pygame.mouse.get_pressed()[0] and self.__released:
                 self.__clicked = True
@@ -34,7 +38,13 @@ class Button(UIComponent, IButton):
             elif not pygame.mouse.get_pressed()[0]:
                 self.__released = True
         else:
-            self.__hovering = False
+            if self.__hovering:
+                self.__hover_frame = pygame.time.get_ticks()
+                self.__hovering = False
+
+    @property
+    def hover_time(self):
+        return self.__hover_frame
 
     def is_hovering(self):
         return self.__hovering

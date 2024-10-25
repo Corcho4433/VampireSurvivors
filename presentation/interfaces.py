@@ -202,6 +202,15 @@ class IButton(IDynamicUIComponent, IClickable):
     def attach_text(self, text: IText):
         """Attach a text to the button"""
 
+    @property
+    @abstractmethod
+    def hover_time(self):
+        """The tick in which the player started hovering over the button
+        
+            Returns:
+                int: ticks
+        """
+
     @abstractmethod
     def is_hovering(self) -> bool:
         """Whether the user is or isn't hovering over the button

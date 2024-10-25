@@ -1,6 +1,6 @@
 """Defines a base upgrade for any weapon"""
 
-from business.progression.interfaces import IUpgrade, IUpgradeValue
+from business.progression.interfaces import IUpgrade, IUpgradeValue, IInventoryItem
 
 class Upgrade(IUpgrade):
     """An upgrade for the weapon"""
@@ -14,6 +14,9 @@ class Upgrade(IUpgrade):
     def __init__(self, data: dict):
         self.__values = data.values
         self.__description = data.description
+
+    def use(self, item: IInventoryItem):
+        pass
 
     @property
     def values(self) -> list[IUpgradeValue]:

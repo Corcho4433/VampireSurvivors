@@ -2,21 +2,50 @@
 
 from abc import ABC, abstractmethod
 
-class IInventoryItem(ABC):
-    """An item of the player's inventory"""
+class IUpgradeable(ABC):
+    """An upgradeable item with a level count"""
+
+    @property
+    @abstractmethod
+    def upgrades(self):
+        """The upgrades for the item"""
+
+    @abstractmethod
+    def upgrade(self):
+        """Upgrades the weapon by one level"""
 
     @property
     @abstractmethod
     def level(self):
-        """The current level of the item
-        
+        """The level of the weapon
+
             Returns:
-                int: Level of the item
+                int: the level of the weapon
         """
 
+class IInventoryItem(IUpgradeable):
+    """An item of the player's inventory"""
+
+    @property
     @abstractmethod
-    def upgrade(self):
-        """Increase the level of the item by 1"""
+    def name(self):
+        """The name of the item"""
+
+class IWeapon(IInventoryItem):
+    """A weapon the player can use"""
+
+    @abstractmethod
+    def attack(self, origin, world):
+        """Uses the weapon to attack from a certain origin spot"""
+
+    @property
+    @abstractmethod
+    def damage(self):
+        """The amount of damage an attack does
+        
+            Returns:
+                int: the damage count
+        """
 
 class IInventory(ABC):
     """The interface for a player's inventory"""
@@ -111,6 +140,14 @@ class IUpgrade(ABC):
                 str: The description of the upgrade
         """
 
+    @abstractmethod
+    def use(self, item: IInventoryItem):
+        """Uses the upgrade on an inventory item
+        
+            Args:
+                InventoryItem: item to upgrade
+        """
+
     @property
     @abstractmethod
     def values(self) -> list[IUpgradeValue]:
@@ -122,3 +159,4 @@ class IUpgrade(ABC):
 
 class IUpgradePerk(IInventoryItem):
     """A perk that upgrades the player's stats"""
+

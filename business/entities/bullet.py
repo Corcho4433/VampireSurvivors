@@ -13,12 +13,12 @@ from presentation.sprite import BulletSprite
 class Bullet(MovableEntity, IBullet):
     """A bullet that moves towards a target direction."""
 
-    def __init__(self, source, enemy_pos, player_stats: IPlayerStats):
+    def __init__(self, source, enemy_pos, damage: int):
         super().__init__(source, 600, BulletSprite(enemy_pos))
         self._logger.debug("Created %s", self)
         self._dir =  self.__calculate_direction(source, enemy_pos)
         self._charges = 1 # que se determine la cantidad internamente
-        self.__player_stats = player_stats
+        self.__damage = damage
 
     def __calculate_direction(self, source, enemy_pos):
         direction = -(source - enemy_pos)
@@ -35,7 +35,7 @@ class Bullet(MovableEntity, IBullet):
 
     @property
     def damage(self):
-        return self.__player_stats.attack_damage
+        return self.__damage
 
     def use_charge(self, amount=1):
         self._charges -= amount

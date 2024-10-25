@@ -8,9 +8,9 @@ class PlayerStats(IPlayerStats):
 
     BASE_LUCK = 1
     BASE_HEALTH = 100
-    BASE_ATTACK_DAMAGE = 50
+    BASE_ATTACK_DAMAGE = 10
     BASE_ATTACK_SPEED = 1
-    BASE_SHOOT_COOLDOWN = .2
+    BASE_SHOOT_COOLDOWN = 2
     BASE_MOVEMENT_SPEED = 1
 
     def __init__(self):

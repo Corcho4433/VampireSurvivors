@@ -18,8 +18,6 @@ class PauseMenu(Menu):
         self.__quit_button: Button = None
         self.__resume_button: Button = None
         self.__world = world
-        self.__last_hover = time.get_ticks()
-        self.__last_hover_2 = time.get_ticks()
 
         self.set_active(False)
         self.draw()
@@ -28,30 +26,35 @@ class PauseMenu(Menu):
         super().update(display)
 
         # Hovering
-        if self.__quit_button.is_hovering():
-            factor = min((time.get_ticks() - self.__last_hover)/100, 1)
+        quit_factor = min((time.get_ticks() - self.__quit_button.hover_time)/100, 1)
+        resume_factor = min((time.get_ticks() - self.__resume_button.hover_time)/200, 1)
 
-            self.__quit_button.resize(Vector2(250 + 30 * factor, 60 + 7 * factor))
-            self.__quit_button.move(Vector2(settings.SCREEN_WIDTH // 2 - self.__quit_button.size.x//2, 100 - (3.5 * factor)))
+        if self.__quit_button.is_hovering():
+            
+            size = self.__quit_button.size
+
+            self.__quit_button.resize(Vector2(size.x + (280 - size.x) * quit_factor, size.y + (67 - size.y) * quit_factor))
+            self.__quit_button.move(Vector2(settings.SCREEN_WIDTH // 2 - self.__quit_button.size.x//2, 100 - (3.5 * quit_factor)))
             self.__quit_button.change_color((160, 120, 110))
         else:
-            self.__last_hover = time.get_ticks()
+            size = self.__quit_button.size
 
-            self.__quit_button.resize(Vector2(250, 60))
-            self.__quit_button.move(Vector2(settings.SCREEN_WIDTH // 2 - self.__quit_button.size.x//2, 100))
+            self.__quit_button.resize(Vector2(size.x + (250 - size.x) * quit_factor, size.y + (60 - size.y) * quit_factor))
+            self.__quit_button.move(Vector2(settings.SCREEN_WIDTH // 2 - self.__quit_button.size.x//2, 100 - (3.5 * (1 - quit_factor))))
             self.__quit_button.change_color((100, 100, 110))
 
-        if self.__resume_button.is_hovering():
-            factor = min((time.get_ticks() - self.__last_hover_2)/200, 1)
 
-            self.__resume_button.resize(Vector2(250 + 30 * factor, 60 + 7 * factor))
-            self.__resume_button.move(Vector2(settings.SCREEN_WIDTH // 2 - self.__resume_button.size.x//2, 200 - (3.5 * factor)))
+        if self.__resume_button.is_hovering():
+            size = self.__resume_button.size
+
+            self.__resume_button.resize(Vector2(size.x + (280 - size.x) * resume_factor, size.y + (67 - size.y) * resume_factor))
+            self.__resume_button.move(Vector2(settings.SCREEN_WIDTH // 2 - self.__resume_button.size.x//2, 200 - (3.5 * resume_factor)))
             self.__resume_button.change_color((130,130,160))
         else:
-            self.__last_hover_2 = time.get_ticks()
+            size = self.__resume_button.size
 
-            self.__resume_button.resize(Vector2(250, 60))
-            self.__resume_button.move(Vector2(settings.SCREEN_WIDTH // 2 - self.__resume_button.size.x//2, 200))
+            self.__resume_button.resize(Vector2(size.x + (250 - size.x) * resume_factor, size.y + (60 - size.y) * resume_factor))
+            self.__resume_button.move(Vector2(settings.SCREEN_WIDTH // 2 - self.__resume_button.size.x//2, 200 - (3.5 * (1 - resume_factor))))
             self.__resume_button.change_color((100, 100, 110))
 
         # Clicking

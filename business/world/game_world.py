@@ -4,6 +4,7 @@ from business.entities.interfaces import IBullet, IExperienceGem, IMonster, IPla
 from business.world.interfaces import IGameWorld, IMonsterSpawner, ITileMap
 from business.handlers.cooldown_handler import CooldownHandler
 from business.world.gem_spawner import ExperienceGemFactory
+from business.weapons.weapon_factory import WeaponFactory
 from presentation.interfaces import IDisplay
 
 class GameWorld(IGameWorld):
@@ -19,6 +20,7 @@ class GameWorld(IGameWorld):
         self.__monster_spawner_cooldown: CooldownHandler = CooldownHandler(self.DEFAULT_MONSTER_SPAWN_TIME)
         self.__world_simulation_speed: int = 1
         self.__gem_factory = ExperienceGemFactory()
+        self.__weapon_factory = WeaponFactory(self)
         self.__display: IDisplay = display
 
         # Initialize the tile map
@@ -26,6 +28,9 @@ class GameWorld(IGameWorld):
 
         # Initialize the monster spawner
         self.__monster_spawner: IMonsterSpawner = spawner
+
+        Gun = self.__weapon_factory.create_gun()
+        self.__player.give_weapon(Gun)
 
     def update(self):
         self.player.update(self)

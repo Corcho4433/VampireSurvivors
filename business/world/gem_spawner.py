@@ -21,6 +21,6 @@ class ExperienceGemFactory(IGemFactory):
         minimum_threshold = ((100 - settings.MINIMUM_GEM_DROP_CHANCE) * (luck_stat - 1)/100) + settings.MINIMUM_GEM_DROP_CHANCE
         chance = randint(0, 100)
 
-        if minimum_threshold < chance:
+        if chance < minimum_threshold:
             gem = ExperienceGem(monster.pos)
             world.add_experience_gem(gem)

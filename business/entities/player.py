@@ -4,7 +4,6 @@ import pygame
 import settings
 
 from business.handlers.cooldown_handler import CooldownHandler
-from business.entities.bullet import Bullet
 from business.entities.entity import MovableEntity
 from business.entities.experience_gem import ExperienceGem
 from business.entities.interfaces import ICanDealDamage, IDamageable, IPlayer
@@ -26,6 +25,7 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
         self.__stats = PlayerStats()
         self.__last_shot_time = CooldownHandler(self.__stats.cooldown)
         self.__inventory = Inventory()
+        self.__weapon = None
         self.__experience = 0
         self.__level = 1
         self._logger.debug("Created %s", self)
@@ -61,6 +61,10 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
     def health(self) -> int:
         return self.__stats.health
 
+    @property
+    def stats(self) -> PlayerStats:
+        return self.__stats
+
     def take_damage(self, amount):
         self.__stats.health = max(0, self.health - amount)
         self.sprite.take_damage()
@@ -75,18 +79,11 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
             self.__level += 1
 
     def __attack_at_nearest_enemy(self, world: IGameWorld):
-        if not world.monsters:
-            return  # No monsters to shoot at
+        if self.__weapon:
+            self.__weapon.attack(self.pos, world)
 
-        # Find the nearest monster
-        monster = min(
-            world.monsters,
-            key=lambda monster: (monster.pos.distance_to(self.pos)),
-        )
-
-        # Create a bullet towards the nearest monster
-        bullet = Bullet(self.pos, monster.pos, self.__stats)
-        world.add_bullet(bullet)
+    def give_weapon(self, weapon):
+        self.__weapon = weapon
 
     def update(self, world: IGameWorld):
         super().update(world)
