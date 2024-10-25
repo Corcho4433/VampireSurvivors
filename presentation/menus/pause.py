@@ -44,9 +44,14 @@ class PauseMenu(Menu):
         if self.__resume_button.is_hovering():
             factor = min((time.get_ticks() - self.__last_hover_2)/200, 1)
 
+            self.__resume_button.resize(Vector2(250 + 30 * factor, 60 + 7 * factor))
+            self.__resume_button.move(Vector2(settings.SCREEN_WIDTH // 2 - self.__resume_button.size.x//2, 200 - (3.5 * factor)))
             self.__resume_button.change_color((130,130,160))
         else:
             self.__last_hover_2 = time.get_ticks()
+
+            self.__resume_button.resize(Vector2(250, 60))
+            self.__resume_button.move(Vector2(settings.SCREEN_WIDTH // 2 - self.__resume_button.size.x//2, 200))
             self.__resume_button.change_color((100, 100, 110))
 
         # Clicking
