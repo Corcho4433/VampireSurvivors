@@ -1,6 +1,5 @@
 """Defines the player Heads Up Display (HUD) for short"""
 
-import settings
 from pygame import Vector2
 
 from presentation.menus.menu import Menu

@@ -1,6 +1,5 @@
 """This module contains the implementation of the game world."""
 
-from pygame import Vector2
 from business.entities.interfaces import IBullet, IExperienceGem, IMonster, IPlayer
 from business.world.interfaces import IGameWorld, IMonsterSpawner, ITileMap
 from business.handlers.cooldown_handler import CooldownHandler
