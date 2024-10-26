@@ -64,7 +64,7 @@ class PauseMenu(Menu):
             self.__world.toggle_pause()
 
     def draw(self):
-        title = DynamicText("PAUSE MENU", Vector2(0, 0), Vector2(settings.SCREEN_WIDTH, 50))
+        title = DynamicText("PAUSE MENU", Vector2(settings.SCREEN_WIDTH // 2, 25))
         background = UIComponent(Vector2(), Vector2(settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT), (0, 0, 10), 90)
         self.__quit_button = Button(Vector2(settings.SCREEN_WIDTH // 2 - 125, 100), Vector2(250, 60), (100, 100, 110))
         self.__resume_button = Button(Vector2(settings.SCREEN_WIDTH // 2 - 125, 200), Vector2(250, 60), (100, 100, 110))

@@ -29,3 +29,7 @@ class Menu(IMenu):
 
     def remove_component(self, component):
         self.__components.remove(component)
+
+    @property
+    def components(self):
+        return self.__components

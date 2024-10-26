@@ -19,6 +19,11 @@ class IComponentHolder(ABC):
     def remove_component(self, component: "IUIComponent") -> None:
         """Removes a component from the screen"""
 
+    @property
+    @abstractmethod
+    def components(self):
+        """All the components in the menu"""
+
 class IDisplay(ABC):
     """Interface for displaying the game world."""
 
@@ -94,6 +99,11 @@ class IUIComponent(IRootComponent):
             Returns:
                 pygame.Rect: The rect hitbox containing the ui component
         """
+
+    @property
+    @abstractmethod
+    def original_properties(self):
+        """The original properties of the UI object before any edits are made"""
 
     @property
     @abstractmethod
@@ -194,6 +204,11 @@ class IText(IRootComponent):
     @abstractmethod
     def change(self, text: str) -> None:
         """Changes the displayed text"""
+
+    @property
+    @abstractmethod
+    def text(self) -> str:
+        """The text inside the text object"""
 
 class IButton(IDynamicUIComponent, IClickable):
     """A UI button used in menus"""

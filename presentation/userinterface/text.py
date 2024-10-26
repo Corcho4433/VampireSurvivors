@@ -6,15 +6,22 @@ from presentation.interfaces import IText, IUIComponent
 class Text(IText):
     """Assignable text to a button or uicomponent"""
 
-    def __init__(self, text: str, component: IUIComponent, font_size: int=48, color: tuple[int, int, int]=(255, 255, 255)):
+    DEFAULT_FONT = 'bahnschrift'
+    DEFAULT_BOLD = False
+
+    def __init__(self, text: str, component: IUIComponent, font_size: int=48, color: tuple[int, int, int]=(255, 255, 255), font: str=DEFAULT_FONT, bold=DEFAULT_BOLD):
         self.__text = text
         self.__color = color
         self.__component = component
         self.__font_size = font_size
         self.__active = True
+        self.__font = font
+        self.__bold = bold
+
+        print(pygame.font.get_fonts())
 
     def update(self, display):
-        font = pygame.font.SysFont(None, self.__font_size)
+        font = pygame.font.SysFont(self.__font, int(self.__font_size * 0.75), self.__bold)
         text_object = font.render(self.__text, True, self.__color)
         pos = self.__component.pos
         size = self.__component.size
@@ -25,9 +32,16 @@ class Text(IText):
     @property
     def active(self):
         return self.__active
+    
+    @property
+    def text(self):
+        return self.__text
 
     def set_active(self, state):
         self.__active = state
 
     def change(self, text: str):
         self.__text = text
+
+    def __str__(self):
+        return f'TEXT::{self.__hash__()}'

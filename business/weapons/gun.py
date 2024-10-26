@@ -8,8 +8,8 @@ from business.entities.bullet import Bullet
 class Gun(Weapon):
     """A gun that shoots bullets"""
 
-    def __init__(self, stats: IWeaponStats, player_stats: IPlayerStats):
-        super().__init__("Gun", [], stats, player_stats)
+    def __init__(self, stats: IWeaponStats, player_stats: IPlayerStats, upgrades: list=[]): #pylint: disable=W0102
+        super().__init__("Gun", upgrades, stats, player_stats)
 
         self.__player_stats = player_stats
 
@@ -20,6 +20,8 @@ class Gun(Weapon):
         # Find the nearest monster
 
         bullet = Bullet(origin, self.__aim_at_target(origin, world), self.__player_stats.attack_damage)
+        bullet.change_speed((bullet.original_speed + self.power)* self.speed)
+
         world.add_bullet(bullet)
 
     def __aim_at_target(self, origin, world):

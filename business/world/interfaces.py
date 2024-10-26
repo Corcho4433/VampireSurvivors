@@ -11,6 +11,16 @@ class IGameWorld(ABC):
     The game world is the environment in which the game entities exist.
     """
 
+    @property
+    @abstractmethod
+    def clock_seconds(self):
+        """The amount of seconds passed since the game started"""
+
+    @property
+    @abstractmethod
+    def upgrading(self):
+        """Whether the upgrading menu is active or not"""
+
     @abstractmethod
     def set_upgrade_menu_active(self, state: bool):
         """Sets whether or not the upgrade menu is active"""

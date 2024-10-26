@@ -1,11 +1,13 @@
 """Contains the base classes for all entities in the game."""
 
 import logging
-import settings
-
 from abc import abstractmethod
 from pygame import Vector2
 
+import settings
+
+
+from business.exceptions import InvalidMovementSpeed
 from business.entities.interfaces import ICanMove, IDamageable, IHasPosition, IHasSprite
 from business.world.interfaces import IGameWorld
 from presentation.sprite import Sprite
@@ -52,20 +54,31 @@ class MovableEntity(Entity, ICanMove):
     def __init__(self, pos: Vector2, speed: float, sprite: Sprite):
         super().__init__(pos, sprite)
         self._pos: Vector2 =  pos
-        self._speed: float = speed
+        self.__speed: float = speed
+        self.__original_speed = speed
         self._sprite: Sprite = sprite
 
     def move(self, direction: Vector2):
-        self._pos += direction * self._speed * (1/settings.FPS)
-        #self._pos_y += direction_y * self._speed
+        self._pos += direction * self.speed * (1/settings.FPS)
+
         self._logger.debug(
             "Moving in direction (%.2f, %.2f) with speed %.2f",
             direction.x,
             direction.y,
-            self._speed,
+            self.__speed,
         )
         self.sprite.update_pos(self._pos)
 
     @property
+    def original_speed(self):
+        return self.__original_speed
+
+    @property
     def speed(self) -> float:
-        return self._speed
+        return self.__speed
+
+    def change_speed(self, speed: float):
+        if speed < 0:
+            raise InvalidMovementSpeed("Movement speed can't be negative")
+
+        self.__speed = speed

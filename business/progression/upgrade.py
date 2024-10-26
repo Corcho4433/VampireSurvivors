@@ -2,6 +2,27 @@
 
 from business.progression.interfaces import IUpgrade, IUpgradeValue, IInventoryItem
 
+
+class UpgradeValue(IUpgradeValue):
+    """One of the values held inside an upgrade"""
+
+    def __init__(self, upgrade_type: str, stat: str, value: float):
+        self.__type = upgrade_type
+        self.__stat = stat
+        self.__value = value
+
+    @property
+    def type(self):
+        return self.__type
+
+    @property
+    def value(self):
+        return self.__value
+
+    @property
+    def stat(self):
+        return self.__stat
+
 class Upgrade(IUpgrade):
     """An upgrade for the weapon"""
 
@@ -24,15 +45,15 @@ class Upgrade(IUpgrade):
 
                 match upgrade_value.type:
                     case self.MULTIPLY:
-                        setattr(item, upgrade_value.stat, base * upgrade_value.value)
+                        item.change_stat(upgrade_value.stat, base * upgrade_value.value)
                     case self.ADD:
-                        setattr(item, upgrade_value.stat, base + upgrade_value.value)
+                        item.change_stat(upgrade_value.stat, base + upgrade_value.value)
                     case self.SUBTRACT:
-                        setattr(item, upgrade_value.stat, base - upgrade_value.value)
+                        item.change_stat(upgrade_value.stat, base - upgrade_value.value)
                     case self.DIVIDE:
-                        setattr(item, upgrade_value.stat, base / upgrade_value.value)
+                        item.change_stat(upgrade_value.stat, base / upgrade_value.value)
                     case self.POWER:
-                        setattr(item, upgrade_value.stat, base ** upgrade_value.value)
+                        item.change_stat(upgrade_value.stat, base ** upgrade_value.value)
 
 
     @property
@@ -42,3 +63,6 @@ class Upgrade(IUpgrade):
     @property
     def description(self):
         return self.__description
+
+    def __str__(self):
+        return f"UpgradeObject - Description:{self.__description} - Values:{self.__values}"

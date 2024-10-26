@@ -17,13 +17,23 @@ class Weapon(InventoryItem, IWeapon):
     def damage(self):
         return self.__weapon_stats.damage * self.__player_stats.attack_damage
 
+    @property
+    def speed(self):
+        return self.__weapon_stats.speed * self.__player_stats.attack_speed
+
+    @property
+    def power(self):
+        return self.__weapon_stats.power
+
+    def change_stat(self, name: str, new_value: float | int):
+        return self.__weapon_stats.change_stat(name, new_value)
+
     def upgrade(self):
         super().upgrade()
 
         current_level = self.level
-        print(current_level)
 
         if current_level <= len(self.upgrades):
-            current_upgrade = self.upgrades[current_level - 1]
+            current_upgrade: IUpgrade = self.upgrades[current_level - 2]
 
-            print(current_upgrade)
+            current_upgrade.apply(self)

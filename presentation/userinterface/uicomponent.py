@@ -2,7 +2,7 @@
     Defines the root class used for any UI Component varying from a button to a background
 """
 
-from pygame import Vector2, Rect, draw, Surface, SRCALPHA #pylint: disable=E0611
+from pygame import Vector2, Rect, draw, Surface, SRCALPHA, error #pylint: disable=E0611
 from presentation.interfaces import IDynamicUIComponent, IDisplay
 
 class UIComponent(IDynamicUIComponent):
@@ -14,18 +14,28 @@ class UIComponent(IDynamicUIComponent):
         self.__color = color
         self.__active = True
         self.__opacity = opacity
+        self.__original_properties = {'color': color, 'size': size, 'pos':pos}
 
+        self.change_color(color)
         self.__make_rect()
+
+    @property
+    def original_properties(self):
+        return self.__original_properties
 
     def set_active(self, state: bool):
         self.__active = state
 
     def update(self, display: IDisplay):
-        color = (self.__color[0], self.__color[1], self.__color[2], self.__opacity)
-        shape_surf = Surface(self.__rect.size, SRCALPHA)
-        draw.rect(shape_surf, color, shape_surf.get_rect())
+        try:
+            color = (self.__color[0], self.__color[1], self.__color[2], self.__opacity)
+            shape_surf = Surface(self.__rect.size, SRCALPHA)
+            draw.rect(shape_surf, color, shape_surf.get_rect())
 
-        display.screen.blit(shape_surf, self.__rect)
+            display.screen.blit(shape_surf, self.__rect)
+        except error as err:
+            print(self.__rect.size)
+            print("Error on pygame:", err)
 
     def move(self, pos: Vector2):
         self.__pos = pos
@@ -36,6 +46,7 @@ class UIComponent(IDynamicUIComponent):
         self.__make_rect()
 
     def change_color(self, new_color):
+        new_color = (min(255, new_color[0]), min(255, new_color[1]), min(255, new_color[2]))
         self.__color = new_color
 
     @property
@@ -60,3 +71,6 @@ class UIComponent(IDynamicUIComponent):
 
     def __make_rect(self):
         self.__rect: Rect = Rect(self.__pos.x, self.__pos.y, self.__size.x, self.__size.y)
+
+    def __str__(self):
+        return f'COMPONENT::{self.__hash__()}'

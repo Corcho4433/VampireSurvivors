@@ -1,5 +1,7 @@
 """This module contains the implementation of the game world."""
 
+import settings
+
 from business.entities.interfaces import IBullet, IExperienceGem, IMonster, IPlayer
 from business.world.interfaces import IGameWorld, IMonsterSpawner, ITileMap
 from business.handlers.cooldown_handler import CooldownHandler
@@ -23,6 +25,7 @@ class GameWorld(IGameWorld):
         self.__weapon_factory = WeaponFactory(self)
         self.__display: IDisplay = display
         self.__upgrading: bool = False
+        self.__clock_seconds = 0
 
         self.__player.assign_world(self)
 
@@ -33,6 +36,10 @@ class GameWorld(IGameWorld):
         self.__monster_spawner: IMonsterSpawner = spawner
 
         self.__player.give_weapon(self.__weapon_factory.create_gun())
+
+    @property
+    def clock_seconds(self):
+        return self.__clock_seconds
 
     def update(self):
         self.player.update(self)
@@ -48,6 +55,7 @@ class GameWorld(IGameWorld):
 
         if self.__world_simulation_speed > 0:
             # when game is running
+            self.__clock_seconds += 1 / settings.FPS
 
             if self.__monster_spawner_cooldown.is_action_ready():
                 self.__monster_spawner_cooldown.put_on_cooldown()
@@ -62,6 +70,10 @@ class GameWorld(IGameWorld):
             self.__pause()
         else:
             self.__resume()
+
+    @property
+    def upgrading(self):
+        return self.__upgrading
 
     def add_monster(self, monster: IMonster):
         self.__monsters.append(monster)

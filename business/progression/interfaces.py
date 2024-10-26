@@ -35,6 +35,10 @@ class IWeapon(IInventoryItem):
     """A weapon the player can use"""
 
     @abstractmethod
+    def change_stat(self, name: str, new_value: float | int):
+        """Changes a statistic to fit a specific number"""
+
+    @abstractmethod
     def attack(self, origin, world):
         """Uses the weapon to attack from a certain origin spot"""
 
@@ -45,6 +49,24 @@ class IWeapon(IInventoryItem):
         
             Returns:
                 int: the damage count
+        """
+
+    @property
+    @abstractmethod
+    def speed(self):
+        """The speed of an attack
+        
+            Returns:
+                int: the speed multiplier
+        """
+
+    @property
+    @abstractmethod
+    def power(self):
+        """The amplified power of an attack
+        
+            Returns:
+                int: the power amplifier
         """
 
 class IInventory(ABC):

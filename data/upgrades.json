@@ -1,13 +1,18 @@
 {
     "default_gun": [{   
+            "description": "Increases the speed of the bullet by 50 units",
+            "values": [
+                {"type":2, "stat":"power", "value":50}
+            ]
+        }, {   
             "description": "Increases the speed of the bullet by 10%",
             "values": [
                 {"type":1, "stat":"speed", "value":1.1}
             ]
-        }, {   
-            "description": "Increases the damage of the bullet by 10%",
+        },{   
+            "description": "Increases the damage of the bullet by 5%",
             "values": [
-                {"type":1, "stat":"damage", "value":1.1}
+                {"type":1, "stat":"damage", "value":1.05}
             ]
         }
     ]

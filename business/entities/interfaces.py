@@ -104,8 +104,21 @@ class ICanMove(IHasPosition):
             float: The speed of the entity.
         """
 
+    @property
     @abstractmethod
-    def move(self, direction_x: float, direction_y: float):
+    def original_speed(self) -> float:
+        """The original speed of the entity, before any changes
+        
+            Returns:
+                float: The original speed of the entity.
+        """
+
+    @abstractmethod
+    def change_speed(self, speed: int):
+        """Changes the speed of the moving entity"""
+
+    @abstractmethod
+    def move(self, direction: tuple[int, int]):
         """Move the entity in the given direction based on its speed.
 
         This method should update the entity's position and sprite.
@@ -170,6 +183,10 @@ class IPlayer(IUpdatable, ICanMove, IDamageable, ICanDealDamage):
             Returns:
                 PlayerStats: the player stats object
         """
+
+    @abstractmethod
+    def get_next_weapon_upgrade(self):
+        """Gets the next upgrade for a weapon"""
 
     @property
     @abstractmethod

@@ -75,6 +75,12 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
     def weapon_level(self) -> int:
         return self.__weapon.level
 
+    def get_next_weapon_upgrade(self):
+        if self.weapon_level > len(self.weapon_upgrades):
+            return
+
+        return self.weapon_upgrades[self.weapon_level - 1]
+
     def upgrade_weapon(self):
         self.__weapon.upgrade()
 

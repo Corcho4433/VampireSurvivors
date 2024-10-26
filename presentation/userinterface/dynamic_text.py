@@ -7,10 +7,13 @@ from presentation.userinterface.text import Text
 class DynamicText(Text):
     """A text that can be placed on any place of the screen and not attached to a text"""
 
-    def __init__(self, text: str, pos: Vector2, size: Vector2):
-        self.__component = UIComponent(pos, size, (255, 255, 255), 0)
+    def __init__(self, text: str, pos: Vector2, font_size: int=48, color: tuple[int, int, int]=(255, 255, 255), bold=Text.DEFAULT_BOLD, font=Text.DEFAULT_FONT):
+        self.__component = UIComponent(pos, Vector2(), (255, 255, 255), 0)
 
-        super().__init__(text, self.__component)
+        super().__init__(text, self.__component, font_size, color, font=font, bold=bold)
 
-    def update(self, display):
-        super().update(display)
+    #def update(self, display):
+    #    super().update(display)
+
+    def __str__(self):
+        return f'DYNAMICTEXT::{self.text}'

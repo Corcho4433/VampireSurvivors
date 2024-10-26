@@ -7,5 +7,5 @@ class IJSONParser(ABC):
 
     @staticmethod
     @abstractmethod
-    def build_upgrade_from(data: str):
-        """Builds an upgrade object from data"""
+    def build_upgrades_for(weapon_name: str):
+        """Builds an upgrade object from a weapon's name"""

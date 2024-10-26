@@ -12,7 +12,8 @@ from business.world.interfaces import IGameWorld
 from presentation.interfaces import IDisplay, IInputHandler
 from persistance.json_parser import JSONParser
 
-JSONParser.build_upgrade_from("hey")
+upgrade = JSONParser.build_upgrades_for("default_gun")
+print(upgrade[0])
 
 
 class Game:

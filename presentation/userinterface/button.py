@@ -58,3 +58,9 @@ class Button(UIComponent, IButton):
 
     def attach_text(self, text: IText) -> None:
         self.__text = text
+
+    def __str__(self):
+        if self.__text:
+            return f'BUTTON::{self.__text.text}'
+
+        return f'BUTTON::{self.__hash__()}'
