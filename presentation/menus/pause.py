@@ -30,7 +30,6 @@ class PauseMenu(Menu):
         resume_factor = min((time.get_ticks() - self.__resume_button.hover_time)/200, 1)
 
         if self.__quit_button.is_hovering():
-            
             size = self.__quit_button.size
 
             self.__quit_button.resize(Vector2(size.x + (280 - size.x) * quit_factor, size.y + (67 - size.y) * quit_factor))
@@ -72,7 +71,7 @@ class PauseMenu(Menu):
 
         self.__quit_button.attach_text(Text("Close", self.__quit_button))
         self.__resume_button.attach_text(Text("Continue", self.__resume_button))
-        
+
         self.add_component(background)
         self.add_component(self.__quit_button)
         self.add_component(self.__resume_button)

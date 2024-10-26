@@ -32,8 +32,7 @@ class GameWorld(IGameWorld):
         # Initialize the monster spawner
         self.__monster_spawner: IMonsterSpawner = spawner
 
-        Gun = self.__weapon_factory.create_gun()
-        self.__player.give_weapon(Gun)
+        self.__player.give_weapon(self.__weapon_factory.create_gun())
 
     def update(self):
         self.player.update(self)

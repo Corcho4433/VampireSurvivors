@@ -13,7 +13,7 @@ UPGRADES_ROUTE = "data/upgrades.json"
 def load_file(route: str):
     """Loads a specific JSON file"""
 
-    with open(route) as data_file:
+    with open(route, encoding="utf-8") as data_file:
         return json.load(data_file)
 
 
