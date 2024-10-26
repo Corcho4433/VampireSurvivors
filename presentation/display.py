@@ -10,6 +10,7 @@ from presentation.tileset import Tileset
 from presentation.handlers.userinterface_handler import UserInterfaceHandler
 from presentation.menus.pause import PauseMenu
 from presentation.menus.hud import HUD
+from presentation.menus.upgrade_menu import UpgradeMenu
 
 
 class Display(IDisplay):
@@ -95,6 +96,7 @@ class Display(IDisplay):
 
         self.__interface_handler.add_menu(HUD(self.__world))
         self.__interface_handler.add_menu(PauseMenu(self.__world))
+        self.__interface_handler.add_menu(UpgradeMenu(self.__world))
 
     def get_menu(self, name: str):
         return self.__interface_handler.get_menu(name)

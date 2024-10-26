@@ -11,12 +11,29 @@ class Upgrade(IUpgrade):
     DIVIDE = 4
     POWER = 5
 
-    def __init__(self, data: dict):
-        self.__values = data.values
-        self.__description = data.description
+    def __init__(self, description: str, values: list[IUpgradeValue]):
+        self.__values: list[IUpgradeValue] = values
+        self.__description = description
 
-    def use(self, item: IInventoryItem):
-        pass
+    def apply(self, item: IInventoryItem):
+        values = self.values
+
+        for upgrade_value in values:
+            if hasattr(item, upgrade_value.stat):
+                base = getattr(item, upgrade_value.stat)
+
+                match upgrade_value.type:
+                    case self.MULTIPLY:
+                        setattr(item, upgrade_value.stat, base * upgrade_value.value)
+                    case self.ADD:
+                        setattr(item, upgrade_value.stat, base + upgrade_value.value)
+                    case self.SUBTRACT:
+                        setattr(item, upgrade_value.stat, base - upgrade_value.value)
+                    case self.DIVIDE:
+                        setattr(item, upgrade_value.stat, base / upgrade_value.value)
+                    case self.POWER:
+                        setattr(item, upgrade_value.stat, base ** upgrade_value.value)
+
 
     @property
     def values(self) -> list[IUpgradeValue]:

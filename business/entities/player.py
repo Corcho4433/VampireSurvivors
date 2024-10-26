@@ -11,6 +11,7 @@ from business.world.interfaces import IGameWorld
 from business.progression.inventory import Inventory
 from business.progression.player_stats import PlayerStats
 from presentation.sprite import Sprite
+from business.progression.interfaces import IWeapon, IUpgrade
 
 class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
     """Player entity.
@@ -25,7 +26,8 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
         self.__stats = PlayerStats()
         self.__last_shot_time = CooldownHandler(self.__stats.cooldown)
         self.__inventory = Inventory()
-        self.__weapon = None
+        self.__weapon: IWeapon = None
+        self.__world: IGameWorld = None
         self.__experience = 0
         self.__level = 1
         self._logger.debug("Created %s", self)
@@ -65,6 +67,17 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
     def stats(self) -> PlayerStats:
         return self.__stats
 
+    @property
+    def weapon_upgrades(self) -> list[IUpgrade]:
+        return self.__weapon.upgrades
+
+    @property
+    def weapon_level(self) -> int:
+        return self.__weapon.level
+
+    def upgrade_weapon(self):
+        self.__weapon.upgrade()
+
     def take_damage(self, amount):
         self.__stats.health = max(0, self.health - amount)
         self.sprite.take_damage()
@@ -77,6 +90,7 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
         while self.__experience >= self.experience_to_next_level:
             self.__experience -= self.experience_to_next_level
             self.__level += 1
+            self.__world.set_upgrade_menu_active(True)
 
     def __attack_at_nearest_enemy(self, world: IGameWorld):
         if self.__weapon:
@@ -84,6 +98,9 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
 
     def give_weapon(self, weapon):
         self.__weapon = weapon
+
+    def assign_world(self, world: IGameWorld):
+        self.__world = world
 
     def update(self, world: IGameWorld):
         super().update(world)

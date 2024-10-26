@@ -10,6 +10,9 @@ from business.handlers.collision_handler import CollisionHandler
 from business.handlers.death_handler import DeathHandler
 from business.world.interfaces import IGameWorld
 from presentation.interfaces import IDisplay, IInputHandler
+from persistance.json_parser import JSONParser
+
+JSONParser.build_upgrade_from("hey")
 
 
 class Game:

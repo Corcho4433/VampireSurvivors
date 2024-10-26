@@ -18,12 +18,14 @@ class Gun(Weapon):
             return
 
         # Find the nearest monster
+
+        bullet = Bullet(origin, self.__aim_at_target(origin, world), self.__player_stats.attack_damage)
+        world.add_bullet(bullet)
+
+    def __aim_at_target(self, origin, world):
         monster = min(
             world.monsters,
             key=lambda monster: (monster.pos.distance_to(origin)),
         )
 
-        # Create a bullet towards the nearest monster
-
-        bullet = Bullet(origin, monster.pos, self.__player_stats.attack_damage)
-        world.add_bullet(bullet)
+        return monster.pos

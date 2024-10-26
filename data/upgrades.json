@@ -1,0 +1,14 @@
+{
+    "default_gun": [{   
+            "description": "Increases the speed of the bullet by 10%",
+            "values": [
+                {"type":1, "stat":"speed", "value":1.1}
+            ]
+        }, {   
+            "description": "Increases the damage of the bullet by 10%",
+            "values": [
+                {"type":1, "stat":"damage", "value":1.1}
+            ]
+        }
+    ]
+}

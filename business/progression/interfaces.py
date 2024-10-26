@@ -141,8 +141,8 @@ class IUpgrade(ABC):
         """
 
     @abstractmethod
-    def use(self, item: IInventoryItem):
-        """Uses the upgrade on an inventory item
+    def apply(self, item: IInventoryItem):
+        """Applies the upgrade onto an inventory item
         
             Args:
                 InventoryItem: item to upgrade

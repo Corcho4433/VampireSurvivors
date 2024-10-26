@@ -16,3 +16,14 @@ class Weapon(InventoryItem, IWeapon):
     @property
     def damage(self):
         return self.__weapon_stats.damage * self.__player_stats.attack_damage
+
+    def upgrade(self):
+        super().upgrade()
+
+        current_level = self.level
+        print(current_level)
+
+        if current_level <= len(self.upgrades):
+            current_upgrade = self.upgrades[current_level - 1]
+
+            print(current_upgrade)
