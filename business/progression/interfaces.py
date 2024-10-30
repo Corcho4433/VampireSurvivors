@@ -182,3 +182,10 @@ class IUpgrade(ABC):
 class IUpgradePerk(IInventoryItem):
     """A perk that upgrades the player's stats"""
 
+
+class IPerkFactory(ABC):
+    """Creates perks"""
+
+    @abstractmethod
+    def create_max_health(self):
+        """Creates the max health perk"""

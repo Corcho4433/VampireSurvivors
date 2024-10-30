@@ -25,12 +25,16 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
 
         self.__stats = PlayerStats()
         self.__last_shot_time = CooldownHandler(self.__stats.cooldown)
-        self.__inventory = Inventory()
-        self.__weapon: IWeapon = None
         self.__world: IGameWorld = None
+        self.__inventory : Inventory = None
+        self.__weapon: IWeapon = None
         self.__experience = 0
         self.__level = 1
         self._logger.debug("Created %s", self)
+
+    def __asign_inventory(self):
+        self.__inventory = Inventory(self.__world)
+        self.__weapon = self.__inventory.get_item("Gun")
 
     def __str__(self):
         return f"Player(hp={self.__stats.health}, xp={self.__experience}, lvl={self.__level}, pos=({self._pos.x}, {self._pos.y}))" #pylint: disable=C0301
@@ -107,6 +111,7 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
 
     def assign_world(self, world: IGameWorld):
         self.__world = world
+        self.__asign_inventory()
 
     def update(self, world: IGameWorld):
         super().update(world)
