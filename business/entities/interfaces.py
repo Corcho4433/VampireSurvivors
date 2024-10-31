@@ -229,19 +229,9 @@ class IPlayer(IUpdatable, ICanMove, IDamageable, ICanDealDamage):
             int: The experience required to reach the next level.
         """
 
-    @property
     @abstractmethod
-    def weapon_upgrades(self):
-        """The available upgrades for the player"""
-
-    @abstractmethod
-    def upgrade_weapon(self):
-        """Upgrades the weapon level"""
-
-    @property
-    @abstractmethod
-    def weapon_level(self):
-        """The level of the player's weapon"""
+    def upgrade_weapon(self, weapon):
+        """Upgrades the selected weapon level"""
 
     @abstractmethod
     def assign_world(self, world):

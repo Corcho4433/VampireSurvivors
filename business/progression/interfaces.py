@@ -182,6 +182,10 @@ class IUpgrade(ABC):
 class IUpgradePerk(IInventoryItem):
     """A perk that upgrades the player's stats"""
 
+    @abstractmethod
+    def change_stat(self, name: str, value: int):
+        """Changes one of the perk's stat values"""
+
 
 class IPerkFactory(ABC):
     """Creates perks"""

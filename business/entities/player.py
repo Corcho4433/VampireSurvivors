@@ -11,7 +11,7 @@ from business.world.interfaces import IGameWorld
 from business.progression.inventory import Inventory
 from business.progression.player_stats import PlayerStats
 from presentation.sprite import Sprite
-from business.progression.interfaces import IWeapon, IUpgrade
+from business.progression.interfaces import IInventoryItem
 
 class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
     """Player entity.
@@ -27,14 +27,12 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
         self.__last_shot_time = CooldownHandler(self.__stats.cooldown)
         self.__world: IGameWorld = None
         self.__inventory : Inventory = None
-        self.__weapon: IWeapon = None
         self.__experience = 0
         self.__level = 1
         self._logger.debug("Created %s", self)
 
-    def __asign_inventory(self):
+    def __assign_inventory(self):
         self.__inventory = Inventory(self.__world)
-        self.__weapon = self.__inventory.get_item("Gun")
 
     def __str__(self):
         return f"Player(hp={self.__stats.health}, xp={self.__experience}, lvl={self.__level}, pos=({self._pos.x}, {self._pos.y}))" #pylint: disable=C0301
@@ -71,22 +69,10 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
     def stats(self) -> PlayerStats:
         return self.__stats
 
-    @property
-    def weapon_upgrades(self) -> list[IUpgrade]:
-        return self.__weapon.upgrades
-
-    @property
-    def weapon_level(self) -> int:
-        return self.__weapon.level
-
-    def get_next_weapon_upgrade(self):
-        if self.weapon_level > len(self.weapon_upgrades):
-            return
-
-        return self.weapon_upgrades[self.weapon_level - 1]
-
-    def upgrade_weapon(self):
-        self.__weapon.upgrade()
+    def upgrade_weapon(self, item: IInventoryItem):
+        for inventory_item in self.__inventory.get_item():
+            if inventory_item == item:
+                inventory_item.upgrade()
 
     def take_damage(self, amount):
         self.__stats.health = max(0, self.health - amount)
@@ -103,15 +89,12 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
             self.__world.set_upgrade_menu_active(True)
 
     def __attack_at_nearest_enemy(self, world: IGameWorld):
-        if self.__weapon:
-            self.__weapon.attack(self.pos, world)
-
-    def give_weapon(self, weapon):
-        self.__weapon = weapon
+        for weapon in self.__inventory.get_weapons():
+            weapon.attack(self.pos, world)
 
     def assign_world(self, world: IGameWorld):
         self.__world = world
-        self.__asign_inventory()
+        self.__assign_inventory()
 
     def update(self, world: IGameWorld):
         super().update(world)

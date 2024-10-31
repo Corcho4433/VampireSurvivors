@@ -55,10 +55,50 @@
             "values": [
                 {"type":1, "stat":"damage", "value":1.1}
             ]
-        },{   
+        },
+        {   
             "description": "Base damage up by 10%",
             "values": [
                 {"type":1, "stat":"damage", "value":1.05}
+            ]
+        },
+        {   
+            "description": "Base damage up by 10%",
+            "values": [
+                {"type":1, "stat":"damage", "value":1.1}
+            ]
+        },
+        {   
+            "description": "Base damage up by 10%",
+            "values": [
+                {"type":1, "stat":"damage", "value":1.05}
+            ]
+        }
+    ],
+    "clover": [{   
+            "description": "Chance to get lucky up by 10%",
+            "values": [
+                {"type":1, "stat":"luck", "value":1.1}
+            ]
+        }, {   
+            "description": "Chance to get lucky up by 10%",
+            "values": [
+                {"type":1, "stat":"luck", "value":1.1}
+            ]
+        },{   
+            "description": "Chance to get lucky up by 10%",
+            "values": [
+                {"type":1, "stat":"luck", "value":1.05}
+            ]
+        },{   
+            "description": "Chance to get lucky up by 10%",
+            "values": [
+                {"type":1, "stat":"luck", "value":1.05}
+            ]
+        },{   
+            "description": "Chance to get lucky up by 10%",
+            "values": [
+                {"type":1, "stat":"luck", "value":1.05}
             ]
         }
     ]
