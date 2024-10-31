@@ -187,5 +187,5 @@ class IPerkFactory(ABC):
     """Creates perks"""
 
     @abstractmethod
-    def create_max_health(self):
-        """Creates the max health perk"""
+    def create_hollow_heart(self):
+        """Creates the hollow heart perk"""

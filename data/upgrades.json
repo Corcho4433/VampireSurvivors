@@ -15,5 +15,51 @@
                 {"type":1, "stat":"damage", "value":1.05}
             ]
         }
+    ],
+    "hollow_heart": [{   
+            "description": "Max health increases by 20%",
+            "values": [
+                {"type":1, "stat":"health", "value":50}
+            ]
+        }, {   
+            "description": "Max health increases by 20%",
+            "values": [
+                {"type":1, "stat":"health", "value":1.1}
+            ]
+        },{   
+            "description": "Max health increases by 20%",
+            "values": [
+                {"type":1, "stat":"health", "value":1.05}
+            ]
+        },
+        {   
+            "description": "Max health increases by 20%",
+            "values": [
+                {"type":1, "stat":"health", "value":1.05}
+            ]
+        },
+        {   
+            "description": "Max health increases by 20%",
+            "values": [
+                {"type":1, "stat":"health", "value":1.05}
+            ]
+        }
+    ],
+    "spinach": [{   
+            "description": "Base damage up by 10%",
+            "values": [
+                {"type":1, "stat":"damage", "value":1.1}
+            ]
+        }, {   
+            "description": "Base damage up by 10%",
+            "values": [
+                {"type":1, "stat":"damage", "value":1.1}
+            ]
+        },{   
+            "description": "Base damage up by 10%",
+            "values": [
+                {"type":1, "stat":"damage", "value":1.05}
+            ]
+        }
     ]
 }

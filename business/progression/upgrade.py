@@ -55,7 +55,6 @@ class Upgrade(IUpgrade):
                     case self.POWER:
                         item.change_stat(upgrade_value.stat, base ** upgrade_value.value)
 
-
     @property
     def values(self) -> list[IUpgradeValue]:
         return self.__values
