@@ -1,7 +1,9 @@
 """This module contains the InputHandler class, which handles user input for the game."""
 
+from math import cos, sin
+
 import pygame
-import math
+from pygame import Vector2
 
 from pygame import K_w as Key_w, K_d as Key_d, K_a as Key_a, K_s as Key_s, KEYDOWN, K_ESCAPE #pylint: disable=E0611
 
@@ -31,14 +33,11 @@ class InputHandler(IInputHandler):
         if keys[Key_d]:
             dx += 1
 
-        if dx > 0:
-            angle = math.atan(dy/dx)
+        new_vector = Vector2(dx, dy)
+        normalized = new_vector.normalize() if new_vector.magnitude() > 0 else Vector2(0, 0)
 
-            dx = math.cos(angle)
-            dy = math.sin(angle)
-
-        dx *= self.__world.simulation_speed
-        dy *= self.__world.simulation_speed
+        dx = normalized.x * self.__world.simulation_speed
+        dy = normalized.y * self.__world.simulation_speed
 
         return pygame.Vector2(dx, dy)
 
