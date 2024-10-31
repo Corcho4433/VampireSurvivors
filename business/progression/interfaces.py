@@ -31,6 +31,15 @@ class IInventoryItem(IUpgradeable):
     def name(self):
         """The name of the item"""
 
+    @property
+    @abstractmethod
+    def item_type(self):
+        """The type of the item
+
+            Returns:
+                str: "Perk" or "Weapon"
+        """
+
 class IWeapon(IInventoryItem):
     """A weapon the player can use"""
 
@@ -81,6 +90,15 @@ class IInventory(ABC):
                 int: The limit of items
         """
 
+    @property
+    @abstractmethod
+    def item_count(self):
+        """The current amount of items in the inventory
+        
+            Returns:
+                int: The amount of items inside the inventory
+        """
+
     @abstractmethod
     def get_item(self, name: str) -> IInventoryItem:
         """Gets an item under the inventory by its name
@@ -92,6 +110,11 @@ class IInventory(ABC):
     @abstractmethod
     def add_item(self, item: IInventoryItem) -> None:
         """Adds an item to the inventory"""
+
+
+    @abstractmethod
+    def get_weapons(self):
+        """Returns all the weapons of the player"""
 
 class IPlayerStats(ABC):
     """The player's stats"""

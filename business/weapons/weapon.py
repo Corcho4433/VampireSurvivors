@@ -8,7 +8,7 @@ class Weapon(InventoryItem, IWeapon):
     """A weapon used by the player"""
 
     def __init__(self, name: str, upgrades: list[IUpgrade], weapon_stats: IWeaponStats, player_stats: IPlayerStats):
-        super().__init__(name, upgrades)
+        super().__init__(name, InventoryItem.TYPES['WEAPON'], upgrades)
 
         self.__weapon_stats: IWeaponStats = weapon_stats
         self.__player_stats: IPlayerStats = player_stats

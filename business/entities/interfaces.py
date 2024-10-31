@@ -171,10 +171,6 @@ class IPlayer(IUpdatable, ICanMove, IDamageable, ICanDealDamage):
             gem (IExperienceGem): The experience gem to pick up.
         """
 
-    @abstractmethod
-    def give_weapon(self, weapon):
-        """Give the player a weapon to use"""
-
     @property
     @abstractmethod
     def stats(self):
@@ -183,10 +179,6 @@ class IPlayer(IUpdatable, ICanMove, IDamageable, ICanDealDamage):
             Returns:
                 PlayerStats: the player stats object
         """
-
-    @abstractmethod
-    def get_next_weapon_upgrade(self):
-        """Gets the next upgrade for a weapon"""
 
     @property
     @abstractmethod
@@ -230,8 +222,8 @@ class IPlayer(IUpdatable, ICanMove, IDamageable, ICanDealDamage):
         """
 
     @abstractmethod
-    def upgrade_weapon(self, weapon):
-        """Upgrades the selected weapon level"""
+    def upgrade_item(self, item):
+        """Upgrades the selected item level"""
 
     @abstractmethod
     def assign_world(self, world):
@@ -239,4 +231,12 @@ class IPlayer(IUpdatable, ICanMove, IDamageable, ICanDealDamage):
 
             Args:
                 IGameWorld: The world where the player is in
+        """
+
+    @abstractmethod
+    def give_item(self, item):
+        """Gives an item to the player
+        
+            Args:
+                item: The item to add to the player's inventory
         """

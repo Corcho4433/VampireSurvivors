@@ -1,9 +1,9 @@
 """This module contains the InputHandler class, which handles user input for the game."""
 
-from math import cos, sin
-
 import pygame
 from pygame import Vector2
+
+from business.handlers.position_handler import PositionHandler
 
 from pygame import K_w as Key_w, K_d as Key_d, K_a as Key_a, K_s as Key_s, KEYDOWN, K_ESCAPE #pylint: disable=E0611
 
@@ -39,7 +39,11 @@ class InputHandler(IInputHandler):
         dx = normalized.x * self.__world.simulation_speed
         dy = normalized.y * self.__world.simulation_speed
 
-        return pygame.Vector2(dx, dy)
+        new_direction_vector = Vector2(dx, dy)
+        if not PositionHandler.is_position_within_boundaries(self.__world.player.pos + (new_direction_vector * 8)):
+            return Vector2()
+
+        return new_direction_vector
 
     def __check_pause(self):
         for event in self.__events:

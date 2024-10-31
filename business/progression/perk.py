@@ -8,7 +8,7 @@ class UpgradePerk(InventoryItem, IUpgradePerk):
     """An item from the inventory"""
 
     def __init__(self, name: str, base_stats: IPlayerStats, upgrades: list[IUpgrade]):
-        super().__init__(name, upgrades)
+        super().__init__(name, InventoryItem.TYPES['PERK'], upgrades)
 
         self.__player_stats: IPlayerStats = base_stats
 

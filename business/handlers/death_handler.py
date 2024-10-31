@@ -4,6 +4,7 @@ import settings
 #from business.entities.experience_gem import ExperienceGem
 from business.exceptions import DeadPlayerException
 from business.world.interfaces import IGameWorld
+from business.handlers.position_handler import PositionHandler
 
 
 class DeathHandler:
@@ -11,9 +12,7 @@ class DeathHandler:
 
     @staticmethod
     def __is_entity_within_world_boundaries(entity):
-        return (
-            0 <= entity.pos.x <= settings.WORLD_WIDTH and 0 <= entity.pos.y <= settings.WORLD_HEIGHT
-        )
+        return PositionHandler.is_position_within_boundaries(entity.pos)
 
     @staticmethod
     def check_deaths(world: IGameWorld):

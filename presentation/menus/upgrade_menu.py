@@ -86,8 +86,8 @@ class UpgradeMenu(Menu):
         self.draw()
 
         player = self.__world.player
-        next_upgrade = player.get_next_weapon_upgrade()
-        possible_upgrades = [('weapon', next_upgrade)]
+
+        possible_upgrades = [] # ('weapon', next_upgrade)
 
         count = -1
         for upgrade_to_show in possible_upgrades:

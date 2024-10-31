@@ -69,8 +69,8 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
     def stats(self) -> PlayerStats:
         return self.__stats
 
-    def upgrade_weapon(self, item: IInventoryItem):
-        for inventory_item in self.__inventory.get_item():
+    def upgrade_item(self, item: IInventoryItem):
+        for inventory_item in self.__inventory.get_weapons():
             if inventory_item == item:
                 inventory_item.upgrade()
 
@@ -95,6 +95,9 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
     def assign_world(self, world: IGameWorld):
         self.__world = world
         self.__assign_inventory()
+
+    def give_item(self, item: IInventoryItem):
+        self.__inventory.add_item(item)
 
     def update(self, world: IGameWorld):
         super().update(world)
