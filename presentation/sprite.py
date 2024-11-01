@@ -71,10 +71,12 @@ class Sprite(pygame.sprite.Sprite):
 class PlayerSprite(Sprite):
     """A class representing the player sprite."""
 
-    ASSET = "./assets/adventurer-idle-00.png"
+    ASSET = "./assets/character.png"
 
     def __init__(self, pos: pygame.Vector2):
-        tileset = Tileset(PlayerSprite.ASSET, settings.TILE_HEIGHT, settings.TILE_HEIGHT, 1, 1)
+        tileset = Tileset(
+            PlayerSprite.ASSET, settings.TILE_HEIGHT, settings.TILE_HEIGHT, 4, 1
+        )
         image: pygame.Surface = tileset.get_tile(0)
         rect: pygame.Rect = image.get_rect(center=(int(pos.x), int(pos.y)))
 
@@ -87,11 +89,10 @@ class MonsterSprite(Sprite):
 
     def __init__(self, pos: pygame.Vector2):
         image: pygame.Surface = pygame.image.load(MonsterSprite.ASSET).convert_alpha()
-        image = pygame.transform.scale(image, settings.TILE_DIMENSION)
+        image = pygame.transform.scale(image, (128,128))
         rect: pygame.rect = image.get_rect(center=(int(pos.x), int(pos.y)))
 
         super().__init__(image, rect)
-
 
 class BulletSprite(Sprite):
     """A class representing the bullet sprite."""
