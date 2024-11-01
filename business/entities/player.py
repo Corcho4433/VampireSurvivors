@@ -23,11 +23,12 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
     def __init__(self, pos: pygame.Vector2, sprite: Sprite):
         super().__init__(pos, 300, sprite)
 
-        self.__stats = PlayerStats()
+        self.__stats = PlayerStats(health=100)
         self.__last_shot_time = CooldownHandler(self.__stats.cooldown)
         self.__world: IGameWorld = None
         self.__inventory : Inventory = None
         self.__experience = 0
+        self.__max_health = self.__stats.health
         self.__level = 1
         self._logger.debug("Created %s", self)
 
@@ -63,7 +64,12 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
 
     @property
     def health(self) -> int:
+        #print(self.__stats.health)
         return self.__stats.health
+    
+    @property
+    def max_health(self) -> int:
+        return self.__max_health
 
     @property
     def stats(self) -> PlayerStats:
@@ -75,7 +81,8 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
                 inventory_item.upgrade()
 
     def take_damage(self, amount):
-        self.__stats.health = max(0, self.health - amount)
+        self.__stats.health -= amount #max(0, self.__stats.health - amount)
+
         self.sprite.take_damage()
 
     def pickup_gem(self, gem: ExperienceGem):
@@ -92,9 +99,19 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
         for weapon in self.__inventory.get_weapons():
             weapon.attack(self.pos, world)
 
+    def apply_perks(self):
+        self.__stats = PlayerStats(health=100)
+
+        perks = self.__inventory.get_perks()
+        for perk in perks:
+            self.__stats = self.__stats * perk.stats
+
+        self.__max_health = self.__stats.health
+
     def assign_world(self, world: IGameWorld):
         self.__world = world
         self.__assign_inventory()
+        self.apply_perks()
 
     def give_item(self, item: IInventoryItem):
         self.__inventory.add_item(item)

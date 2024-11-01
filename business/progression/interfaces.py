@@ -40,6 +40,14 @@ class IInventoryItem(IUpgradeable):
                 str: "Perk" or "Weapon"
         """
 
+    @abstractmethod
+    def get_stat(self, name: str):
+        """Gets the value of a stat by the specified name
+        
+            Args:
+                name (str): The name of the stat to search for
+        """
+
 class IWeapon(IInventoryItem):
     """A weapon the player can use"""
 
@@ -214,5 +222,5 @@ class IPerkFactory(ABC):
     """Creates perks"""
 
     @abstractmethod
-    def create_hollow_heart(self):
-        """Creates the hollow heart perk"""
+    def create_perk(self, name: str):
+        """Creates a perk using a name as base"""

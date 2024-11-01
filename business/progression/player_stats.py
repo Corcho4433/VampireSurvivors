@@ -7,10 +7,10 @@ class PlayerStats(IPlayerStats):
     """The stats for the player"""
 
     BASE_LUCK = 1
-    BASE_HEALTH = 100
+    BASE_HEALTH = 1
     BASE_ATTACK_DAMAGE = 10
     BASE_ATTACK_SPEED = 1
-    BASE_ATTACK_COOLDOWN = .2
+    BASE_ATTACK_COOLDOWN = 2
     BASE_MOVEMENT_SPEED = 1
 
     def __init__(self, health: int=BASE_HEALTH,
@@ -46,7 +46,7 @@ class PlayerStats(IPlayerStats):
         if new_health < 0:
             raise InvalidStatValueException("Invalid value given for health")
 
-        self.__attack_damage = new_health
+        self.__health = new_health
 
     @property
     def attack_damage(self):
@@ -91,3 +91,22 @@ class PlayerStats(IPlayerStats):
             raise InvalidStatValueException("Invalid value given for cooldown")
 
         self.__cooldown = new_cooldown
+
+
+    def __mul__(self, other_player_stats: 'PlayerStats'):
+        if isinstance(other_player_stats, PlayerStats):
+            return PlayerStats(
+                self.health * other_player_stats.health,
+                self.attack_damage * other_player_stats.attack_damage,
+                self.movement_speed * other_player_stats.movement_speed,
+                self.luck * other_player_stats.luck,
+                self.cooldown * other_player_stats.cooldown,
+                self.attack_speed * other_player_stats.attack_speed,
+            )
+        elif type(other_player_stats) == int:
+            return PlayerStats(self.health * other_player_stats,
+                               self.attack_damage * other_player_stats,
+                               self.movement_speed * other_player_stats,
+                               self.luck * other_player_stats,
+                               self.cooldown * other_player_stats,
+                               self.attack_speed * other_player_stats,)

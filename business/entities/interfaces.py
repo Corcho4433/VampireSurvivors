@@ -221,6 +221,11 @@ class IPlayer(IUpdatable, ICanMove, IDamageable, ICanDealDamage):
             int: The experience required to reach the next level.
         """
 
+    @property
+    @abstractmethod
+    def max_health(self) -> int:
+        """The max amount of health the player can have at the moment"""
+
     @abstractmethod
     def upgrade_item(self, item):
         """Upgrades the selected item level"""

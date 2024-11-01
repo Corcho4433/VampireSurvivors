@@ -4,7 +4,7 @@ from business.progression.item import InventoryItem
 from business.progression.interfaces import IUpgradePerk, IUpgrade, IPlayerStats
 from business.exceptions import InvalidStatValueException
 
-class UpgradePerk(InventoryItem, IUpgradePerk):
+class Perk(InventoryItem, IUpgradePerk):
     """An item from the inventory"""
 
     def __init__(self, name: str, base_stats: IPlayerStats, upgrades: list[IUpgrade]):
@@ -15,8 +15,6 @@ class UpgradePerk(InventoryItem, IUpgradePerk):
     def change_stat(self, name: str, value: int):
         if value < 0:
             raise InvalidStatValueException
-
-        print(hasattr(self.__player_stats, name))
 
         match name:
             case 'luck':
@@ -31,16 +29,11 @@ class UpgradePerk(InventoryItem, IUpgradePerk):
                 self.__player_stats.attack_damage = value
             case 'movement_speed':
                 self.__player_stats.movement_speed = value
-
-
+                
     @property
-    def upgrades(self):
-        return self.__upgrades
-
-    @property
-    def name(self):
-        return self.__name
-
-    @property
-    def level(self):
-        return self.__level
+    def stats(self):
+        return self.__player_stats
+    
+    def get_stat(self, name: str):
+        if hasattr(self.stats, name):
+            return getattr(self.stats, name)

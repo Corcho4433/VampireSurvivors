@@ -21,17 +21,23 @@ class JSONParser(IJSONParser):
     """General JSON data parser"""
 
     @staticmethod
-    def build_upgrades_for(weapon_name: str):
+    def build_upgrades_for(item_name: str):
         upgrades_data = load_file(UPGRADES_ROUTE)
-        weapon_upgrade_data = upgrades_data[weapon_name]
+        item_upgrade_data = upgrades_data[item_name]
 
-        if weapon_upgrade_data:
+        if item_upgrade_data:
             upgrades = []
-            for weapon_upgrade in weapon_upgrade_data:
-                values = []
-                for value_object in weapon_upgrade['values']:
-                    values.append(UpgradeValue(value_object['type'], value_object['stat'], value_object['value']))
+            for item_upgrade in item_upgrade_data:
+                try:
+                    repeat_count = item_upgrade['repeats']
+                except KeyError:
+                    repeat_count = 1
 
-                upgrades.append(Upgrade(weapon_upgrade['description'], values))
+                for _ in range(repeat_count):
+                    values = []
+                    for value_object in item_upgrade['values']:
+                        values.append(UpgradeValue(value_object['type'], value_object['stat'], value_object['value']))
+
+                    upgrades.append(Upgrade(item_upgrade['description'], values))
 
             return upgrades

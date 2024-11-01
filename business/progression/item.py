@@ -17,6 +17,12 @@ class InventoryItem(IInventoryItem):
         self.__upgrades = upgrades
 
     def upgrade(self):
+        next_upgrade = self.get_next_upgrade()
+
+        print(next_upgrade)
+        if next_upgrade:
+            next_upgrade.apply(self)
+
         self.__level += 1
 
     @property
@@ -34,3 +40,15 @@ class InventoryItem(IInventoryItem):
     @property
     def level(self):
         return self.__level
+    
+    def get_stat(self, name: str):
+        if hasattr(self, name):
+            return getattr(self, name)
+        
+        return
+
+    def get_next_upgrade(self):
+        if self.level > len(self.upgrades):
+            return
+
+        return self.upgrades[self.level - 1]

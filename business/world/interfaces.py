@@ -179,3 +179,9 @@ class IGemFactory(ABC):
     @abstractmethod
     def create_gem(self, monster: IMonster, world: IGameWorld):
         """Create a gem based on the monster and the world"""
+
+class IClock(ABC):
+
+    @abstractmethod
+    def time(self):
+        pass

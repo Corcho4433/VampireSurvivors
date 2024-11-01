@@ -9,5 +9,10 @@ class TestsJSONParser(unittest.TestCase):
         pass
         #JSONParser.build_upgrade_from("hi")
 
+    def test02_repeats(self):
+        #data = JSONParser.build_upgrades_for("clover")
+
+        pass
+
 if __name__ == "__main__":
     unittest.main()

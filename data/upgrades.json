@@ -18,87 +18,25 @@
     ],
     "hollow_heart": [{   
             "description": "Max health increases by 20%",
+            "repeats":5,
             "values": [
-                {"type":1, "stat":"health", "value":50}
-            ]
-        }, {   
-            "description": "Max health increases by 20%",
-            "values": [
-                {"type":1, "stat":"health", "value":1.1}
-            ]
-        },{   
-            "description": "Max health increases by 20%",
-            "values": [
-                {"type":1, "stat":"health", "value":1.05}
-            ]
-        },
-        {   
-            "description": "Max health increases by 20%",
-            "values": [
-                {"type":1, "stat":"health", "value":1.05}
-            ]
-        },
-        {   
-            "description": "Max health increases by 20%",
-            "values": [
-                {"type":1, "stat":"health", "value":1.05}
+                {"type":1, "stat":"health", "value":1.2}
             ]
         }
     ],
     "spinach": [{   
             "description": "Base damage up by 10%",
+            "repeats": 5,
             "values": [
                 {"type":1, "stat":"damage", "value":1.1}
-            ]
-        }, {   
-            "description": "Base damage up by 10%",
-            "values": [
-                {"type":1, "stat":"damage", "value":1.1}
-            ]
-        },
-        {   
-            "description": "Base damage up by 10%",
-            "values": [
-                {"type":1, "stat":"damage", "value":1.05}
-            ]
-        },
-        {   
-            "description": "Base damage up by 10%",
-            "values": [
-                {"type":1, "stat":"damage", "value":1.1}
-            ]
-        },
-        {   
-            "description": "Base damage up by 10%",
-            "values": [
-                {"type":1, "stat":"damage", "value":1.05}
             ]
         }
     ],
     "clover": [{   
-            "description": "Chance to get lucky up by 10%",
+            "description": "Increase the players luck by 10%",
+            "repeats":5,
             "values": [
                 {"type":1, "stat":"luck", "value":1.1}
-            ]
-        }, {   
-            "description": "Chance to get lucky up by 10%",
-            "values": [
-                {"type":1, "stat":"luck", "value":1.1}
-            ]
-        },{   
-            "description": "Chance to get lucky up by 10%",
-            "values": [
-                {"type":1, "stat":"luck", "value":1.05}
-            ]
-        },{   
-            "description": "Chance to get lucky up by 10%",
-            "values": [
-                {"type":1, "stat":"luck", "value":1.05}
-            ]
-        },{   
-            "description": "Chance to get lucky up by 10%",
-            "values": [
-                {"type":1, "stat":"luck", "value":1.05}
             ]
         }
     ]

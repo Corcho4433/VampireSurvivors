@@ -1,6 +1,7 @@
 """Class that defines all of the buttons inside the """
 
 from pygame import Vector2, time
+import random
 import settings
 
 from presentation.menus.menu import Menu
@@ -58,9 +59,12 @@ class UpgradeMenu(Menu):
                 break
 
     def __handle_button_presses(self, data: tuple[str]):
-        match data[0]:
-            case 'weapon':
-                self.__world.player.upgrade_weapon()
+        item = self.__world.player.inventory.get_item(data[0])
+
+        if item:
+            item.upgrade()
+        
+        self.__world.player.apply_perks()
 
     def draw(self):
         title = DynamicText("UPGRADE MENU", Vector2(settings.SCREEN_WIDTH // 2, 30), bold=True)
@@ -80,14 +84,32 @@ class UpgradeMenu(Menu):
         for object_component in self.components:
             self.remove_component(object_component)
 
+    def __parse_items(self) -> list[tuple]:
+        player = self.__world.player
+        items = player.inventory.get_items()
+        choices = []
+        choosen = []
+
+        for i in range(len(items)):
+            item = items[i]
+            choices.append((item.name, item.get_next_upgrade()))
+
+        for i in range(min(3, len(items))):
+            new_choice = random.choice(choices)
+
+            choices.remove(new_choice)
+            choosen.append(new_choice)
+
+        return choosen
+
+    
     def render_options(self):
         """Renders the options for the upgrade menu"""
         self.__clean_objects()
         self.draw()
 
         player = self.__world.player
-
-        possible_upgrades = [] # ('weapon', next_upgrade)
+        possible_upgrades = self.__parse_items() #[("default_gun", )] # ('weapon', next_upgrade)
 
         count = -1
         for upgrade_to_show in possible_upgrades:
@@ -95,10 +117,11 @@ class UpgradeMenu(Menu):
 
             type_upgrade = upgrade_to_show[0]
             upgrade_object = upgrade_to_show[1]
+            item = player.inventory.get_item(type_upgrade)
 
-            y_pos = 100 + 200 * (count)/len(possible_upgrades)
+            y_pos = 100 + 270 * (count)/len(possible_upgrades)
 
-            new_text = DynamicText(f"{type_upgrade.capitalize()}: Level {player.weapon_level} > Level {player.weapon_level + 1}", Vector2(settings.SCREEN_WIDTH // 2, y_pos	 - 10), 24)
+            new_text = DynamicText(f"{type_upgrade.capitalize()}: Level {item.level} > Level {item.level + 1}", Vector2(settings.SCREEN_WIDTH // 2, y_pos - 10), 24)
             new_button = Button(Vector2(0, y_pos), Vector2(settings.SCREEN_WIDTH, 60), (0, 0, 20))
             description = upgrade_object.description if isinstance(upgrade_object, IUpgrade) else 'MAX UPGRADES'
 

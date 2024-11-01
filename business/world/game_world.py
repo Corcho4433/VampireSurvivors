@@ -8,6 +8,7 @@ from business.handlers.cooldown_handler import CooldownHandler
 from business.world.gem_spawner import ExperienceGemFactory
 from business.weapons.weapon_factory import WeaponFactory
 from presentation.interfaces import IDisplay
+from business.world.clock import Clock
 
 class GameWorld(IGameWorld):
     """Represents the game world."""
@@ -25,7 +26,7 @@ class GameWorld(IGameWorld):
         self.__weapon_factory = WeaponFactory(self)
         self.__display: IDisplay = display
         self.__upgrading: bool = False
-        self.__clock_seconds = 0
+        self.__clock = Clock()
 
         self.__player.assign_world(self)
 
@@ -39,7 +40,7 @@ class GameWorld(IGameWorld):
 
     @property
     def clock_seconds(self):
-        return self.__clock_seconds
+        return self.__clock.time
 
     def update(self):
         self.player.update(self)
@@ -55,7 +56,7 @@ class GameWorld(IGameWorld):
 
         if self.__world_simulation_speed > 0:
             # when game is running
-            self.__clock_seconds += 1 / settings.FPS
+            self.__clock.count()
 
             if self.__monster_spawner_cooldown.is_action_ready():
                 self.__monster_spawner_cooldown.put_on_cooldown()

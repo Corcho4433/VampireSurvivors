@@ -18,8 +18,6 @@ class Text(IText):
         self.__font = font
         self.__bold = bold
 
-        print(pygame.font.get_fonts())
-
     def update(self, display):
         font = pygame.font.SysFont(self.__font, int(self.__font_size * 0.75), self.__bold)
         text_object = font.render(self.__text, True, self.__color)

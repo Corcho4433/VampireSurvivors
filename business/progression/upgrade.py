@@ -40,8 +40,9 @@ class Upgrade(IUpgrade):
         values = self.values
 
         for upgrade_value in values:
-            if hasattr(item, upgrade_value.stat):
-                base = getattr(item, upgrade_value.stat)
+            print(upgrade_value.stat)
+            if item.get_stat(upgrade_value.stat):
+                base = item.get_stat(upgrade_value.stat)
 
                 match upgrade_value.type:
                     case self.MULTIPLY:
