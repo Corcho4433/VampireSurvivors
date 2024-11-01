@@ -147,6 +147,8 @@ class IHasCharges:
 class IBullet(IUpdatable, ICanMove, IHasCharges, ICanDealDamage):
     """Interface for bullet entities."""
 
+class IAttack(IUpdatable, ICanDealDamage, IHasPosition):
+    """Interface for melee attacks."""
 
 class IExperienceGem(IUpdatable, IHasPosition, IPickeable):
     """Interface for experience gem entities."""

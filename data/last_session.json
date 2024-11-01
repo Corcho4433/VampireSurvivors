@@ -1,0 +1,13 @@
+{
+    "player_info":{
+        "pos": [0, 0],
+        "inventory": [],
+        "level":1,
+        "experience":1
+    },
+
+    "map_info":{
+        "monsters":{},
+        "items":{}
+    }
+}

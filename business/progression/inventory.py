@@ -3,7 +3,6 @@
 from business.progression.interfaces import IInventory, IInventoryItem
 from business.world.interfaces import IGameWorld
 from business.weapons.weapon_factory import WeaponFactory
-from business.weapons.weapon_stats import WeaponStats
 from business.progression.item import InventoryItem
 from business.progression.perk_factory import PerkFactory
 
@@ -13,14 +12,14 @@ class Inventory(IInventory):
     DEFAULT_LIMIT = 6
 
     def __init__(self, world: IGameWorld):
-        arma_stats = WeaponStats()
-        arma_inicial = WeaponFactory(world).create_gun(arma_stats)
-        hollow_heart = PerkFactory(world).create_perk("hollow_heart")
-        spinach = PerkFactory(world).create_perk("spinach")
-        clover = PerkFactory(world).create_perk("clover")
+        perk_factory = PerkFactory(world)
 
-        self.__items = {arma_inicial.name : arma_inicial, hollow_heart.name : hollow_heart,
-                        spinach.name : spinach, clover.name : clover}
+        self.__items = {}
+
+        self.add_item(perk_factory.create_perk("spinach"))
+        self.add_item(perk_factory.create_perk("clover"))
+        self.add_item(perk_factory.create_perk("hollow_heart"))
+        self.add_item(WeaponFactory(world).create_weapon('gun'))
 
     @property
     def limit(self) -> int:
@@ -29,7 +28,7 @@ class Inventory(IInventory):
     @property
     def item_count(self) -> int:
         count = 0
-        for _ in range(self.__items.keys()):
+        for _ in range(len(self.__items.keys())):
             count += 1
         return count
 

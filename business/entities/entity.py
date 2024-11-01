@@ -8,7 +8,7 @@ import settings
 
 
 from business.exceptions import InvalidMovementSpeed
-from business.entities.interfaces import ICanMove, IDamageable, IHasPosition, IHasSprite
+from business.entities.interfaces import ICanMove, IHasPosition, IHasSprite
 from business.world.interfaces import IGameWorld
 from presentation.sprite import Sprite
 

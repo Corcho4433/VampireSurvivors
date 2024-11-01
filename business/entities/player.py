@@ -81,7 +81,7 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
                 inventory_item.upgrade()
 
     def take_damage(self, amount):
-        self.__stats.health -= amount #max(0, self.__stats.health - amount)
+        self.__stats.health = max(0, self.__stats.health - amount)
 
         self.sprite.take_damage()
 

@@ -28,5 +28,9 @@ class IWeaponFactory(ABC):
     """Creates weapons"""
 
     @abstractmethod
-    def create_gun(self, stats: IWeaponStats):
-        """Creates a gun using the stats given"""
+    def create_weapon(self, name: str):
+        """Creates a weapon using the name given as an index
+        
+            Args:
+                name (str): "Gun" or "Whip"
+        """

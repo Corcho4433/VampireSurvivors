@@ -6,9 +6,8 @@ import random
 from pygame import Vector2
 
 import settings
-from business.entities.monster import Monster
+from business.entities.monsters.default_monster import DefaultMonster
 from business.world.interfaces import IGameWorld, IMonsterSpawner
-from presentation.sprite import MonsterSprite
 
 
 class MonsterSpawner(IMonsterSpawner):
@@ -20,9 +19,14 @@ class MonsterSpawner(IMonsterSpawner):
     def update(self, world: IGameWorld):
         self.spawn_monster(world)
 
-    def spawn_monster(self, world: IGameWorld):
-        pos = Vector2(random.randint(0, settings.WORLD_WIDTH), random.randint(0, settings.WORLD_HEIGHT))
+    def spawn_monster(self, world):
+        return self.__spawn_default_monster(world)
 
-        monster = Monster(pos, MonsterSprite(pos))
+    def __get_random_position(self):
+        return Vector2(random.randint(0, settings.WORLD_WIDTH), random.randint(0, settings.WORLD_HEIGHT))
+
+    def __spawn_default_monster(self, world: IGameWorld):
+        pos = self.__get_random_position()
+        monster = DefaultMonster(pos)
         world.add_monster(monster)
         self.__logger.debug("Spawning monster at (%d, %d)", pos.x, pos.y)

@@ -16,6 +16,23 @@
             ]
         }
     ],
+    "whip": [{   
+            "description": "",
+            "values": [
+                {"type":2, "stat":"power", "value":50}
+            ]
+        }, {   
+            "description": "",
+            "values": [
+                {"type":1, "stat":"speed", "value":1.1}
+            ]
+        },{   
+            "description": "",
+            "values": [
+                {"type":1, "stat":"damage", "value":1.05}
+            ]
+        }
+    ],
     "hollow_heart": [{   
             "description": "Max health increases by 20%",
             "repeats":5,
