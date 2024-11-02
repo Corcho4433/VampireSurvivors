@@ -59,7 +59,14 @@ class MovableEntity(Entity, ICanMove):
         self._sprite: Sprite = sprite
 
     def move(self, direction: Vector2):
-        self._pos += direction * self.speed * (1/settings.FPS)
+        movement = direction * self.speed * (1/settings.FPS)
+        self._pos += movement
+
+        if movement.magnitude() > 0:
+            self._sprite.set_sprite_state("moving")
+            self._sprite.advance_frame()
+        else:
+            self._sprite.set_sprite_state("idle")
 
         self._logger.debug(
             "Moving in direction (%.2f, %.2f) with speed %.2f",

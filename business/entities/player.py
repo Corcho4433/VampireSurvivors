@@ -10,8 +10,8 @@ from business.entities.interfaces import ICanDealDamage, IDamageable, IPlayer
 from business.world.interfaces import IGameWorld
 from business.progression.inventory import Inventory
 from business.progression.player_stats import PlayerStats
-from presentation.sprite import Sprite
 from business.progression.interfaces import IInventoryItem
+from presentation.sprite import Sprite
 
 class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
     """Player entity.

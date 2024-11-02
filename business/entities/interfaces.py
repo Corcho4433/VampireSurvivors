@@ -166,6 +166,12 @@ class IPlayer(IUpdatable, ICanMove, IDamageable, ICanDealDamage):
     """Interface for the player entity."""
 
     @abstractmethod
+    def apply_perks(self):
+        """Applies all the perks the player currently possesses in it's inventory
+            and changes all the stats
+        """
+
+    @abstractmethod
     def pickup_gem(self, gem: IExperienceGem):
         """Picks up an experience gem.
 

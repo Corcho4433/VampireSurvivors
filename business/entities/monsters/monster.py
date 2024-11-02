@@ -66,8 +66,12 @@ class Monster(MovableEntity, IMonster):
                         key=lambda monster: (monster.pos.distance_to(other.pos)),
                     )
 
-                    monster.move(direction)
+                    monster.move(direction * .5)
 
+        if direction.x <= 0:
+            self.sprite.flip(True)
+        else:
+            self.sprite.flip(False)
 
         self.attack(world.player)
 
