@@ -2,10 +2,10 @@
 
 #import settings
 
-from business.entities.interfaces import IBullet, IExperienceGem, IMonster, IPlayer
+from business.entities.interfaces import IBullet, IPickeable, IMonster, IPlayer
 from business.world.interfaces import IGameWorld, IMonsterSpawner, ITileMap
 from business.handlers.cooldown_handler import CooldownHandler
-from business.world.gem_spawner import ExperienceGemFactory
+from business.world.collectible_factory import CollectibleFactory
 #from business.weapons.weapon_factory import WeaponFactory
 from business.world.clock import Clock
 
@@ -19,11 +19,10 @@ class GameWorld(IGameWorld):
         # Initialize the player and lists for monsters, bullets and gems
         self.__player: IPlayer = None
         self.__monsters: list[IMonster] = []
-        self.__bullets: list[IBullet] = []
-        self.__experience_gems: list[IExperienceGem] = []
+        self.__attacks: list[IBullet] = []
+        self.__collectibles: list[IPickeable] = []
         self.__monster_spawner_cooldown: CooldownHandler = CooldownHandler(self.DEFAULT_MONSTER_SPAWN_TIME)
         self.__world_simulation_speed: int = 1
-        self.__gem_factory = ExperienceGemFactory()
         self.__display: IDisplay = display
         self.__upgrading: bool = False
         self.__clock = Clock()
@@ -47,11 +46,11 @@ class GameWorld(IGameWorld):
         for monster in self.monsters:
             monster.update(self)
 
-        for bullet in self.bullets:
-            bullet.update(self)
+        for attack in self.attacks:
+            attack.update(self)
 
-        for gem in self.experience_gems:
-            gem.update(self)
+        for collectible in self.collectibles:
+            collectible.update(self)
 
         if self.__world_simulation_speed > 0:
             # when game is running
@@ -80,19 +79,21 @@ class GameWorld(IGameWorld):
 
     def remove_monster(self, monster: IMonster):
         self.__monsters.remove(monster)
-        self.__gem_factory.create_gem(monster, self)
+        CollectibleFactory.create_random_gem(monster, self)
 
-    def add_experience_gem(self, gem: IExperienceGem):
-        self.__experience_gems.append(gem)
+    def add_collectible(self, collectible: IPickeable):
+        self.__collectibles.append(collectible)
 
-    def remove_experience_gem(self, gem: IExperienceGem):
-        self.__experience_gems.remove(gem)
+    def remove_collectible(self, collectible: IPickeable):
+        self.__collectibles.remove(collectible)
 
-    def add_bullet(self, bullet: IBullet):
-        self.__bullets.append(bullet)
 
-    def remove_bullet(self, bullet: IBullet):
-        self.__bullets.remove(bullet)
+    #TODO: AGREGAR INTERFAZ DE ATAQUE Y DE ATAQUE MELEE
+    def add_attack(self, attack):
+        self.__attacks.append(attack)
+
+    def remove_attack(self, attack):
+        self.__attacks.remove(attack)
 
     def __pause(self):
         self.__world_simulation_speed = 0
@@ -125,9 +126,9 @@ class GameWorld(IGameWorld):
         return self.__monsters[:]
 
     @property
-    def bullets(self) -> list[IBullet]:
-        return self.__bullets[:]
+    def attacks(self) -> list[IBullet]:
+        return self.__attacks[:]
 
     @property
-    def experience_gems(self) -> list[IExperienceGem]:
-        return self.__experience_gems[:]
+    def collectibles(self) -> list[IPickeable]:
+        return self.__collectibles[:]

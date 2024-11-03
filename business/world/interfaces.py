@@ -45,35 +45,35 @@ class IGameWorld(ABC):
         """
 
     @abstractmethod
-    def add_experience_gem(self, gem: IExperienceGem):
-        """Adds an experience gem to the world.
+    def add_collectible(self, collectible: IExperienceGem):
+        """Adds a collectible to the world.
 
         Args:
-            gem (IExperienceGem): The experience gem to add.
+            collectible (IPickable): The collectible to add.
         """
 
     @abstractmethod
-    def remove_experience_gem(self, gem: IExperienceGem):
-        """Removes an experience gem from the world.
+    def remove_collectible(self, collectible: IExperienceGem):
+        """Removes a collectible from the world.
 
         Args:
-            gem (IExperienceGem): The experience gem to remove.
+            collectible (IPickable): The collectible to remove.
         """
 
     @abstractmethod
-    def add_bullet(self, bullet: IBullet):
-        """Adds a bullet to the world.
+    def add_attack(self, attack):
+        """Adds an attack to the world.
 
         Args:
-            bullet (IBullet): The bullet to add.
+            attack (IAttack): The attack to add.
         """
 
     @abstractmethod
-    def remove_bullet(self, bullet: IBullet):
-        """Removes a bullet from the world.
+    def remove_attack(self, attack):
+        """Removes a attack from the world.
 
         Args:
-            bullet (IBullet): The bullet to remove.
+            attack (IAttack): The attack to remove.
         """
 
     @abstractmethod
@@ -109,20 +109,20 @@ class IGameWorld(ABC):
 
     @property
     @abstractmethod
-    def bullets(self) -> list[IBullet]:
-        """Gets the list of bullets in the world.
+    def attacks(self) -> list:
+        """Gets the list of attacks in the world.
 
         Returns:
-            list[IBullet]: A copy of the list of bullets in the world.
+            list[IAttack]: A copy of the list of attacks in the world.
         """
 
     @property
     @abstractmethod
-    def experience_gems(self) -> list[IExperienceGem]:
-        """Gets the list of experience gems in the world.
+    def collectibles(self) -> list:
+        """Gets the list of collectibles in the world.
 
         Returns:
-            list[IExperienceGem]: A copy of the list of experience gems in the world.
+            list[IPickable]: A copy of the list of collectibles in the world.
         """
 
     @abstractmethod
@@ -177,14 +177,23 @@ class ITileMap(ABC):
         """
 
 
-class IGemFactory(ABC):
+class ICollectibleFactory(ABC):
+    """A gem factory that creates gems from monsters"""
 
+    @staticmethod
     @abstractmethod
-    def create_gem(self, monster: IMonster, world: IGameWorld):
-        """Create a gem based on the monster and the world"""
+    def create_collectible(name: str, pos):
+        """Create a gem based on the name given and the position"""
+
+    @staticmethod
+    @abstractmethod
+    def create_random_gem(monster: IMonster, world: IGameWorld):
+        """Creates a gem using the monster as factor"""
 
 class IClock(ABC):
+    """The global clock measuring in game time in seconds"""
 
+    @property
     @abstractmethod
     def time(self):
-        pass
+        """The current time of the clock"""

@@ -5,7 +5,6 @@ import settings
 
 from business.handlers.cooldown_handler import CooldownHandler
 from business.entities.entity import MovableEntity
-from business.entities.experience_gem import ExperienceGem
 from business.entities.interfaces import ICanDealDamage, IDamageable, IPlayer
 from business.world.interfaces import IGameWorld
 from business.progression.inventory import Inventory
@@ -86,7 +85,7 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
 
         self.sprite.take_damage()
 
-    def pickup_gem(self, gem: ExperienceGem):
+    def pickup_gem(self, gem):
         self.__gain_experience(gem.amount)
 
     def __gain_experience(self, amount: int):

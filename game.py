@@ -14,6 +14,7 @@ from persistance.json_helpers import reset_file
 from persistance.dao.json_player import JSONPlayerDAO
 from persistance.dao.json_monster import JSONMonsterDAO
 from persistance.dao.json_inventory import JSONInventoryDAO
+from persistance.dao.json_collectibles import JSONCollectibleDAO
 
 from presentation.exceptions import SavedGameException
 from presentation.interfaces import IDisplay, IInputHandler
@@ -35,6 +36,7 @@ class Game:
         self.__player_dao = JSONPlayerDAO(settings.SAVE_FILE_PATH)
         self.__monster_dao = JSONMonsterDAO(settings.SAVE_FILE_PATH)
         self.__inventory_dao = JSONInventoryDAO(settings.SAVE_FILE_PATH)
+        self.__collectibles_dao = JSONCollectibleDAO(settings.SAVE_FILE_PATH)
 
     def __process_game_events(self):
         self.__input_handler.reset_events()
@@ -75,18 +77,27 @@ class Game:
         for monster in self.__world.monsters:
             self.__monster_dao.add_monster(monster)
 
+        self.__collectibles_dao.clear_collectibles()
+        for collectible in self.__world.collectibles:
+            self.__collectibles_dao.add_collectible(collectible)
+
         self.__player_dao.add_player(player)
 
-    def run(self, player):
-        """Starts the game loop."""
-        self.__logger.debug("Starting the game loop.")
-
+    def __load_data(self, player):
         self.__world.assign_player(player)
 
         for monster in self.__monster_dao.get_all_monsters():
             self.__world.add_monster(monster)
 
+        for collectible in self.__collectibles_dao.get_all_collectibles():
+            self.__world.add_collectible(collectible)
+
         player.assign_world(self.__world)
+
+    def run(self, player):
+        """Starts the game loop."""
+        self.__logger.debug("Starting the game loop.")
+        self.__load_data(player)
 
         while self.__running:
             try:

@@ -20,7 +20,7 @@ class Gun(Weapon):
         bullet = Bullet(origin, self.__aim_at_target(origin, world), self.damage * player_stats.attack_damage)
         bullet.change_speed((bullet.original_speed + self.power)* self.speed)
 
-        world.add_bullet(bullet)
+        world.add_attack(bullet)
 
     def __aim_at_target(self, origin, world):
         monster = min(

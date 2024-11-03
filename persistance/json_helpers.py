@@ -17,8 +17,8 @@ DEFAULT_JSON_STRUCTURE = {
 
     "map_info":{
         "monsters":{},
-        "drops":{},
-        "bullets":{},
+        "collectibles":{},
+        "attacks":{},
     }
 }
 

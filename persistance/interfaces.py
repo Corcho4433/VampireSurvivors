@@ -25,6 +25,39 @@ class MonsterDAO(ABC):
     def add_monster(self, monster):
         """Add a monster to the DAO data"""
 
+class CollectibleDAO(ABC):
+    """A collectible Data-Access-Object used to save data for collectibles"""
+
+    @abstractmethod
+    def get_all_collectibles(self):
+        """Get all the collectibles in the DAO data"""
+
+    @abstractmethod
+    def clear_collectibles(self):
+        """Clears the DAO collectibles object"""
+
+    @abstractmethod
+    def add_collectible(self, collectible):
+        """Add a collectible to the DAO data"""
+
+
+class AttackDAO(ABC):
+    """An attack Data-Access-Object used to save data for attacks"""
+
+    @abstractmethod
+    def get_all_attacks(self):
+        """Get all the attacks in the DAO data"""
+
+    @abstractmethod
+    def clear_attacks(self):
+        """Clears the DAO attacks object"""
+
+    @abstractmethod
+    def add_attack(self, attack):
+        """Add an attack to the DAO data"""
+
+
+
 class PlayerDAO(ABC):
     """A player Data-Access-Object used to save data for the player"""
 

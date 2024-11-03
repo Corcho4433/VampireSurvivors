@@ -30,7 +30,6 @@ class IPickeable(ABC):
             bool: Picked or not picked.
         """
 
-    @property
     @abstractmethod
     def pick(self) -> None:
         """Set the entity as picked.
@@ -152,7 +151,19 @@ class IHasCharges:
 class IBullet(IUpdatable, ICanMove, IHasCharges, ICanDealDamage):
     """Interface for bullet entities."""
 
-class IExperienceGem(IUpdatable, IHasPosition, IPickeable):
+class ICollectible(IUpdatable, IHasPosition, IPickeable):
+    """A collectible item"""
+
+    @property
+    @abstractmethod
+    def type(self):
+        """The type of collectible
+
+            Returns:
+                str: "ExperienceGem"
+        """
+
+class IExperienceGem(ICollectible):
     """Interface for experience gem entities."""
 
     @property

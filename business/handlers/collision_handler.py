@@ -14,23 +14,23 @@ class CollisionHandler:
         return an_entity.sprite.rect.colliderect(another_entity.sprite.rect)
 
     @staticmethod
-    def __handle_bullets(bullets: List[IBullet], monsters: List[IMonster]):
-        for bullet in bullets:
+    def __handle_attacks(attacks: List[IBullet], monsters: List[IMonster]):
+        for attack in attacks:
             for monster in monsters:
-                if CollisionHandler.__collides_with(bullet, monster):
-                    monster.take_damage(bullet.damage)
-                    bullet.use_charge()
+                if CollisionHandler.__collides_with(attack, monster):
+                    monster.take_damage(attack.damage)
+                    attack.use_charge()
 
     @staticmethod
     def __handle_monsters(monsters: List[IMonster], player: IPlayer):
         pass
 
     @staticmethod
-    def __handle_gems(gems: List[IExperienceGem], player: IPlayer, world: IGameWorld):
-        for gem in gems:
-            if CollisionHandler.__collides_with(gem, player):
-                player.pickup_gem(gem)
-                gem.pick()
+    def __handle_collectibles(collectibles: List[IExperienceGem], player: IPlayer):
+        for collectible in collectibles:
+            if CollisionHandler.__collides_with(collectible, player):
+                player.pickup_gem(collectible)
+                collectible.pick()
 
     @staticmethod
     def handle_collisions(world: IGameWorld):
@@ -39,9 +39,9 @@ class CollisionHandler:
         Args:
             world (IGameWorld): The game world.
         """
-        CollisionHandler.__handle_bullets(world.bullets, world.monsters)
+        CollisionHandler.__handle_attacks(world.attacks, world.monsters)
         CollisionHandler.__handle_monsters(world.monsters, world.player)
-        CollisionHandler.__handle_gems(world.experience_gems, world.player, world)
+        CollisionHandler.__handle_collectibles(world.collectibles, world.player)
 
     @staticmethod
     def get_monster_colliding_pairs(world: IGameWorld) -> list[tuple[IMonster, IMonster]]:

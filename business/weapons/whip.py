@@ -2,8 +2,8 @@
 from pygame import Vector2
 from business.weapons.weapon import Weapon
 from business.progression.interfaces import IPlayerStats
-from business.weapons.interfaces import IWeaponStats, IAttack
-from business.weapons.hitbox import Hitbox
+from business.weapons.interfaces import IWeaponStats
+from business.weapons.attack import Attack
 
 class Whip(Weapon):
     """A whip that inflicts melee damage"""
@@ -15,6 +15,6 @@ class Whip(Weapon):
         if not world.monsters:
             return
 
-        # Find the nearest monster
-        #attack = Attack(origin, self.__aim_at_target(origin, world), self.__player_stats.attack_damage)
-        #bullet.change_speed((bullet.original_speed + self.power)* self.speed)
+        attack = Attack(origin, player_stats.attack_damage)
+
+        world.add_attack(attack)

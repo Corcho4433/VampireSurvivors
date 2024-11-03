@@ -28,6 +28,7 @@ class IWeaponStats(ABC):
 class IWeaponFactory(ABC):
     """Creates weapons"""
 
+    @staticmethod
     @abstractmethod
     def create_weapon(name: str):
         """Creates a weapon using the name given as an index
@@ -36,7 +37,7 @@ class IWeaponFactory(ABC):
                 name (str): "Gun" or "Whip"
         """
 
-class IAttack(ICanDealDamage, IHasPosition, IHasSprite):
+class IAttack(IUpdatable, ICanDealDamage, IHasPosition, IHasSprite):
     """Interface for melee attacks."""
 
 class IHitBox():

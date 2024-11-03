@@ -109,10 +109,10 @@ class Display(IDisplay):
         self.__render_ground_tiles()
 
         # Draw all the experience gems
-        for gem in self.__world.experience_gems:
-            if self.camera.camera_rect.colliderect(gem.sprite.rect):
-                adjusted_rect = self.camera.apply(gem.sprite.rect)
-                self.__screen.blit(gem.sprite.image, adjusted_rect)
+        for collectible in self.__world.collectibles:
+            if self.camera.camera_rect.colliderect(collectible.sprite.rect):
+                adjusted_rect = self.camera.apply(collectible.sprite.rect)
+                self.__screen.blit(collectible.sprite.image, adjusted_rect)
 
         # Draw all monsters
         for monster in self.__world.monsters:
@@ -121,10 +121,10 @@ class Display(IDisplay):
                 self.__screen.blit(monster.sprite.image, adjusted_rect)
 
         # Draw the bullets
-        for bullet in self.__world.bullets:
-            if self.camera.camera_rect.colliderect(bullet.sprite.rect):
-                adjusted_rect = self.camera.apply(bullet.sprite.rect)
-                self.__screen.blit(bullet.sprite.image, adjusted_rect)
+        for attack in self.__world.attacks:
+            if self.camera.camera_rect.colliderect(attack.sprite.rect):
+                adjusted_rect = self.camera.apply(attack.sprite.rect)
+                self.__screen.blit(attack.sprite.image, adjusted_rect)
 
         # Draw the player
         self.__draw_player()

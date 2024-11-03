@@ -21,11 +21,11 @@ class DeathHandler:
         Args:
             world (IGameWorld): The game world to check for dead entities.
         """
-        for bullet in world.bullets:
-            if bullet.charges_remaining <= 0:
-                world.remove_bullet(bullet)
-            if not DeathHandler.__is_entity_within_world_boundaries(bullet):
-                world.remove_bullet(bullet)
+        for attack in world.attacks:
+            if attack.charges_remaining <= 0:
+                world.remove_attack(attack)
+            if not DeathHandler.__is_entity_within_world_boundaries(attack):
+                world.remove_attack(attack)
 
         for monster in world.monsters:
             if monster.health <= 0:
@@ -33,11 +33,11 @@ class DeathHandler:
             if not DeathHandler.__is_entity_within_world_boundaries(monster):
                 world.remove_monster(monster)
 
-        for gem in world.experience_gems:
-            if gem.is_picked:
-                world.remove_experience_gem(gem)
-            if not DeathHandler.__is_entity_within_world_boundaries(gem):
-                world.remove_experience_gem(gem)
+        for collectible in world.collectibles:
+            if collectible.is_picked:
+                world.remove_collectible(collectible)
+            if not DeathHandler.__is_entity_within_world_boundaries(collectible):
+                world.remove_collectible(collectible)
 
         if world.player.health <= 0:
             raise DeadPlayerException
