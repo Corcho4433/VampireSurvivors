@@ -102,7 +102,7 @@ class Sprite(pygame.sprite.Sprite):
     @property
     def state(self):
         """The sprite's current state:
-         
+
             Returns:
                 str: "moving", "idle", "attack"  
         """
@@ -185,6 +185,18 @@ class ExperienceGemSprite(Sprite):
 
     def __init__(self, pos: pygame.Vector2):
         image: pygame.Surface = pygame.image.load(ExperienceGemSprite.ASSET).convert_alpha()
+        image = pygame.transform.scale(image, (32,32))
+        rect: pygame.rect = image.get_rect(center=(int(pos.x), int(pos.y)))
+
+        super().__init__(image, rect)
+
+class ChestSprite(Sprite):
+    """A class representing the chest sprite."""
+
+    ASSET = "./assets/chest.png"
+
+    def __init__(self, pos: pygame.Vector2):
+        image: pygame.Surface = pygame.image.load(ChestSprite.ASSET).convert_alpha()
         image = pygame.transform.scale(image, (32,32))
         rect: pygame.rect = image.get_rect(center=(int(pos.x), int(pos.y)))
 

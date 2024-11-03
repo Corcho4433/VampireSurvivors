@@ -5,6 +5,7 @@ import settings
 
 from business.world.interfaces import IMonster, IGameWorld
 from business.entities.collectibles.experience_gem import ExperienceGem
+from business.entities.collectibles.chest import Chest
 from business.world.interfaces import ICollectibleFactory
 
 class CollectibleFactory(ICollectibleFactory):
@@ -15,6 +16,8 @@ class CollectibleFactory(ICollectibleFactory):
         match name:
             case "experience":
                 return ExperienceGem(pos)
+            case "chest":
+                return Chest(pos)
 
     @staticmethod
     def create_random_gem(monster: IMonster, world: IGameWorld):

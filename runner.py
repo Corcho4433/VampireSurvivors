@@ -6,6 +6,7 @@ import pygame
 
 from business.world.game_world import GameWorld
 from business.world.monster_spawner import MonsterSpawner
+from business.world.chest_spawner import ChestSpawner
 from business.world.tile_map import TileMap
 from game import Game
 from presentation.display import Display
@@ -15,8 +16,9 @@ from presentation.input_handler import InputHandler
 def initialize_game_world(display):
     """Initializes the game world"""
     monster_spawner = MonsterSpawner()
+    chest_spawner = ChestSpawner()
     tile_map = TileMap()
-    return GameWorld(monster_spawner, tile_map, display)
+    return GameWorld(monster_spawner, chest_spawner, tile_map, display)
 
 
 def main():

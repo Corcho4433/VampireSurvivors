@@ -2,7 +2,7 @@
 
 from typing import List
 
-from business.entities.interfaces import IBullet, IExperienceGem, IHasSprite, IMonster, IPlayer, IMeleeAttack, IDistanceAttack
+from business.entities.interfaces import IBullet, IExperienceGem, IHasSprite, IMonster, IPlayer, IMeleeAttack, IDistanceAttack, IChest
 from business.world.interfaces import IGameWorld
 
 
@@ -30,8 +30,15 @@ class CollisionHandler:
     def __handle_collectibles(collectibles: List[IExperienceGem], player: IPlayer):
         for collectible in collectibles:
             if CollisionHandler.__collides_with(collectible, player):
-                player.pickup_gem(collectible)
-                collectible.pick()
+                if isinstance(collectible, IExperienceGem):
+                    player.pickup_gem(collectible)
+                    collectible.pick()
+                if isinstance(collectible, IChest):
+                    player.give_item(collectible.item)
+                    print(f"se le dio el item {collectible.item.name}")
+                    player.apply_perks()
+                    print(f"se aplico el item {collectible.item.name}")
+                    collectible.pick()
 
     @staticmethod
     def handle_collisions(world: IGameWorld):

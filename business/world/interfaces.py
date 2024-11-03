@@ -3,6 +3,7 @@
 from abc import ABC, abstractmethod
 
 from business.entities.interfaces import IBullet, IExperienceGem, IMonster, IPlayer
+from business.entities.interfaces import ICollectible
 
 
 class IGameWorld(ABC):
@@ -45,7 +46,7 @@ class IGameWorld(ABC):
         """
 
     @abstractmethod
-    def add_collectible(self, collectible: IExperienceGem):
+    def add_collectible(self, collectible: ICollectible):
         """Adds a collectible to the world.
 
         Args:
@@ -53,7 +54,7 @@ class IGameWorld(ABC):
         """
 
     @abstractmethod
-    def remove_collectible(self, collectible: IExperienceGem):
+    def remove_collectible(self, collectible: ICollectible):
         """Removes a collectible from the world.
 
         Args:
@@ -141,6 +142,18 @@ class IUpdatable(ABC):
             world (IGameWorld): The game world in which the entity exists.
         """
 
+class IChestSpawner(IUpdatable):
+    """Interface for a chest spawner.
+    
+    A chest spawner is responsible for spawning chests in the game world."""
+
+    @abstractmethod
+    def spawn_chest(self, world: IGameWorld):
+        """Spawns a chest in the game world.
+
+        Args:
+            world (IGameWorld): The game world in which to spawn the chest.
+        """
 
 class IMonsterSpawner(IUpdatable):
     """Interface for a monster spawner.

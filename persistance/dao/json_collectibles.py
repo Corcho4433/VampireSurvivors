@@ -8,7 +8,7 @@ from persistance.interfaces import CollectibleDAO
 from persistance.json_helpers import create_json_file
 
 class JSONCollectibleDAO(CollectibleDAO):
-    """A Data-Access-Object that handles all monsters in a json file"""
+    """A Data-Access-Object that handles all collectibles in a json file"""
 
     def __init__(self, json_path: str):
         self.__path = json_path

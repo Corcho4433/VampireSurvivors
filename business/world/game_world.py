@@ -1,9 +1,9 @@
 """This module contains the implementation of the game world."""
 
 #import settings
-
+import random
 from business.entities.interfaces import IAttack, IBullet, IPickeable, IMonster, IPlayer
-from business.world.interfaces import IGameWorld, IMonsterSpawner, ITileMap
+from business.world.interfaces import IGameWorld, IMonsterSpawner, ITileMap, IChestSpawner
 from business.handlers.cooldown_handler import CooldownHandler
 from business.world.collectible_factory import CollectibleFactory
 #from business.weapons.weapon_factory import WeaponFactory
@@ -15,13 +15,14 @@ class GameWorld(IGameWorld):
     """Represents the game world."""
     DEFAULT_MONSTER_SPAWN_TIME = 0.6
 
-    def __init__(self, spawner: IMonsterSpawner, tile_map: ITileMap, display: IDisplay):
+    def __init__(self, monster_spawner: IMonsterSpawner, chest_spawner : IChestSpawner, tile_map: ITileMap, display: IDisplay):
         # Initialize the player and lists for monsters, bullets and gems
         self.__player: IPlayer = None
         self.__monsters: list[IMonster] = []
         self.__attacks: list[IAttack] = []
         self.__collectibles: list[IPickeable] = []
         self.__monster_spawner_cooldown: CooldownHandler = CooldownHandler(self.DEFAULT_MONSTER_SPAWN_TIME)
+        self.__chest_spawner_cooldown : CooldownHandler = CooldownHandler(random.randint(40,70))
         self.__world_simulation_speed: int = 1
         self.__display: IDisplay = display
         self.__upgrading: bool = False
@@ -31,7 +32,10 @@ class GameWorld(IGameWorld):
         self.tile_map: ITileMap = tile_map
 
         # Initialize the monster spawner
-        self.__monster_spawner: IMonsterSpawner = spawner
+        self.__monster_spawner: IMonsterSpawner = monster_spawner
+
+        # Initialize the chest spawner
+        self.__chest_spawner : IChestSpawner = chest_spawner
 
     def assign_player(self, player: IPlayer):
         self.__player = player
@@ -60,6 +64,12 @@ class GameWorld(IGameWorld):
                 self.__monster_spawner_cooldown.put_on_cooldown()
 
                 self.__monster_spawner.update(self)
+
+            if self.__chest_spawner_cooldown.is_action_ready():
+                self.__chest_spawner_cooldown.put_on_cooldown()
+
+                self.__chest_spawner_cooldown.change_time(random.randint(40,70))
+                self.__chest_spawner.update(self)
 
     def set_upgrade_menu_active(self, state: bool):
         self.__upgrading = state

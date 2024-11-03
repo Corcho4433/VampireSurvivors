@@ -1,1 +1,1309 @@
-{"player": {"pos": [0, 0], "inventory": [{"name": "gun", "type": 1, "level": 1}], "level": 1, "experience": 0}, "map_info": {"monsters": {}, "collectibles": {}, "attacks": {}}}
+{
+    "player": {
+        "pos": [
+            876.4718625761384,
+            1113.9801564019615
+        ],
+        "inventory": [
+            {
+                "type": 1,
+                "name": "gun",
+                "level": 5
+            },
+            {
+                "type": 2,
+                "name": "Clover",
+                "level": 2
+            }
+        ],
+        "level": 7,
+        "experience": 0
+    },
+    "map_info": {
+        "monsters": [
+            {
+                "pos": [
+                    827.0,
+                    816.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    952.0,
+                    799.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    974.0,
+                    894.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    917.0,
+                    957.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    958.0,
+                    945.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    942.0,
+                    955.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    942.0,
+                    937.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    942.0,
+                    957.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    942.0,
+                    940.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    943.0,
+                    949.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    944.0,
+                    949.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    946.0,
+                    948.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    936.0,
+                    948.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    949.0,
+                    949.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    937.0,
+                    949.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    951.0,
+                    949.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    937.0,
+                    949.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    956.0,
+                    949.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    931.0,
+                    949.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    966.0,
+                    949.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    926.0,
+                    948.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    971.0,
+                    948.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    922.0,
+                    948.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    967.0,
+                    948.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    927.0,
+                    948.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    956.0,
+                    949.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    938.0,
+                    948.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    950.0,
+                    948.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    938.0,
+                    948.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    954.0,
+                    941.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    934.0,
+                    957.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    960.0,
+                    931.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    927.0,
+                    953.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    966.0,
+                    945.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    922.0,
+                    949.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    974.0,
+                    949.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    920.0,
+                    949.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    966.0,
+                    949.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    934.0,
+                    949.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    951.0,
+                    949.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    938.0,
+                    948.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    949.0,
+                    949.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    940.0,
+                    948.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    944.0,
+                    949.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    942.0,
+                    949.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    943.0,
+                    949.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    942.0,
+                    949.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    942.0,
+                    949.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    943.0,
+                    949.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    944.0,
+                    949.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    960.0,
+                    949.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    917.0,
+                    949.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    973.0,
+                    948.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    925.0,
+                    948.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    962.0,
+                    946.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    934.0,
+                    952.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    951.0,
+                    945.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    939.0,
+                    951.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    944.0,
+                    944.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    942.0,
+                    948.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    942.0,
+                    948.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    943.0,
+                    949.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    942.0,
+                    948.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    943.0,
+                    949.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    946.0,
+                    948.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    939.0,
+                    944.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    975.0,
+                    955.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    903.0,
+                    916.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    983.0,
+                    961.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    923.0,
+                    890.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    956.0,
+                    949.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    943.0,
+                    937.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    943.0,
+                    956.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    945.0,
+                    908.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    937.0,
+                    956.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    958.0,
+                    881.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    928.0,
+                    957.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    971.0,
+                    900.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    915.0,
+                    942.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    963.0,
+                    956.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    940.0,
+                    937.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    944.0,
+                    946.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    942.0,
+                    955.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    943.0,
+                    937.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    983.0,
+                    957.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    894.0,
+                    941.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    1002.0,
+                    935.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    904.0,
+                    957.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    982.0,
+                    914.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    950.0,
+                    1016.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    906.0,
+                    891.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    979.0,
+                    900.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    921.0,
+                    951.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    948.0,
+                    957.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    945.0,
+                    905.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    942.0,
+                    923.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    942.0,
+                    962.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    956.0,
+                    893.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    921.0,
+                    928.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    979.0,
+                    956.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    911.0,
+                    895.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    963.0,
+                    957.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    958.0,
+                    916.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    951.0,
+                    1020.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    905.0,
+                    895.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    975.0,
+                    867.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    921.0,
+                    946.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    944.0,
+                    956.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    945.0,
+                    880.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    982.0,
+                    958.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    895.0,
+                    940.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    973.0,
+                    954.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    945.0,
+                    906.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    940.0,
+                    976.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    944.0,
+                    917.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    942.0,
+                    879.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    729.0,
+                    874.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    856.0,
+                    822.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    952.0,
+                    858.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    975.0,
+                    976.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    1037.0,
+                    922.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    925.0,
+                    848.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    1051.0,
+                    805.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    864.0,
+                    743.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    989.0,
+                    825.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    1028.0,
+                    785.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    1005.0,
+                    913.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    489.0,
+                    709.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    597.0,
+                    1112.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    648.0,
+                    1339.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    1217.0,
+                    1499.0
+                ],
+                "type": "default",
+                "health": 10
+            },
+            {
+                "pos": [
+                    200.0,
+                    1146.0
+                ],
+                "type": "default",
+                "health": 10
+            }
+        ],
+        "collectibles": [
+            {
+                "pos": [
+                    988.0,
+                    730.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    458.0,
+                    352.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    473.0,
+                    1035.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    981.0,
+                    1494.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    1401.0,
+                    1318.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    912.0,
+                    254.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    252.0,
+                    429.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    984.0,
+                    297.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    780.0,
+                    1022.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    1246.0,
+                    1399.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    494.0,
+                    915.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    443.0,
+                    913.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    1019.0,
+                    886.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    1373.0,
+                    1478.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    448.0,
+                    666.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    513.0,
+                    667.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    1127.0,
+                    350.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    1459.0,
+                    571.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    1225.0,
+                    931.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    586.0,
+                    1269.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    501.0,
+                    1148.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    192.0,
+                    278.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    973.0,
+                    277.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    1221.0,
+                    484.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    1175.0,
+                    1219.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    842.0,
+                    1589.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    346.0,
+                    1285.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    378.0,
+                    731.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    454.0,
+                    327.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    792.0,
+                    490.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    993.0,
+                    769.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    1049.0,
+                    1114.0
+                ],
+                "type": "experience"
+            }
+        ],
+        "attacks": {}
+    }
+}

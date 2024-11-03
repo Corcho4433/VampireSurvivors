@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 from pygame import Vector2
 
 from presentation.sprite import Sprite
+from business.progression.interfaces import IInventoryItem
 
 
 class ICanDealDamage(ABC):
@@ -178,6 +179,18 @@ class ICollectible(IUpdatable, IHasPosition, IPickeable):
 
             Returns:
                 str: "ExperienceGem"
+        """
+
+class IChest(ICollectible):
+    """Interface for chest entities"""
+
+    @property
+    @abstractmethod
+    def item(self) -> IInventoryItem:
+        """The item the chest drops.
+
+        Returns:
+            IInventoryItem: The item the chest drops.
         """
 
 class IExperienceGem(ICollectible):
