@@ -148,8 +148,21 @@ class IHasCharges:
     def use_charge(self, amount: int):
         """Reduces the amount of charges by 1 or amount"""
 
+class IHasHitbox:
+    """Inteface that determines that an object has a hitbox"""
+
+class IAttack(IUpdatable, ICanDealDamage, IHasHitbox):
+    """Interface for attack entities in general"""
+
+class IMeleeAttack(IAttack):
+    """Interface for melee attack entities"""
+
+class IDistanceAttack(IAttack, ICanMove, IHasCharges):
+    """Interface for distance attack entities"""
+
 class IBullet(IUpdatable, ICanMove, IHasCharges, ICanDealDamage):
     """Interface for bullet entities."""
+
 
 class ICollectible(IUpdatable, IHasPosition, IPickeable):
     """A collectible item"""

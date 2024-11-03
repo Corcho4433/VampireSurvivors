@@ -4,12 +4,12 @@ import math
 
 from pygame import Vector2
 from business.entities.entity import MovableEntity
-from business.entities.interfaces import IBullet
+from business.entities.interfaces import IDistanceAttack
 from business.world.interfaces import IGameWorld
 from presentation.sprite import BulletSprite
 
 
-class Bullet(MovableEntity, IBullet):
+class Bullet(MovableEntity, IDistanceAttack):
     """A bullet that moves towards a target direction."""
 
     def __init__(self, source, enemy_pos, damage: int):
