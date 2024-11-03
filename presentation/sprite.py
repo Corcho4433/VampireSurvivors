@@ -181,13 +181,11 @@ class AttackWhipSprite(Sprite):
 class ExperienceGemSprite(Sprite):
     """A class representing the experience gem sprite."""
 
-    ASSET = "./assets/experience_gems.png"
+    ASSET = "./assets/experience_gem.png"
 
     def __init__(self, pos: pygame.Vector2):
-        tileset = Tileset(
-            ExperienceGemSprite.ASSET, settings.TILE_HEIGHT, settings.TILE_HEIGHT, 2, 2
-        )
-        image: pygame.Surface = tileset.get_tile(0)
-        rect: pygame.Rect = image.get_rect(center=(int(pos.x), int(pos.y)))
+        image: pygame.Surface = pygame.image.load(ExperienceGemSprite.ASSET).convert_alpha()
+        image = pygame.transform.scale(image, (32,32))
+        rect: pygame.rect = image.get_rect(center=(int(pos.x), int(pos.y)))
 
         super().__init__(image, rect)
