@@ -1,14 +1,13 @@
 import pygame
 from business.entities.interfaces import IMonster
-from business.weapons.interfaces import IHitBox
+from business.entities.interfaces import IHitbox
 from business.world.interfaces import IGameWorld
 
-class Hitbox(IHitBox):
+class Hitbox(IHitbox):
     def __init__(self, size: pygame.Vector2, pos: pygame.Vector2):
         self.__size : pygame.Vector2 = size
         self.__pos : pygame.Vector2 = pos
         self.__rect = pygame.Rect(self.__pos.x, self.__pos.y, self.__size.x, self.__size.y)
-
 
     # Esto es solo por si agregamos el area de ataque como upgrade
     @property

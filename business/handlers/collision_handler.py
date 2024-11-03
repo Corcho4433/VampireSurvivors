@@ -2,7 +2,7 @@
 
 from typing import List
 
-from business.entities.interfaces import IBullet, IExperienceGem, IHasSprite, IMonster, IPlayer
+from business.entities.interfaces import IBullet, IExperienceGem, IHasSprite, IMonster, IPlayer, IMeleeAttack, IDistanceAttack
 from business.world.interfaces import IGameWorld
 
 
@@ -19,7 +19,8 @@ class CollisionHandler:
             for monster in monsters:
                 if CollisionHandler.__collides_with(attack, monster):
                     monster.take_damage(attack.damage)
-                    attack.use_charge()
+                    if isinstance(attack, IDistanceAttack):
+                        attack.use_charge()
 
     @staticmethod
     def __handle_monsters(monsters: List[IMonster], player: IPlayer):

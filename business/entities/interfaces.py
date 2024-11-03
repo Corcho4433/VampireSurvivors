@@ -148,21 +148,25 @@ class IHasCharges:
     def use_charge(self, amount: int):
         """Reduces the amount of charges by 1 or amount"""
 
+class IHitbox:
+    """Inteface for the hitbox"""
+
 class IHasHitbox:
     """Inteface that determines that an object has a hitbox"""
 
-class IAttack(IUpdatable, ICanDealDamage, IHasHitbox):
+class IAttack(IUpdatable, ICanDealDamage):
     """Interface for attack entities in general"""
 
-class IMeleeAttack(IAttack):
+class IMeleeAttack(IAttack, IHasHitbox):
     """Interface for melee attack entities"""
 
 class IDistanceAttack(IAttack, ICanMove, IHasCharges):
     """Interface for distance attack entities"""
 
-class IBullet(IUpdatable, ICanMove, IHasCharges, ICanDealDamage):
+class IBullet(IDistanceAttack):
     """Interface for bullet entities."""
 
+#Se podria agregar IWhipAttack(?)
 
 class ICollectible(IUpdatable, IHasPosition, IPickeable):
     """A collectible item"""

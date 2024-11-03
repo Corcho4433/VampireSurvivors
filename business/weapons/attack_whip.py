@@ -1,18 +1,17 @@
 import pygame
 
-from business.weapons.interfaces import IAttack
+from business.entities.interfaces import IMeleeAttack
 from business.weapons.hitbox import Hitbox
 from business.world.interfaces import IGameWorld
 from business.entities.interfaces import IMonster
 from business.entities.entity import Entity
-from presentation.sprite import AttackSprite
-from presentation.sprite import Sprite
+from presentation.sprite import AttackWhipSprite
 
-class Attack(Entity, IAttack):
+class AttackWhip(Entity, IMeleeAttack):
     """An attack for a weapon"""
 
     def __init__(self, pos: pygame.Vector2, damage: int):
-        super().__init__(pos, AttackSprite(pos))
+        super().__init__(pos, AttackWhipSprite(pos))
         self.__damage = damage
         self.__hitbox : Hitbox = Hitbox(pygame.Vector2(100,100), pos)
         self.__finished : bool = False

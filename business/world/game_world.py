@@ -2,7 +2,7 @@
 
 #import settings
 
-from business.entities.interfaces import IBullet, IPickeable, IMonster, IPlayer
+from business.entities.interfaces import IAttack, IBullet, IPickeable, IMonster, IPlayer
 from business.world.interfaces import IGameWorld, IMonsterSpawner, ITileMap
 from business.handlers.cooldown_handler import CooldownHandler
 from business.world.collectible_factory import CollectibleFactory
@@ -19,7 +19,7 @@ class GameWorld(IGameWorld):
         # Initialize the player and lists for monsters, bullets and gems
         self.__player: IPlayer = None
         self.__monsters: list[IMonster] = []
-        self.__attacks: list[IBullet] = []
+        self.__attacks: list[IAttack] = []
         self.__collectibles: list[IPickeable] = []
         self.__monster_spawner_cooldown: CooldownHandler = CooldownHandler(self.DEFAULT_MONSTER_SPAWN_TIME)
         self.__world_simulation_speed: int = 1
@@ -87,12 +87,10 @@ class GameWorld(IGameWorld):
     def remove_collectible(self, collectible: IPickeable):
         self.__collectibles.remove(collectible)
 
-
-    #TODO: AGREGAR INTERFAZ DE ATAQUE Y DE ATAQUE MELEE
-    def add_attack(self, attack):
+    def add_attack(self, attack: IAttack):
         self.__attacks.append(attack)
 
-    def remove_attack(self, attack):
+    def remove_attack(self, attack: IAttack):
         self.__attacks.remove(attack)
 
     def __pause(self):

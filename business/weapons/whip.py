@@ -3,7 +3,7 @@ from pygame import Vector2
 from business.weapons.weapon import Weapon
 from business.progression.interfaces import IPlayerStats
 from business.weapons.interfaces import IWeaponStats
-from business.weapons.attack import Attack
+from business.weapons.attack_whip import AttackWhip
 
 class Whip(Weapon):
     """A whip that inflicts melee damage"""
@@ -15,6 +15,6 @@ class Whip(Weapon):
         if not world.monsters:
             return
 
-        attack = Attack(origin, player_stats.attack_damage)
+        attack = AttackWhip(origin, player_stats.attack_damage)
 
         world.add_attack(attack)

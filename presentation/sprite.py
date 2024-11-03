@@ -166,14 +166,14 @@ class BulletSprite(Sprite):
 
         super().__init__(image, rect)
 
-class AttackSprite(Sprite):
+class AttackWhipSprite(Sprite):
     """A class representing the melee attack sprite."""
 
     def __init__(self, pos: pygame.Vector2):
-        size = 15
+        size = 48
 
         image = pygame.Surface((size, size), pygame.SRCALPHA)  # pylint: disable=E1101
-        pygame.draw.circle(image, (255, 255, 0), (size // 2, size // 2), size // 2)
+        pygame.draw.circle(image, (255, 0, 0), (size // 2, size // 2), size // 2)
         rect: pygame.rect = image.get_rect(center=(int(pos.x), int(pos.y)))
 
         super().__init__(image, rect)

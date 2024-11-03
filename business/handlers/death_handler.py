@@ -4,6 +4,7 @@
 from business.exceptions import DeadPlayerException
 from business.world.interfaces import IGameWorld
 from business.handlers.position_handler import PositionHandler
+from business.entities.interfaces import IMeleeAttack, IDistanceAttack
 
 
 class DeathHandler:
@@ -21,7 +22,9 @@ class DeathHandler:
             world (IGameWorld): The game world to check for dead entities.
         """
         for attack in world.attacks:
-            if attack.charges_remaining <= 0:
+            if isinstance(attack, IDistanceAttack) and attack.charges_remaining <= 0:
+                world.remove_attack(attack)
+            if isinstance(attack, IMeleeAttack) and attack.is_finished:
                 world.remove_attack(attack)
             if not DeathHandler.__is_entity_within_world_boundaries(attack):
                 world.remove_attack(attack)
