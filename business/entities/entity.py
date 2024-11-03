@@ -58,6 +58,12 @@ class MovableEntity(Entity, ICanMove):
         self.__original_speed = speed
         self._sprite: Sprite = sprite
 
+    def move_to_center(self):
+        """Resets the entity's position to the center"""
+        x, y = settings.WORLD_WIDTH//2, settings.WORLD_HEIGHT//2
+
+        self._pos = Vector2(x, y)
+
     def move(self, direction: Vector2):
         movement = direction * self.speed * (1/settings.FPS)
         self._pos += movement

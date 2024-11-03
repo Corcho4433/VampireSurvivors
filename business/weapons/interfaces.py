@@ -1,6 +1,7 @@
 """Defines all the interfaces for the classes used in weapons"""
 
 from abc import ABC, abstractmethod
+from business.entities.interfaces import IUpdatable, ICanDealDamage, IHasPosition, IHasSprite
 
 class IWeaponStats(ABC):
     """Stats for a weapon"""
@@ -28,9 +29,15 @@ class IWeaponFactory(ABC):
     """Creates weapons"""
 
     @abstractmethod
-    def create_weapon(self, name: str):
+    def create_weapon(name: str):
         """Creates a weapon using the name given as an index
         
             Args:
                 name (str): "Gun" or "Whip"
         """
+
+class IAttack(ICanDealDamage, IHasPosition, IHasSprite):
+    """Interface for melee attacks."""
+
+class IHitBox():
+    """Interface for melee weapons hitbox"""

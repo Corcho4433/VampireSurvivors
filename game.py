@@ -10,11 +10,9 @@ from business.handlers.collision_handler import CollisionHandler
 from business.handlers.death_handler import DeathHandler
 from business.world.interfaces import IGameWorld
 from presentation.interfaces import IDisplay, IInputHandler
-from persistance.json_parser import JSONParser
-
-data = JSONParser.build_upgrades_for("clover")
-print(len(data))
-
+from persistance.dao.json_player import JSONPlayerDAO
+from persistance.dao.json_monster import JSONMonsterDAO
+from persistance.dao.json_inventory import JSONInventoryDAO
 
 class Game:
     """
@@ -30,6 +28,9 @@ class Game:
         self.__world = game_world
         self.__input_handler = input_handler
         self.__running = True
+        self.__player_dao = JSONPlayerDAO(settings.SAVE_FILE_PATH)
+        self.__monster_dao = JSONMonsterDAO(settings.SAVE_FILE_PATH)
+        self.__inventory_dao = JSONInventoryDAO(settings.SAVE_FILE_PATH)
 
     def __process_game_events(self):
         self.__input_handler.reset_events()
@@ -42,9 +43,28 @@ class Game:
 
             self.__input_handler.add_event(event)
 
-    def run(self):
+    def create_player(self):
+        """Creates the player instance from a DAO object"""
+
+        return self.__player_dao.get_player()
+
+    def create_monsters(self):
+        """Creates all the in game monsters from a DAO object"""
+
+        return self.__monster_dao.get_all_monsters()
+
+    def create_inventory(self):
+        """Creates the player inventory instance from a DAO object"""
+
+        return self.__inventory_dao.get_inventory()
+
+    def run(self, player):
         """Starts the game loop."""
         self.__logger.debug("Starting the game loop.")
+        
+        self.__world.assign_player(player)
+        player.assign_world(self.__world)
+
         while self.__running:
             try:
                 self.__process_game_events()

@@ -4,29 +4,19 @@ import logging
 
 import pygame
 
-import settings
-from business.entities.player import Player
 from business.world.game_world import GameWorld
 from business.world.monster_spawner import MonsterSpawner
 from business.world.tile_map import TileMap
 from game import Game
 from presentation.display import Display
 from presentation.input_handler import InputHandler
-from presentation.sprite import PlayerSprite
-
-
-def initialize_player():
-    """Initializes the player object"""
-    pos = pygame.Vector2(settings.WORLD_WIDTH // 2, settings.WORLD_HEIGHT // 2)
-    return Player(pos, PlayerSprite(pos))
 
 
 def initialize_game_world(display):
     """Initializes the game world"""
     monster_spawner = MonsterSpawner()
     tile_map = TileMap()
-    player = initialize_player()
-    return GameWorld(monster_spawner, tile_map, player, display)
+    return GameWorld(monster_spawner, tile_map, display)
 
 
 def main():
@@ -48,7 +38,11 @@ def main():
 
     # Create a game instance and start it
     game = Game(display, world, input_handler)
-    game.run()
+
+    player = game.create_player()
+    player.assign_inventory(game.create_inventory())
+
+    game.run(player)
 
     # Properly quit Pygame
     pygame.quit() #pylint: disable=E1101

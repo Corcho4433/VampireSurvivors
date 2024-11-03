@@ -6,7 +6,7 @@ import random
 from pygame import Vector2
 
 import settings
-from business.entities.monsters.default_monster import DefaultMonster
+from business.entities.monster_factory import MonsterFactory
 from business.world.interfaces import IGameWorld, IMonsterSpawner
 
 
@@ -27,6 +27,6 @@ class MonsterSpawner(IMonsterSpawner):
 
     def __spawn_default_monster(self, world: IGameWorld):
         pos = self.__get_random_position()
-        monster = DefaultMonster(pos)
+        monster = MonsterFactory.create_monster('default', pos)
         world.add_monster(monster)
         self.__logger.debug("Spawning monster at (%d, %d)", pos.x, pos.y)

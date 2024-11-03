@@ -1,42 +1,41 @@
 """This module contains the implementation of the game world."""
 
-import settings
+#import settings
 
 from business.entities.interfaces import IBullet, IExperienceGem, IMonster, IPlayer
 from business.world.interfaces import IGameWorld, IMonsterSpawner, ITileMap
 from business.handlers.cooldown_handler import CooldownHandler
 from business.world.gem_spawner import ExperienceGemFactory
-from business.weapons.weapon_factory import WeaponFactory
-from presentation.interfaces import IDisplay
+#from business.weapons.weapon_factory import WeaponFactory
 from business.world.clock import Clock
+
+from presentation.interfaces import IDisplay
 
 class GameWorld(IGameWorld):
     """Represents the game world."""
     DEFAULT_MONSTER_SPAWN_TIME = 0.6
 
-    def __init__(self, spawner: IMonsterSpawner, tile_map: ITileMap, player: IPlayer, display: IDisplay):
+    def __init__(self, spawner: IMonsterSpawner, tile_map: ITileMap, display: IDisplay):
         # Initialize the player and lists for monsters, bullets and gems
-        self.__player: IPlayer = player
+        self.__player: IPlayer = None
         self.__monsters: list[IMonster] = []
         self.__bullets: list[IBullet] = []
         self.__experience_gems: list[IExperienceGem] = []
         self.__monster_spawner_cooldown: CooldownHandler = CooldownHandler(self.DEFAULT_MONSTER_SPAWN_TIME)
         self.__world_simulation_speed: int = 1
         self.__gem_factory = ExperienceGemFactory()
-        self.__weapon_factory = WeaponFactory(self)
         self.__display: IDisplay = display
         self.__upgrading: bool = False
         self.__clock = Clock()
-
-        self.__player.assign_world(self)
-
+        
         # Initialize the tile map
         self.tile_map: ITileMap = tile_map
 
         # Initialize the monster spawner
         self.__monster_spawner: IMonsterSpawner = spawner
 
-        #self.__player.give_weapon(self.__weapon_factory.create_gun())
+    def assign_player(self, player: IPlayer):
+        self.__player = player
 
     @property
     def clock_seconds(self):

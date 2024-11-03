@@ -34,7 +34,6 @@ class UIComponent(IDynamicUIComponent):
 
             display.screen.blit(shape_surf, self.__rect)
         except error as err:
-            print(self.__rect.size)
             print("Error on pygame:", err)
 
     def move(self, pos: Vector2):

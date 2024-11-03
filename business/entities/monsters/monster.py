@@ -12,12 +12,13 @@ from presentation.sprite import Sprite
 class Monster(MovableEntity, IMonster):
     """A monster entity in the game."""
 
-    def __init__(self, pos: Vector2, sprite: Sprite, mov_speed: int):
+    def __init__(self, pos: Vector2, sprite: Sprite, mov_speed: int, monster_type: str):
         super().__init__(pos, mov_speed, sprite)
         self.__health: int = 10
         self.__damage = 10
         self.__attack_range = 50
         self.__attack_cooldown = CooldownHandler(0.5)
+        self.__monster_type = monster_type
         self._logger.debug("Created %s", self)
 
     def attack(self, target: IDamageable):
@@ -47,6 +48,10 @@ class Monster(MovableEntity, IMonster):
     #) -> bool:
     #    new_position = self.sprite.rect.move(dx, dy).inflate(-10, -10)
     #    return any(e.sprite.rect.colliderect(new_position) for e in entities)
+
+    @property
+    def type(self) -> str:
+        return self.__monster_type
 
     def update(self, world: IGameWorld):
         direction = self.__get_direction_towards_the_player(world)

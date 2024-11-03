@@ -2,7 +2,7 @@
 
 import unittest
 
-from persistance.json_parser import JSONParser
+from persistance.upgrade_data_handler import JSONParser
 
 class TestsJSONParser(unittest.TestCase):
     def test01_prints_something(self):

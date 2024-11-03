@@ -1,25 +1,20 @@
 """Defines the class used for the player's inventory"""
 
 from business.progression.interfaces import IInventory, IInventoryItem
-from business.world.interfaces import IGameWorld
-from business.weapons.weapon_factory import WeaponFactory
 from business.progression.item import InventoryItem
-from business.progression.perk_factory import PerkFactory
 
 class Inventory(IInventory):
     """A class symbolizing the player's inventory"""
 
     DEFAULT_LIMIT = 6
 
-    def __init__(self, world: IGameWorld):
-        perk_factory = PerkFactory(world)
-
+    def __init__(self):
         self.__items = {}
 
-        self.add_item(perk_factory.create_perk("spinach"))
-        self.add_item(perk_factory.create_perk("clover"))
-        self.add_item(perk_factory.create_perk("hollow_heart"))
-        self.add_item(WeaponFactory(world).create_weapon('gun'))
+        #self.add_item(PerkFactory.create_perk("spinach"))
+        #self.add_item(PerkFactory.create_perk("clover"))
+        #self.add_item(PerkFactory.create_perk("hollow_heart"))
+        #self.add_item(WeaponFactory.create_weapon('gun'))
 
     @property
     def limit(self) -> int:

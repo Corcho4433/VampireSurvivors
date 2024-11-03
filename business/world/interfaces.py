@@ -11,6 +11,9 @@ class IGameWorld(ABC):
     The game world is the environment in which the game entities exist.
     """
 
+    def assign_player(self, player):
+        """Assign a player to the world"""
+
     @property
     @abstractmethod
     def clock_seconds(self):

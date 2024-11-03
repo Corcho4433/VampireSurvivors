@@ -56,7 +56,7 @@ class IWeapon(IInventoryItem):
         """Changes a statistic to fit a specific number"""
 
     @abstractmethod
-    def attack(self, origin, world):
+    def attack(self, origin, world, player_stats):
         """Uses the weapon to attack from a certain origin spot"""
 
     @property
@@ -221,6 +221,7 @@ class IUpgradePerk(IInventoryItem):
 class IPerkFactory(ABC):
     """Creates perks"""
 
+    @staticmethod
     @abstractmethod
-    def create_perk(self, name: str):
+    def create_perk(name: str):
         """Creates a perk using a name as base"""

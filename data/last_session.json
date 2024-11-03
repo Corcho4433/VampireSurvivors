@@ -1,13 +1,18 @@
 {
-    "player_info":{
+    "player":{
         "pos": [0, 0],
-        "inventory": [],
+        "inventory": [{
+            "name": "gun",
+            "level":1,
+            "type":1
+        }],
         "level":1,
-        "experience":1
+        "experience":0
     },
 
     "map_info":{
         "monsters":{},
-        "items":{}
+        "drops":{},
+        "bullets":{}
     }
 }

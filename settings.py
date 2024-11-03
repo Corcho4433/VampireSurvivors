@@ -1,4 +1,7 @@
+"""All the settings or core values needed to run the game"""
+
 # Display
+SAVE_FILE_PATH = "./data/last_session.json"
 GAME_TITLE = "Vampoilets Surboilers"
 FPS = 60
 

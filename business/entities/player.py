@@ -11,7 +11,8 @@ from business.world.interfaces import IGameWorld
 from business.progression.inventory import Inventory
 from business.progression.player_stats import PlayerStats
 from business.progression.interfaces import IInventoryItem
-from presentation.sprite import Sprite
+from business.handlers.position_handler import PositionHandler
+from presentation.sprite import PlayerSprite
 
 class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
     """Player entity.
@@ -20,20 +21,20 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
         It can move around the game world and shoot at monsters.
     """
 
-    def __init__(self, pos: pygame.Vector2, sprite: Sprite):
-        super().__init__(pos, 300, sprite)
+    def __init__(self, pos: pygame.Vector2, level=1, experience=0):
+        super().__init__(pos, 300, PlayerSprite(pos))
 
         self.__stats = PlayerStats(health=100)
         self.__last_shot_time = CooldownHandler(self.__stats.cooldown)
         self.__world: IGameWorld = None
         self.__inventory : Inventory = None
-        self.__experience = 0
+        self.__experience = experience
         self.__max_health = self.__stats.health
-        self.__level = 1
+        self.__level = level
         self._logger.debug("Created %s", self)
 
-    def __assign_inventory(self):
-        self.__inventory = Inventory(self.__world)
+    def assign_inventory(self, inventory):
+        self.__inventory = inventory
 
     def __str__(self):
         return f"Player(hp={self.__stats.health}, xp={self.__experience}, lvl={self.__level}, pos=({self._pos.x}, {self._pos.y}))" #pylint: disable=C0301
@@ -97,7 +98,7 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
 
     def __attack_at_nearest_enemy(self, world: IGameWorld):
         for weapon in self.__inventory.get_weapons():
-            weapon.attack(self.pos, world)
+            weapon.attack(self.pos, world, self.stats)
 
     def apply_perks(self):
         self.__stats = PlayerStats(health=100)
@@ -110,7 +111,6 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
 
     def assign_world(self, world: IGameWorld):
         self.__world = world
-        self.__assign_inventory()
         self.apply_perks()
 
     def give_item(self, item: IInventoryItem):
@@ -118,6 +118,9 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
 
     def update(self, world: IGameWorld):
         super().update(world)
+
+        if not PositionHandler.is_position_within_boundaries(self.pos):
+            self.move_to_center()
 
         if self.__last_shot_time.is_action_ready() and world.simulation_speed > 0:
             self.__attack_at_nearest_enemy(world)

@@ -132,6 +132,11 @@ class ICanMove(IHasPosition):
 class IMonster(IUpdatable, ICanMove, IDamageable, ICanDealDamage):
     """Interface for monster entities."""
 
+    @property
+    @abstractmethod
+    def type(self):
+        """The monster type"""
+
 
 class IHasCharges:
     """Interface that determines that an object"""
@@ -146,9 +151,6 @@ class IHasCharges:
 
 class IBullet(IUpdatable, ICanMove, IHasCharges, ICanDealDamage):
     """Interface for bullet entities."""
-
-class IAttack(IUpdatable, ICanDealDamage, IHasPosition):
-    """Interface for melee attacks."""
 
 class IExperienceGem(IUpdatable, IHasPosition, IPickeable):
     """Interface for experience gem entities."""
@@ -202,6 +204,14 @@ class IPlayer(IUpdatable, ICanMove, IDamageable, ICanDealDamage):
                 Inventory: the player's inventory
         """
 
+    @abstractmethod
+    def assign_inventory(self, inventory):
+        """Assign an inventory object to the player
+        
+            Args:
+                inventory (Inventory): The new player's inventory
+        """
+
     @property
     @abstractmethod
     def level(self) -> int:
@@ -252,4 +262,20 @@ class IPlayer(IUpdatable, ICanMove, IDamageable, ICanDealDamage):
         
             Args:
                 item: The item to add to the player's inventory
+        """
+
+class IMonsterFactory(ABC):
+    """A monster factory object that creates monsters"""
+
+    @staticmethod
+    @abstractmethod
+    def create_monster(monster_type: str, pos: Vector2):
+        """Creates a monster using the monster type given
+
+            Args:
+                monster_type (str): "default"
+                pos (Vector2): The position of the monster
+
+            Returns:
+                Monster: the monster created
         """

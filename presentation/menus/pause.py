@@ -69,7 +69,7 @@ class PauseMenu(Menu):
         self.__quit_button = Button(Vector2(settings.SCREEN_WIDTH // 2 - 125, 100), Vector2(250, 60), (100, 100, 110))
         self.__resume_button = Button(Vector2(settings.SCREEN_WIDTH // 2 - 125, 200), Vector2(250, 60), (100, 100, 110))
 
-        self.__quit_button.attach_text(Text("Close", self.__quit_button))
+        self.__quit_button.attach_text(Text("Save & Close", self.__quit_button))
         self.__resume_button.attach_text(Text("Continue", self.__resume_button))
 
         self.add_component(background)

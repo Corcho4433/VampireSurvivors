@@ -1,5 +1,5 @@
 {
-    "default_gun": [{   
+    "gun": [{   
             "description": "Increases the speed of the bullet by 50 units",
             "values": [
                 {"type":2, "stat":"power", "value":50}
