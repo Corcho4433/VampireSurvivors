@@ -18,7 +18,11 @@ class MonsterDAO(ABC):
         """Get all the monsters in the DAO data"""
 
     @abstractmethod
-    def create_monster(self, monster):
+    def clear_monsters(self):
+        """Clears the DAO monster object"""
+
+    @abstractmethod
+    def add_monster(self, monster):
         """Add a monster to the DAO data"""
 
 class PlayerDAO(ABC):
@@ -38,6 +42,10 @@ class InventoryDAO(ABC):
     @abstractmethod
     def get_inventory(self):
         """Gets the inventory object"""   
+
+    @abstractmethod
+    def clear_inventory(self):
+        """Clears the DAO inventory object"""
 
     @abstractmethod
     def add_item(self, item):

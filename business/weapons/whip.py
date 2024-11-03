@@ -9,7 +9,7 @@ class Whip(Weapon):
     """A whip that inflicts melee damage"""
 
     def __init__(self, stats: IWeaponStats, upgrades: list=[]): #pylint: disable=W0102
-        super().__init__("Whip", upgrades, stats)
+        super().__init__("whip", upgrades, stats)
 
     def attack(self, origin, world, player_stats: IPlayerStats):
         if not world.monsters:

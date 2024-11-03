@@ -9,7 +9,7 @@ class Gun(Weapon):
     """A gun that shoots bullets"""
 
     def __init__(self, stats: IWeaponStats, upgrades: list=[]): #pylint: disable=W0102
-        super().__init__("Gun", upgrades, stats)
+        super().__init__("gun", upgrades, stats)
 
     def attack(self, origin, world, player_stats: IPlayerStats):
         if not world.monsters:

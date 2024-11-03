@@ -61,6 +61,19 @@ class JSONInventoryDAO(InventoryDAO):
 
             return self.__get_full_file_json()
 
+
+    def clear_inventory(self):
+        try:
+            data = self.__get_full_file_json()
+            data['player']['inventory'] = []
+
+            with open(self.__path, 'w', encoding="utf-8") as data_file:
+                json.dump(data, data_file, indent=4)
+        except ValueError:
+            create_json_file(self.__path)
+
+            return self.clear_inventory()
+
     def add_item(self, item: InventoryItem):
         try:
             data = self.__get_full_file_json()
@@ -70,6 +83,7 @@ class JSONInventoryDAO(InventoryDAO):
                 "level": item.level,
             }
 
+            print(new_item)
             data['player']['inventory'].append(new_item)
 
             with open(self.__path, 'w', encoding="utf-8") as data_file:

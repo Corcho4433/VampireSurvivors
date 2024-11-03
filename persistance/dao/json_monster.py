@@ -48,7 +48,19 @@ class JSONMonsterDAO(MonsterDAO):
 
             return self.__get_full_file_json()
 
-    def create_monster(self, monster):
+    def clear_monsters(self):
+        try:
+            data = self.__get_full_file_json()
+            data['map_info']['monsters'] = []
+
+            with open(self.__path, 'w', encoding="utf-8") as data_file:
+                json.dump(data, data_file, indent=4)
+        except ValueError:
+            create_json_file(self.__path)
+
+            return self.clear_monsters()
+
+    def add_monster(self, monster):
         try:
             data = self.__get_full_file_json()
             new_monster = {
@@ -64,4 +76,4 @@ class JSONMonsterDAO(MonsterDAO):
         except ValueError:
             create_json_file(self.__path)
 
-            return self.create_monster(monster)
+            return self.add_monster(monster)

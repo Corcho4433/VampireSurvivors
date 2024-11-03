@@ -6,7 +6,11 @@ import json
 DEFAULT_JSON_STRUCTURE = {
     "player":{
         "pos": [0, 0],
-        "inventory": [],
+        "inventory": [{
+            "name":'gun',
+            "type":1,
+            "level":1
+        }],
         "level":1,
         "experience":0
     },

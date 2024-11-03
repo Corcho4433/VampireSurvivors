@@ -8,6 +8,7 @@ from presentation.userinterface.uicomponent import UIComponent
 from presentation.userinterface.button import Button
 from presentation.userinterface.text import Text
 from presentation.userinterface.dynamic_text import DynamicText
+from presentation.exceptions import SavedGameException
 
 class PauseMenu(Menu):
     """A pause menu for the game"""
@@ -58,7 +59,7 @@ class PauseMenu(Menu):
 
         # Clicking
         if self.__quit_button.is_clicked():
-            quit()
+            raise SavedGameException
 
         if self.__resume_button.is_clicked():
             self.__world.toggle_pause()

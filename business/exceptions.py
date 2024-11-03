@@ -3,8 +3,7 @@
 
 class DeadPlayerException(Exception):
     """Exception raised when the player dies."""
-
-
+    
 class InvalidStatValueException(Exception):
     """Exception raised when an invalid value is given to a stat"""
 

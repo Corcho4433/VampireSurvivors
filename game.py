@@ -9,10 +9,14 @@ from business.exceptions import DeadPlayerException
 from business.handlers.collision_handler import CollisionHandler
 from business.handlers.death_handler import DeathHandler
 from business.world.interfaces import IGameWorld
-from presentation.interfaces import IDisplay, IInputHandler
+
+from persistance.json_helpers import reset_file
 from persistance.dao.json_player import JSONPlayerDAO
 from persistance.dao.json_monster import JSONMonsterDAO
 from persistance.dao.json_inventory import JSONInventoryDAO
+
+from presentation.exceptions import SavedGameException
+from presentation.interfaces import IDisplay, IInputHandler
 
 class Game:
     """
@@ -58,11 +62,30 @@ class Game:
 
         return self.__inventory_dao.get_inventory()
 
+    def save(self):
+        """Save the player's progress in game"""
+
+        player = self.__world.player
+
+        self.__inventory_dao.clear_inventory()
+        for item in player.inventory.get_items():
+            self.__inventory_dao.add_item(item)
+
+        self.__monster_dao.clear_monsters()
+        for monster in self.__world.monsters:
+            self.__monster_dao.add_monster(monster)
+
+        self.__player_dao.add_player(player)
+
     def run(self, player):
         """Starts the game loop."""
         self.__logger.debug("Starting the game loop.")
-        
+
         self.__world.assign_player(player)
+
+        for monster in self.__monster_dao.get_all_monsters():
+            self.__world.add_monster(monster)
+
         player.assign_world(self.__world)
 
         while self.__running:
@@ -76,3 +99,7 @@ class Game:
                 self.__clock.tick(settings.FPS)
             except DeadPlayerException:
                 self.__running = False
+                reset_file(settings.SAVE_FILE_PATH)
+            except SavedGameException:
+                self.__running = False
+                self.save()
