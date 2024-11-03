@@ -1,6 +1,5 @@
 """Module that contains the DeathHandler class."""
 
-import settings
 #from business.entities.experience_gem import ExperienceGem
 from business.exceptions import DeadPlayerException
 from business.world.interfaces import IGameWorld
