@@ -12,15 +12,21 @@ class Weapon(InventoryItem, IWeapon):
         super().__init__(name, InventoryItem.TYPES['WEAPON'], upgrades)
 
         self.__weapon_stats: IWeaponStats = weapon_stats
-        self.__cooldown = CooldownHandler(self.__weapon_stats.cooldown)
+        self.__cooldown_handler = CooldownHandler(self.__weapon_stats.cooldown)
 
     @property
-    def cooldown(self):
-        return self.__cooldown
+    def cooldown_handler(self):
+        """The cooldown handler for the weapon"""
+
+        return self.__cooldown_handler
 
     @property
     def damage(self):
         return self.__weapon_stats.damage
+
+    @property
+    def cooldown(self):
+        return self.__weapon_stats.cooldown
 
     @property
     def speed(self):
@@ -30,17 +36,11 @@ class Weapon(InventoryItem, IWeapon):
     def power(self):
         return self.__weapon_stats.power
 
+    @property
+    def range(self):
+        return self.__weapon_stats.range
+
     def change_stat(self, name: str, new_value: float | int):
         self.__weapon_stats.change_stat(name, new_value)
 
-        self.__cooldown.change_time(self.__weapon_stats.cooldown)
-
-    def upgrade(self):
-        super().upgrade()
-
-        current_level = self.level
-
-        if current_level <= len(self.upgrades):
-            current_upgrade: IUpgrade = self.upgrades[current_level - 2]
-
-            current_upgrade.apply(self)
+        self.__cooldown_handler.change_time(self.__weapon_stats.cooldown)

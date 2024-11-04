@@ -156,6 +156,11 @@ class IMonster(IUpdatable, ICanMove, IDamageable, ICanDealDamage):
 
     @property
     @abstractmethod
+    def attack_cooldown(self):
+        """The cooldown until the next attack of the monster"""
+
+    @property
+    @abstractmethod
     def can_move(self) -> bool:
         """Whether or not the entity can move
 
@@ -178,6 +183,19 @@ class IHasCharges:
 class IHitbox:
     """Inteface for the hitbox"""
 
+    @property
+    @abstractmethod
+    def size(self):
+        """"The size of the hitbox as a Vector2"""
+
+    @abstractmethod
+    def get_enemies_inside(self, world):
+        """Get all the enemies inside the hitbox at the moment
+
+            Returns:
+                list[IMonster]: A list of monsters inside the hitbox
+        """
+
 class IHasHitbox:
     """Inteface that determines that an object has a hitbox"""
 
@@ -186,6 +204,20 @@ class IAttack(IUpdatable, ICanDealDamage):
 
 class IMeleeAttack(IAttack, IHasHitbox):
     """Interface for melee attack entities"""
+
+    @abstractmethod
+    def process_attack(self, world):
+        """Process all whats needed for the attack to detect hits and more"""
+
+    @property
+    @abstractmethod
+    def is_finished(self):
+        """Whether or not the attack is done processing on screen"""
+
+    @property
+    @abstractmethod
+    def damaged_monsters(self):
+        """A list of monsters damaged by the attack"""
 
 class IDistanceAttack(IAttack, ICanMove, IHasCharges):
     """Interface for distance attack entities"""
@@ -230,6 +262,20 @@ class IExperienceGem(ICollectible):
         Returns:
             int: The amount of experience the gem gives.
         """
+
+
+class IHealingGem(ICollectible):
+    """Interface for healing gem entities."""
+
+    @property
+    @abstractmethod
+    def amount(self) -> int:
+        """The amount of healing the gem gives.
+
+        Returns:
+            int: The amount of healing the gem gives.
+        """
+
 
 class IPlayer(IUpdatable, ICanMove, IDamageable, ICanDealDamage):
     """Interface for the player entity."""

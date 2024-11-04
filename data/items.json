@@ -32,12 +32,22 @@
     "whip": {
         "type":1,
         "upgrades":[{   
+            "description": "Doubles the range of the whip",
+            "values": [
+                {"type":1, "stat":"range", "value":1.1}
+            ]
+        },{   
             "description": "Increases the damage of the whip by 3 units",
             "repeats":2,
             "values": [
                 {"type":2, "stat":"damage", "value":3}
             ]
-        }, {   
+        },{   
+            "description": "Doubles the range of the whip",
+            "values": [
+                {"type":1, "stat":"range", "value":1.1}
+            ]
+        },{   
             "description": "Increases the damage dealt by 150%",
             "repeats":2,
             "values": [
@@ -77,7 +87,17 @@
             "description": "Increase the players luck by 10%",
             "repeats":5,
             "values": [
-                {"type":1, "stat":"luck", "value":1.1}
+                {"type":2, "stat":"luck", "value":10}
+            ]
+        }
+    ]},
+    "wings": {
+        "type":2,
+        "upgrades":[{   
+            "description": "Increase the players movement speed by 10%",
+            "repeats":5,
+            "values": [
+                {"type":1, "stat":"movement_speed", "value":1.1}
             ]
         }
     ]}

@@ -1,15 +1,18 @@
+"""Defines a hitbox used for attacks"""
+
 import pygame
 from business.entities.interfaces import IMonster
 from business.entities.interfaces import IHitbox
 from business.world.interfaces import IGameWorld
 
 class Hitbox(IHitbox):
+    """A hitbox, generally used in attacks"""
+
     def __init__(self, size: pygame.Vector2, pos: pygame.Vector2):
         self.__size : pygame.Vector2 = size
         self.__pos : pygame.Vector2 = pos
-        self.__rect = pygame.Rect(self.__pos.x, self.__pos.y, self.__size.x, self.__size.y)
+        self.__rect = pygame.Rect(self.__pos.x - self.size.x // 2, self.__pos.y - self.size.y // 2, self.size.x, self.size.y)
 
-    # Esto es solo por si agregamos el area de ataque como upgrade
     @property
     def size(self):
         return self.__size

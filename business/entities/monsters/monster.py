@@ -6,18 +6,22 @@ from business.entities.entity import MovableEntity
 from business.entities.interfaces import IDamageable, IMonster
 from business.handlers.cooldown_handler import CooldownHandler
 from business.world.interfaces import IGameWorld
-from business.handlers.cooldown_handler import CooldownHandler
+from business.world.clock import Clock
 from presentation.sprite import Sprite
+
 
 class Monster(MovableEntity, IMonster):
     """A monster entity in the game."""
 
-    def __init__(self, pos: Vector2, sprite: Sprite, mov_speed: int, monster_type: str, health: int=10):
+    def __init__(self, pos: Vector2, sprite: Sprite, mov_speed: int, monster_type: str, health: int=1, damage: int=3, range: int=60):
         super().__init__(pos, mov_speed, sprite)
+        clock_time = Clock().time
+        health = (health + round(clock_time/20)) * max((clock_time / 180), 1)
+
         self.__health: int = health
         self.__max_health = health
-        self.__damage = 10
-        self.__attack_range = 60
+        self.__damage = damage * (clock_time / 120)
+        self.__attack_range = range
         self.__attack_cooldown = CooldownHandler(0.5)
         self.__dmg_taken_cooldown = CooldownHandler(2.5)
         self.__can_move_cooldown = CooldownHandler(mov_speed / 480)
@@ -29,7 +33,7 @@ class Monster(MovableEntity, IMonster):
         if not self.__attack_cooldown.is_action_ready():
             return
 
-        if self._get_distance_to(target) < self.__attack_range:
+        if self.pos.distance_to(target.pos) < self.__attack_range:
             target.take_damage(self.damage)
             self.__attack_cooldown.put_on_cooldown()
 
@@ -47,18 +51,18 @@ class Monster(MovableEntity, IMonster):
         return Vector2(x, y)
 
     def __movement_collides_with_entities(self, delta: Vector2, entities: list[IMonster], player) -> bool:
-        for entity in entities:
-            if entity == self:
-                continue
+        #for entity in entities:
+            #if entity == self:
+             #   continue
 
-            if self.sprite.rect.colliderect(entity.sprite.rect) and entity.can_move:
-                other_to_plr = entity.pos.distance_to(player.pos)
-                self_to_plr = self.pos.distance_to(player.pos)
+            #if self.sprite.rect.colliderect(entity.sprite.rect) and entity.can_move:
+                #other_to_plr = entity.pos.distance_to(player.pos)
+                #self_to_plr = self.pos.distance_to(player.pos)
 
-                if other_to_plr > self_to_plr:
-                    self.__can_move_cooldown.put_on_cooldown()
+                #if other_to_plr > self_to_plr:
+                    #self.__can_move_cooldown.put_on_cooldown()
 
-                    return Vector2(0, 0)
+                    #return Vector2(0, 0)
 
         return delta
 
@@ -105,6 +109,10 @@ class Monster(MovableEntity, IMonster):
     @property
     def max_health(self) -> int:
         return self.__max_health
+
+    @property
+    def attack_cooldown(self):
+        return self.__attack_cooldown
 
     def take_damage(self, amount):
         self.__health = max(0, self.__health - abs(amount))

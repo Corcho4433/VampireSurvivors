@@ -1,15 +1,18 @@
 """Player entity module."""
 
 import pygame
+from pygame import Vector2
+
 import settings
 
-from business.handlers.cooldown_handler import CooldownHandler
 from business.entities.entity import MovableEntity
 from business.entities.interfaces import ICanDealDamage, IDamageable, IPlayer
 from business.world.interfaces import IGameWorld
 from business.progression.inventory import Inventory
 from business.progression.player_stats import PlayerStats
 from business.progression.interfaces import IInventoryItem
+from business.entities.collectibles.experience_gem import ExperienceGem
+from business.entities.collectibles.healing_gem import HealingGem
 from business.handlers.position_handler import PositionHandler
 from presentation.sprite import PlayerSprite
 
@@ -21,6 +24,9 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
     """
 
     def __init__(self, pos: pygame.Vector2, level=1, experience=0):
+        if not PositionHandler.is_position_within_boundaries(pos):
+            self.move_to_center()
+
         super().__init__(pos, 300, PlayerSprite(pos))
 
         self.__stats = PlayerStats(health=100)
@@ -85,7 +91,10 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
         self.sprite.take_damage()
 
     def pickup_gem(self, gem):
-        self.__gain_experience(gem.amount)
+        if isinstance(gem, ExperienceGem):
+            self.__gain_experience(gem.amount)
+        if isinstance(gem, HealingGem):
+            self.__heal_from(gem.amount)
 
     def __gain_experience(self, amount: int):
         self.__experience += amount
@@ -93,6 +102,10 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
             self.__experience -= self.experience_to_next_level
             self.__level += 1
             self.__world.set_upgrade_menu_active(True)
+
+    def __heal_from(self, amount: int):
+        new_health = self.health + amount
+        self.__stats.health = min(new_health, self.max_health)
 
     def __attack_at_nearest_enemy(self, world: IGameWorld):
         for weapon in self.__inventory.get_weapons():
@@ -118,7 +131,10 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
         self.__inventory.add_item(item)
 
     def move(self, direction):
-        super().move(direction)
+        if not PositionHandler.is_position_within_boundaries(self.pos + (direction * self.__stats.movement_speed) * (1/settings.FPS) * 2):
+            return
+
+        super().move(direction * self.__stats.movement_speed)
 
         if direction.x < 0:
             self.sprite.flip(True)

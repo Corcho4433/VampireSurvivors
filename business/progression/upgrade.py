@@ -23,6 +23,9 @@ class UpgradeValue(IUpgradeValue):
     def stat(self):
         return self.__stat
 
+    def __eq__(self, other_value):
+        return self.stat == other_value.stat and self.value == other_value.value and self.type == other_value.type #pylint: disable=C0301
+
 class Upgrade(IUpgrade):
     """An upgrade for the weapon"""
 
@@ -45,6 +48,7 @@ class Upgrade(IUpgrade):
 
                 match upgrade_value.type:
                     case self.MULTIPLY:
+                        #print(upgrade_value.stat, base, upgrade_value.value, upgrade_value.value * base)
                         item.change_stat(upgrade_value.stat, base * upgrade_value.value)
                     case self.ADD:
                         item.change_stat(upgrade_value.stat, base + upgrade_value.value)
@@ -64,4 +68,23 @@ class Upgrade(IUpgrade):
         return self.__description
 
     def __str__(self):
-        return f"UpgradeObject - Description:{self.__description} - Values:{self.__values}"
+        values_str = []
+        for value in self.__values:
+            values_str.append(f"stat:{value.stat}-value:{value.value}-type:{value.type}")
+
+        return f"UpgradeObject - Description:{self.__description} - Values:{str(values_str)}"
+
+    def __eq__(self, other):
+        equal_desc = other.description == self.description
+        equal_values = len(self.values) == len(other.values)
+
+        if equal_values:
+            for i in len(other.values):
+                other_val = other.values[i]
+                self_val = self.values[i]
+
+                if self_val != other_val:
+                    equal_values = False
+                    break
+
+        return equal_desc and equal_values

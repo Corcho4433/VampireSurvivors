@@ -39,6 +39,11 @@ class Sprite(pygame.sprite.Sprite):
         return self.__mask
 
     @property
+    def time_per_frame(self):
+        """The time until the next frame in the animation"""
+        return 10
+
+    @property
     def image(self) -> pygame.Surface:
         """The image of the sprite.
 
@@ -59,6 +64,16 @@ class Sprite(pygame.sprite.Sprite):
             pygame.Rect: The rect of the sprite. A rect is a rectangle that defines the position and size of the sprite.
         """
         return self._rect
+
+    @property
+    def size(self) -> pygame.Vector2:
+        """The size of the sprite
+        
+            Returns:
+                pygame.Vector2: The size of the sprite. A Vector2 is a vector with 2 axis
+        """
+
+        return pygame.Vector2(self._rect.width, self._rect.height)
 
     def update_pos(self, pos: pygame.Vector2):
         """Update the position of the sprite.
@@ -107,7 +122,7 @@ class Sprite(pygame.sprite.Sprite):
 
     def advance_frame(self):
         """Go forward one frame in the sprite's animation"""
-        self.__next_frame_time = 10
+        self.__next_frame_time = self.time_per_frame
 
     def set_sprite_state(self, state: str):
         """Switches the sprite's state
@@ -185,6 +200,38 @@ class RedGhostSprite(Sprite):
 
         super().__init__(image, rect)
 
+class BossSprite(Sprite):
+    """A class representing the player sprite."""
+
+    ASSET = "./assets/boss.png"
+
+    def __init__(self, pos: pygame.Vector2):
+        self.__moving_tileset = Tileset(
+            BossSprite.ASSET, settings.TILE_HEIGHT * 3, settings.TILE_HEIGHT * 3, 4, 2
+        )
+        self.__current_tile = 7
+
+        image: pygame.Surface = self.__moving_tileset.get_tile(self.__current_tile)
+        rect: pygame.Rect = image.get_rect(center=(int(pos.x), int(pos.y)))
+
+        super().__init__(image, rect)
+
+    def advance_frame(self):
+        if self.time_until_next_frame > 0:
+            return
+
+        if self.__current_tile - 1 < 0:
+            self.__current_tile = 7
+        else:
+            self.__current_tile -= 1
+
+        super().advance_frame()
+
+        if self.state == 'moving':
+            self._image = self.__moving_tileset.get_tile(self.__current_tile)
+        elif self.state == 'idle':
+            self._image = self.__moving_tileset.get_tile(0)
+
 class BulletSprite(Sprite):
     """A class representing the bullet sprite."""
 
@@ -200,14 +247,35 @@ class BulletSprite(Sprite):
 class AttackWhipSprite(Sprite):
     """A class representing the melee attack sprite."""
 
-    def __init__(self, pos: pygame.Vector2):
-        size = 48
+    ASSET = "./assets/whip_attack_spritesheet.png"
 
-        image = pygame.Surface((size, size), pygame.SRCALPHA)  # pylint: disable=E1101
-        pygame.draw.circle(image, (255, 0, 0), (size // 2, size // 2), size // 2)
-        rect: pygame.rect = image.get_rect(center=(int(pos.x), int(pos.y)))
+    def __init__(self, pos: pygame.Vector2, scale: int):
+        self.__moving_tileset = Tileset(
+            AttackWhipSprite.ASSET, round(200 * scale), round(200 * scale), 4, 4
+        )
+        self.__current_tile = 0
+
+        image: pygame.Surface = self.__moving_tileset.get_tile(self.__current_tile)
+        rect: pygame.Rect = image.get_rect(center=(int(pos.x), int(pos.y)))
 
         super().__init__(image, rect)
+
+    def advance_frame(self):
+        if self.time_until_next_frame > 0:
+            return
+
+        if self.__current_tile + 1 > 15:
+            self.__current_tile = 0
+        else:
+            self.__current_tile += 1
+
+        super().advance_frame()
+
+        self._image = self.__moving_tileset.get_tile(self.__current_tile)
+
+    @property
+    def time_per_frame(self):
+        return 1
 
 class ExperienceGemSprite(Sprite):
     """A class representing the experience gem sprite."""
@@ -216,6 +284,18 @@ class ExperienceGemSprite(Sprite):
 
     def __init__(self, pos: pygame.Vector2):
         image: pygame.Surface = pygame.image.load(ExperienceGemSprite.ASSET).convert_alpha()
+        image = pygame.transform.scale(image, (32,32))
+        rect: pygame.rect = image.get_rect(center=(int(pos.x), int(pos.y)))
+
+        super().__init__(image, rect)
+
+class HealingGemSprite(Sprite):
+    """A class representing the healing gem sprite."""
+
+    ASSET = "./assets/healing_gem.png"
+
+    def __init__(self, pos: pygame.Vector2):
+        image: pygame.Surface = pygame.image.load(HealingGemSprite.ASSET).convert_alpha()
         image = pygame.transform.scale(image, (32,32))
         rect: pygame.rect = image.get_rect(center=(int(pos.x), int(pos.y)))
 

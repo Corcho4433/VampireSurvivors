@@ -75,6 +75,15 @@ class IWeapon(IInventoryItem):
 
     @property
     @abstractmethod
+    def range(self):
+        """The range multiplier of the attack's size for the weapon
+        
+            Returns:
+                int: The multiplier
+        """
+
+    @property
+    @abstractmethod
     def speed(self):
         """The speed of an attack
         

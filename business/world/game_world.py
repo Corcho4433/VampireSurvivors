@@ -22,6 +22,9 @@ class GameWorld(IGameWorld):
         self.__monsters: list[IMonster] = []
         self.__attacks: list[IAttack] = []
         self.__collectibles: list[IPickeable] = []
+        self.__clock = Clock()
+        self.__clock.set_time(0)
+
         self.__monster_spawner_cooldown: CooldownHandler = CooldownHandler(self.DEFAULT_MONSTER_SPAWN_TIME)
         self.__chest_spawner_cooldown : CooldownHandler = CooldownHandler(1) #random.randint(40,70)
         self.__world_simulation_speed: int = 1
@@ -29,7 +32,6 @@ class GameWorld(IGameWorld):
         self.__upgrading: bool = False
         self.__total_damage = 0
         self.__time_dead = 0
-        self.__clock = Clock()
 
         # Initialize the tile map
         self.tile_map: ITileMap = tile_map
@@ -117,8 +119,11 @@ class GameWorld(IGameWorld):
         self.__monsters.append(monster)
 
     def remove_monster(self, monster: IMonster):
-        self.__monsters.remove(monster)
+        if monster in self.__monsters:
+            self.__monsters.remove(monster)
+
         CollectibleFactory.create_random_gem(monster, self)
+        del monster
 
     def add_collectible(self, collectible: IPickeable):
         self.__collectibles.append(collectible)
@@ -126,11 +131,15 @@ class GameWorld(IGameWorld):
     def remove_collectible(self, collectible: IPickeable):
         self.__collectibles.remove(collectible)
 
+        del collectible
+
     def add_attack(self, attack: IAttack):
         self.__attacks.append(attack)
 
     def remove_attack(self, attack: IAttack):
         self.__attacks.remove(attack)
+
+        del attack
 
     def __pause(self):
         self.__world_simulation_speed = 0

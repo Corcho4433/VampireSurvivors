@@ -17,6 +17,8 @@ class PerkFactory(IPerkFactory):
                 return PerkFactory.__create_clover()
             case 'spinach':
                 return PerkFactory.__create_spinach()
+            case 'wings':
+                return PerkFactory.__create_wings()
 
     @staticmethod
     def __create_hollow_heart() -> Perk:
@@ -24,6 +26,13 @@ class PerkFactory(IPerkFactory):
         upgrades = DataHandler.build_upgrades_for_item("hollow_heart")
 
         return Perk("hollow_heart", stats, upgrades)
+
+    @staticmethod
+    def __create_wings() -> Perk:
+        stats = PlayerStats(movement_speed=1.1)
+        upgrades = DataHandler.build_upgrades_for_item("wings")
+
+        return Perk("wings", stats, upgrades)
 
     @staticmethod
     def __create_spinach() -> Perk:
@@ -34,7 +43,7 @@ class PerkFactory(IPerkFactory):
 
     @staticmethod
     def __create_clover() -> Perk:
-        stats = PlayerStats(luck=1.2)
+        stats = PlayerStats(luck=10)
         upgrades = DataHandler.build_upgrades_for_item("clover")
 
         return Perk("clover", stats, upgrades)

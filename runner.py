@@ -49,6 +49,11 @@ def main():
     try:
         game.run(player)
     except RetryGameException:
+        del game
+        del display
+        del world
+        del input_handler
+
         reset_file(settings.SAVE_FILE_PATH)
         main()
 

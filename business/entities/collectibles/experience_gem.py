@@ -1,4 +1,4 @@
-""""""
+"""Defines an experience gem, which gives the player experience"""
 from pygame import Vector2
 
 from presentation.sprite import ExperienceGemSprite

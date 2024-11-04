@@ -3,7 +3,7 @@
 """
 
 import pygame
-from pygame import Vector2, Surface, draw, SRCALPHA #pylint: disable=E0611
+from pygame import Vector2, Surface, SRCALPHA #pylint: disable=E0611
 
 from presentation.userinterface.uicomponent import UIComponent
 from presentation.interfaces import IImageComponent
@@ -27,7 +27,7 @@ class ImageComponent(UIComponent, IImageComponent):
         self.__image = pygame.transform.scale(self.__raw_image, self.__image_size)
 
     def draw(self) -> Surface:
-        color = (self.color[0], self.color[1], self.color[2], self.opacity)
+        #color = (self.color[0], self.color[1], self.color[2], self.opacity)
         shape_surf = Surface(self.rect.size, SRCALPHA)
 
         shape_surf.blit(self.__image, self.image.get_rect())

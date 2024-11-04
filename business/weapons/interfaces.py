@@ -17,6 +17,11 @@ class IWeaponStats(ABC):
 
     @property
     @abstractmethod
+    def range(self):
+        """The base range multiplier of the weapon stats"""
+
+    @property
+    @abstractmethod
     def power(self):
         """The amplified power of an attack"""
 

@@ -1,5 +1,5 @@
 """Defines the class used by whips"""
-from pygame import Vector2
+
 from business.weapons.weapon import Weapon
 from business.progression.interfaces import IPlayerStats
 from business.weapons.interfaces import IWeaponStats
@@ -12,10 +12,10 @@ class Whip(Weapon):
         super().__init__("whip", upgrades, stats)
 
     def attack(self, origin, world, player_stats: IPlayerStats):
-        if not world.monsters or not self.cooldown.is_action_ready():
+        if not world.monsters or not self.cooldown_handler.is_action_ready():
             return
 
-        self.cooldown.put_on_cooldown()
-        attack = AttackWhip(origin, player_stats.attack_damage)
+        self.cooldown_handler.put_on_cooldown()
+        attack = AttackWhip(origin, self.damage, self.range)
 
         world.add_attack(attack)

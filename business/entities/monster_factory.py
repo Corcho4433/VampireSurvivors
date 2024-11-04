@@ -3,6 +3,7 @@
 from pygame import Vector2
 from business.entities.monsters.default_monster import DefaultMonster
 from business.entities.monsters.red_ghost import RedGhost
+from business.entities.monsters.boss import Boss
 from business.entities.interfaces import IMonsterFactory
 
 class MonsterFactory(IMonsterFactory):
@@ -15,3 +16,5 @@ class MonsterFactory(IMonsterFactory):
                 return DefaultMonster(pos)
             case "red_ghost":
                 return RedGhost(pos)
+            case "boss":
+                return Boss(pos)

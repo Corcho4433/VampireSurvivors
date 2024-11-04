@@ -6,7 +6,7 @@ from business.exceptions import InvalidStatValueException
 class PlayerStats(IPlayerStats):
     """The stats for the player"""
 
-    BASE_LUCK = 1
+    BASE_LUCK = 0
     BASE_HEALTH = 1
     BASE_ATTACK_DAMAGE = 1
     BASE_ATTACK_SPEED = 1
@@ -79,7 +79,7 @@ class PlayerStats(IPlayerStats):
         if new_movement_speed < 0:
             raise InvalidStatValueException("Invalid value given for movement speed")
 
-        return self.__movement_speed
+        self.__movement_speed = new_movement_speed
 
     @property
     def cooldown(self):
@@ -99,11 +99,11 @@ class PlayerStats(IPlayerStats):
                 self.health * other_player_stats.health,
                 self.attack_damage * other_player_stats.attack_damage,
                 self.movement_speed * other_player_stats.movement_speed,
-                self.luck * other_player_stats.luck,
+                self.luck + other_player_stats.luck,
                 self.cooldown * other_player_stats.cooldown,
                 self.attack_speed * other_player_stats.attack_speed,
             )
-        elif type(other_player_stats) == int:
+        elif isinstance(other_player_stats, int):
             return PlayerStats(self.health * other_player_stats,
                                self.attack_damage * other_player_stats,
                                self.movement_speed * other_player_stats,

@@ -137,6 +137,7 @@ class Display(IDisplay):
         for attack in self.__world.attacks:
             if self.camera.camera_rect.colliderect(attack.sprite.rect):
                 adjusted_rect = self.camera.apply(attack.sprite.rect)
+
                 self.__screen.blit(attack.sprite.image, adjusted_rect)
 
         # Draw the player

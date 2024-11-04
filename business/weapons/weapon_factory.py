@@ -5,6 +5,7 @@ from business.weapons.gun import Gun
 from business.weapons.whip import Whip
 from business.weapons.weapon_stats import WeaponStats
 from business.handlers.data_handler import DataHandler
+from business.exceptions import InvalidWeaponName
 
 class WeaponFactory(IWeaponFactory):
     """A weapon factory used to create weapons of any type"""
@@ -18,6 +19,8 @@ class WeaponFactory(IWeaponFactory):
                 return WeaponFactory.__create_gun()
             case 'whip':
                 return WeaponFactory.__create_whip()
+            case _:
+                raise InvalidWeaponName
 
     @staticmethod
     def __create_gun():

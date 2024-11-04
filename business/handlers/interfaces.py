@@ -14,12 +14,3 @@ class IDataHandler(ABC):
                 list[Upgrade]: List of all the upgrades
 
         """
-
-    @staticmethod
-    @abstractmethod
-    def build_monsters_from_last_save_file():
-        """Builds all the monster objects using the last session saved data
-        
-            Returns:
-                list[Monster]: List of all the monsters
-        """

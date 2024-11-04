@@ -1,4 +1,4 @@
-"""Defines the class of a monster using JSON file"""
+"""Defines the class of a player using JSON file"""
 
 import json
 from pygame import Vector2
@@ -9,7 +9,7 @@ from persistance.interfaces import PlayerDAO
 from persistance.json_helpers import create_json_file
 
 class JSONPlayerDAO(PlayerDAO):
-    """A Data-Access-Object that handles all monsters in a json file"""
+    """A Data-Access-Object that handles the player in a json file"""
 
     def __init__(self, json_path: str):
         self.__path = json_path

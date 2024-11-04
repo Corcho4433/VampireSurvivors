@@ -2,7 +2,7 @@
 
 from typing import List
 
-from business.entities.interfaces import IBullet, IExperienceGem, IHasSprite, IMonster, IPlayer, IMeleeAttack, IDistanceAttack, IChest
+from business.entities.interfaces import IBullet, IExperienceGem, IHasSprite, IMonster, IPlayer, IMeleeAttack, IDistanceAttack, IChest, IHealingGem
 from business.world.interfaces import IGameWorld
 
 
@@ -18,10 +18,14 @@ class CollisionHandler:
         attacks: List[IBullet] = world.attacks
         monsters: List[IMonster] = world.monsters
 
-        attack_masks = {attack.sprite: attack.sprite.mask for attack in attacks}
+        bullet_attack_masks = {attack.sprite: attack.sprite.mask for attack in attacks if isinstance(attack, IDistanceAttack)}
         monster_masks = {monster.sprite: monster.sprite.mask for monster in monsters}
 
-        for attack_sprite, attack_mask in attack_masks.items():
+        for attack in attacks:
+            if isinstance(attack, IMeleeAttack):
+                attack.process_attack(world)
+
+        for attack_sprite, attack_mask in bullet_attack_masks.items():
             for monster_sprite, monster_mask in monster_masks.items():
                 # Check for overlap using masks
 
@@ -52,7 +56,7 @@ class CollisionHandler:
     def __handle_collectibles(collectibles: List[IExperienceGem], player: IPlayer):
         for collectible in collectibles:
             if CollisionHandler.__collides_with(collectible, player):
-                if isinstance(collectible, IExperienceGem):
+                if isinstance(collectible, IExperienceGem) or isinstance(collectible, IHealingGem):
                     player.pickup_gem(collectible)
                     collectible.pick()
                 if isinstance(collectible, IChest):

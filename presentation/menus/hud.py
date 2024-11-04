@@ -70,6 +70,8 @@ class HUD(Menu):
         for item_component in self.__items:
             self.remove_component(item_component)
 
+            del item_component
+
         self.__items = []
 
         amount = len(full_inventory)

@@ -10,12 +10,18 @@ class WeaponStats(IWeaponStats):
     BASE_SPEED = 1
     BASE_POWER = 0
     BASE_COOLDOWN = 10
+    BASE_RANGE = 1
 
-    def __init__(self, damage=BASE_DAMAGE, speed=BASE_SPEED, power=BASE_DAMAGE, cooldown=BASE_COOLDOWN):
+    def __init__(self, damage=BASE_DAMAGE, speed=BASE_SPEED, power=BASE_DAMAGE, cooldown=BASE_COOLDOWN, weapon_range=BASE_RANGE):
         self.__damage = damage
         self.__speed = speed
         self.__power = power
         self.__cooldown = cooldown
+        self.__range = weapon_range
+
+    @property
+    def range(self):
+        return self.__range
 
     @property
     def cooldown(self):
@@ -46,5 +52,7 @@ class WeaponStats(IWeaponStats):
                 self.__power = new_value
             case 'cooldown':
                 self.__cooldown = new_value
+            case 'range':
+                self.__range = new_value
             case _:
                 raise InvalidStatNameException
