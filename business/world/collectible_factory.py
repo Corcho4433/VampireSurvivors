@@ -27,12 +27,11 @@ class CollectibleFactory(ICollectibleFactory):
         luck_stat = world.player.luck
 
         minimum_threshold = settings.MINIMUM_GEM_DROP_CHANCE + luck_stat
-        print(minimum_threshold, luck_stat)
         chance = randint(0, 100)
 
         if chance < minimum_threshold:
             choice = randint(0, 100)
-            if 0 <= choice <= 70: 
+            if 0 <= choice <= 70:
                 gem = CollectibleFactory.create_collectible('experience', monster.pos)
             else:
                 gem = CollectibleFactory.create_collectible('healing', monster.pos)

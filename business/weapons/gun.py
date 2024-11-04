@@ -18,7 +18,7 @@ class Gun(Weapon):
         # Find the nearest monster
         self.cooldown_handler.put_on_cooldown()
         bullet = Bullet(origin, self.__aim_at_target(origin, world), self.damage * player_stats.attack_damage)
-        bullet.change_speed((bullet.original_speed + self.power)* self.speed)
+        bullet.change_speed((bullet.original_speed + self.power) * self.speed)
 
         world.add_attack(bullet)
 

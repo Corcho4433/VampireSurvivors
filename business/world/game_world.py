@@ -26,7 +26,7 @@ class GameWorld(IGameWorld):
         self.__clock.set_time(0)
 
         self.__monster_spawner_cooldown: CooldownHandler = CooldownHandler(self.DEFAULT_MONSTER_SPAWN_TIME)
-        self.__chest_spawner_cooldown : CooldownHandler = CooldownHandler(1) #random.randint(40,70)
+        self.__chest_spawner_cooldown: CooldownHandler = CooldownHandler(random.randint(40,70))
         self.__world_simulation_speed: int = 1
         self.__display: IDisplay = display
         self.__upgrading: bool = False

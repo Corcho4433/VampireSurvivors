@@ -54,11 +54,11 @@ class CollisionHandler:
             if CollisionHandler.__collides_with(collectible, player):
                 if isinstance(collectible, IExperienceGem) or isinstance(collectible, IHealingGem):
                     player.pickup_gem(collectible)
-                    collectible.pick()
                 if isinstance(collectible, IChest):
                     player.give_item(collectible.item)
                     player.apply_perks(heal=False)
-                    collectible.pick()
+
+                collectible.pick()
 
     @staticmethod
     def handle_collisions(world: IGameWorld):

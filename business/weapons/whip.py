@@ -16,6 +16,6 @@ class Whip(Weapon):
             return
 
         self.cooldown_handler.put_on_cooldown()
-        attack = AttackWhip(origin, self.damage, self.range)
+        attack = AttackWhip(origin, self.damage * player_stats.attack_damage, self.range)
 
         world.add_attack(attack)
