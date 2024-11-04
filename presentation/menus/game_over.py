@@ -3,7 +3,7 @@
 """
 
 from datetime import timedelta
-from pygame import Vector2
+from pygame import Vector2, time
 import settings
 
 from presentation.exceptions import RetryGameException
@@ -37,6 +37,27 @@ class GameOver(Menu):
 
         if not self.active:
             return
+
+        buttons = [self.__retry_button, self.__quit_button]
+        for btn in buttons:
+            factor = min((time.get_ticks() - btn.hover_time)/100, 1)
+            size = btn.original_properties['size']
+            pos = btn.original_properties['pos']
+
+            if btn.is_hovering():
+                origin = btn.original_properties['color']
+                pos = Vector2(btn.pos.x + ((pos.x - size.x * .05) - btn.pos.x) * factor, btn.pos.y + ((pos.y - size.y*0.0125) - btn.pos.y) * factor)
+                size = Vector2(btn.size.x + (size.x * 1.1 - btn.size.x) * factor, btn.size.y + (size.y * 1.025 - btn.size.y) * factor)
+
+                btn.change_color((origin[0] + 25, origin[2] + 25, origin[2] + 25))
+            else:
+                pos = Vector2(btn.pos.x + (pos.x - btn.pos.x) * factor, btn.pos.y + (pos.y - btn.pos.y) * factor)
+                size = Vector2(btn.size.x + (size.x - btn.size.x) * factor, btn.size.y + (size.y - btn.size.y) * factor)
+
+                btn.change_color(btn.original_properties['color'])
+
+            btn.resize(size)
+            btn.move(pos)
 
         if self.__retry_button.is_clicked():
             raise RetryGameException
