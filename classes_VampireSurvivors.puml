@@ -1,0 +1,834 @@
+@startuml classes_VampireSurvivors
+set namespaceSeparator none
+class "AttackDAO" as VampireSurvivors.persistance.interfaces.AttackDAO {
+  {abstract}add_attack(attack)
+  {abstract}clear_attacks()
+  {abstract}get_all_attacks()
+}
+class "AttackWhip" as VampireSurvivors.business.weapons.attack_whip.AttackWhip {
+  damage
+  damaged_monsters
+  is_finished
+  process_attack(world: IGameWorld)
+  update(world)
+}
+class "AttackWhipSprite" as VampireSurvivors.presentation.sprite.AttackWhipSprite {
+  ASSET : str
+  time_per_frame
+  advance_frame()
+}
+class "Boss" as VampireSurvivors.business.entities.monsters.boss.Boss {
+}
+class "BossSprite" as VampireSurvivors.presentation.sprite.BossSprite {
+  ASSET : str
+  advance_frame()
+}
+class "Bullet" as VampireSurvivors.business.entities.bullet.Bullet {
+  charges_remaining
+  damage
+  update(world: IGameWorld)
+  use_charge(amount)
+}
+class "BulletSprite" as VampireSurvivors.presentation.sprite.BulletSprite {
+}
+class "Button" as VampireSurvivors.presentation.userinterface.button.Button {
+  hover_time
+  attach_text(text: IText) -> None
+  is_clicked()
+  is_hovering()
+  update(display)
+}
+class "Camera" as VampireSurvivors.presentation.camera.Camera {
+  camera_rect
+  world_height
+  world_width
+  apply(rect)
+  update(target_rect)
+}
+class "Chest" as VampireSurvivors.business.entities.collectibles.chest.Chest {
+  item
+}
+class "ChestSpawner" as VampireSurvivors.business.world.chest_spawner.ChestSpawner {
+  spawn_chest(world)
+  update(world: IGameWorld)
+}
+class "ChestSprite" as VampireSurvivors.presentation.sprite.ChestSprite {
+  ASSET : str
+}
+class "Clock" as VampireSurvivors.business.world.clock.Clock {
+  time
+  count()
+  set_time(new_time: int)
+}
+class "Collectible" as VampireSurvivors.business.entities.collectibles.collectible.Collectible {
+  is_picked
+  type
+  pick()
+}
+class "CollectibleDAO" as VampireSurvivors.persistance.interfaces.CollectibleDAO {
+  {abstract}add_collectible(collectible)
+  {abstract}clear_collectibles()
+  {abstract}get_all_collectibles()
+}
+class "CollectibleFactory" as VampireSurvivors.business.world.collectible_factory.CollectibleFactory {
+  create_collectible(name: str, pos)
+  create_random_gem(monster: IMonster, world: IGameWorld)
+}
+class "CollisionHandler" as VampireSurvivors.business.handlers.collision_handler.CollisionHandler {
+  get_monster_colliding_pairs(world: IGameWorld) -> list[tuple[IMonster, IMonster]]
+  handle_collisions(world: IGameWorld)
+}
+class "CooldownHandler" as VampireSurvivors.business.handlers.cooldown_handler.CooldownHandler {
+  change_time(new: int)
+  is_action_ready()
+  put_on_cooldown()
+}
+class "DataHandler" as VampireSurvivors.business.handlers.data_handler.DataHandler {
+  build_upgrades_for_item(item_name: str)
+}
+class "<color:red>DeadPlayerException</color>" as VampireSurvivors.business.exceptions.DeadPlayerException {
+}
+class "DeathHandler" as VampireSurvivors.business.handlers.death_handler.DeathHandler {
+  check_deaths(world: IGameWorld)
+}
+class "DefaultMonster" as VampireSurvivors.business.entities.monsters.default_monster.DefaultMonster {
+}
+class "Display" as VampireSurvivors.presentation.display.Display {
+  camera
+  screen
+  get_menu(name: str)
+  load_world(world: IGameWorld)
+  render_frame()
+}
+class "DynamicText" as VampireSurvivors.presentation.userinterface.dynamic_text.DynamicText {
+}
+class "Entity" as VampireSurvivors.business.entities.entity.Entity {
+  pos
+  sprite
+  update(world: IGameWorld)
+}
+class "ExperienceGem" as VampireSurvivors.business.entities.collectibles.experience_gem.ExperienceGem {
+  BASE_EXPERIENCE : int
+  amount
+}
+class "ExperienceGemSprite" as VampireSurvivors.presentation.sprite.ExperienceGemSprite {
+  ASSET : str
+}
+class "Game" as VampireSurvivors.game.Game {
+  create_inventory()
+  create_monsters()
+  create_player()
+  run(player)
+  save()
+}
+class "GameOver" as VampireSurvivors.presentation.menus.game_over.GameOver {
+  draw()
+  set_active(state)
+  set_bg_visibility(factor: int)
+  update(display)
+}
+class "GameWorld" as VampireSurvivors.business.world.game_world.GameWorld {
+  DEFAULT_MONSTER_SPAWN_TIME : int
+  attacks
+  clock_seconds
+  collectibles
+  monsters
+  player
+  simulation_speed
+  tile_map
+  total_damage
+  upgrading
+  add_attack(attack: IAttack)
+  add_collectible(collectible: IPickeable)
+  add_damage(damage: int)
+  add_monster(monster: IMonster)
+  assign_player(player: IPlayer, clock_time: int)
+  remove_attack(attack: IAttack)
+  remove_collectible(collectible: IPickeable)
+  remove_monster(monster: IMonster)
+  set_upgrade_menu_active(state: bool)
+  toggle_pause()
+  update()
+}
+class "GameWorldMock" as VampireSurvivors.tests.world_mock.GameWorldMock {
+  attacks
+  clock_seconds
+  collectibles
+  monsters
+  player
+  simulation_speed
+  total_damage
+  upgrading
+  {abstract}add_attack(attack)
+  {abstract}add_collectible(collectible)
+  {abstract}add_damage(damage: int)
+  {abstract}add_monster(monster)
+  {abstract}assign_player(player, clock_time: int)
+  {abstract}remove_attack(attack)
+  {abstract}remove_collectible(collectible)
+  {abstract}remove_monster(monster)
+  {abstract}set_upgrade_menu_active(state: bool)
+  {abstract}toggle_pause() -> None
+  {abstract}update()
+}
+class "GhostSprite" as VampireSurvivors.presentation.sprite.GhostSprite {
+  ASSET : str
+}
+class "Gun" as VampireSurvivors.business.weapons.gun.Gun {
+  attack(origin, world, player_stats: IPlayerStats)
+}
+class "HUD" as VampireSurvivors.presentation.menus.hud.HUD {
+  draw()
+  update(display)
+}
+class "HealingGem" as VampireSurvivors.business.entities.collectibles.healing_gem.HealingGem {
+  BASE_HEALING : int
+  amount
+}
+class "HealingGemSprite" as VampireSurvivors.presentation.sprite.HealingGemSprite {
+  ASSET : str
+}
+class "Hitbox" as VampireSurvivors.business.weapons.hitbox.Hitbox {
+  size
+  get_enemies_inside(world: IGameWorld)
+}
+class "IAttack" as VampireSurvivors.business.entities.interfaces.IAttack {
+}
+class "IBullet" as VampireSurvivors.business.entities.interfaces.IBullet {
+}
+class "IButton" as VampireSurvivors.presentation.interfaces.IButton {
+  hover_time
+  {abstract}attach_text(text: IText)
+  {abstract}is_hovering() -> bool
+}
+class "ICanDealDamage" as VampireSurvivors.business.entities.interfaces.ICanDealDamage {
+  damage
+}
+class "ICanMove" as VampireSurvivors.business.entities.interfaces.ICanMove {
+  original_speed
+  speed
+  {abstract}change_speed(speed: int)
+  {abstract}move(direction: tuple[int, int])
+}
+class "IChest" as VampireSurvivors.business.entities.interfaces.IChest {
+  item
+}
+class "IChestSpawner" as VampireSurvivors.business.world.interfaces.IChestSpawner {
+  {abstract}spawn_chest(world: IGameWorld)
+}
+class "IClickable" as VampireSurvivors.presentation.interfaces.IClickable {
+  {abstract}is_clicked()
+}
+class "IClock" as VampireSurvivors.business.world.interfaces.IClock {
+  time
+  {abstract}count()
+  {abstract}set_time(new_time: int)
+}
+class "ICollectible" as VampireSurvivors.business.entities.interfaces.ICollectible {
+  type
+}
+class "ICollectibleFactory" as VampireSurvivors.business.world.interfaces.ICollectibleFactory {
+  {abstract}create_collectible(name: str, pos)
+  {abstract}create_random_gem(monster: IMonster, world: IGameWorld)
+}
+class "IComponentHolder" as VampireSurvivors.presentation.interfaces.IComponentHolder {
+  components
+  {abstract}add_component(component: 'IUIComponent') -> None
+  {abstract}remove_component(component: 'IUIComponent') -> None
+  {abstract}update(display: 'IDisplay') -> None
+}
+class "IDamageable" as VampireSurvivors.business.entities.interfaces.IDamageable {
+  health
+  max_health
+  {abstract}take_damage(amount: int)
+}
+class "IDataHandler" as VampireSurvivors.business.handlers.interfaces.IDataHandler {
+  {abstract}build_upgrades_for_item(item_name: str)
+}
+class "IDisplay" as VampireSurvivors.presentation.interfaces.IDisplay {
+  screen
+  {abstract}get_menu(name: str) -> 'IMenu'
+  {abstract}load_world(world: IGameWorld)
+  {abstract}render_frame()
+}
+class "IDistanceAttack" as VampireSurvivors.business.entities.interfaces.IDistanceAttack {
+}
+class "IDynamicText" as VampireSurvivors.presentation.interfaces.IDynamicText {
+}
+class "IDynamicUIComponent" as VampireSurvivors.presentation.interfaces.IDynamicUIComponent {
+  opacity
+  pos
+  size
+  {abstract}change_opacity(opacity)
+  {abstract}move(pos)
+  {abstract}resize(size)
+}
+class "IExperienceGem" as VampireSurvivors.business.entities.interfaces.IExperienceGem {
+  amount
+}
+class "IGameWorld" as VampireSurvivors.business.world.interfaces.IGameWorld {
+  attacks
+  clock_seconds
+  collectibles
+  monsters
+  player
+  simulation_speed
+  total_damage
+  upgrading
+  {abstract}add_attack(attack)
+  {abstract}add_collectible(collectible: ICollectible)
+  {abstract}add_damage(damage: int)
+  {abstract}add_monster(monster: IMonster)
+  {abstract}assign_player(player, clock_time: int)
+  {abstract}remove_attack(attack)
+  {abstract}remove_collectible(collectible: ICollectible)
+  {abstract}remove_monster(monster: IMonster)
+  {abstract}set_upgrade_menu_active(state: bool)
+  {abstract}toggle_pause() -> None
+  {abstract}update()
+}
+class "IHasCharges" as VampireSurvivors.business.entities.interfaces.IHasCharges {
+  charges_remaining
+  {abstract}use_charge(amount: int)
+}
+class "IHasHitbox" as VampireSurvivors.business.entities.interfaces.IHasHitbox {
+}
+class "IHasPosition" as VampireSurvivors.business.entities.interfaces.IHasPosition {
+  pos
+}
+class "IHasSprite" as VampireSurvivors.business.entities.interfaces.IHasSprite {
+  sprite
+}
+class "IHealingGem" as VampireSurvivors.business.entities.interfaces.IHealingGem {
+  amount
+}
+class "IHitbox" as VampireSurvivors.business.entities.interfaces.IHitbox {
+  size
+  {abstract}get_enemies_inside(world)
+}
+class "IImageComponent" as VampireSurvivors.presentation.interfaces.IImageComponent {
+  image
+  {abstract}resize_image(new_size)
+}
+class "IInputHandler" as VampireSurvivors.presentation.interfaces.IInputHandler {
+  {abstract}add_event(event)
+  {abstract}process_input()
+  {abstract}reset_events()
+}
+class "IInventory" as VampireSurvivors.business.progression.interfaces.IInventory {
+  item_count
+  limit
+  {abstract}add_item(item: IInventoryItem) -> None
+  {abstract}get_item(name: str) -> IInventoryItem
+  {abstract}get_perks()
+  {abstract}get_weapons()
+}
+class "IInventoryItem" as VampireSurvivors.business.progression.interfaces.IInventoryItem {
+  item_type
+  name
+  {abstract}get_stat(name: str)
+}
+class "IItemDataHandler" as VampireSurvivors.persistance.interfaces.IItemDataHandler {
+  {abstract}get_all_items()
+  {abstract}get_item_type(name: str)
+  {abstract}get_item_upgrades(item_name: str)
+}
+class "IItemFactory" as VampireSurvivors.business.progression.interfaces.IItemFactory {
+  {abstract}create_item(name: str)
+}
+class "IMeleeAttack" as VampireSurvivors.business.entities.interfaces.IMeleeAttack {
+  damaged_monsters
+  is_finished
+  {abstract}process_attack(world)
+}
+class "IMenu" as VampireSurvivors.presentation.interfaces.IMenu {
+  active
+  name
+  {abstract}draw()
+  {abstract}set_active(state: bool) -> None
+}
+class "IMonster" as VampireSurvivors.business.entities.interfaces.IMonster {
+  attack_cooldown
+  can_move
+  type
+  {abstract}can_show_hp() -> bool
+}
+class "IMonsterFactory" as VampireSurvivors.business.entities.interfaces.IMonsterFactory {
+  {abstract}create_monster(monster_type: str, pos: Vector2)
+}
+class "IMonsterSpawner" as VampireSurvivors.business.world.interfaces.IMonsterSpawner {
+  {abstract}spawn_monster(world: IGameWorld)
+}
+class "IPerkFactory" as VampireSurvivors.business.progression.interfaces.IPerkFactory {
+  {abstract}create_perk(name: str)
+}
+class "IPickeable" as VampireSurvivors.business.entities.interfaces.IPickeable {
+  is_picked
+  {abstract}pick() -> None
+}
+class "IPlayer" as VampireSurvivors.business.entities.interfaces.IPlayer {
+  experience
+  experience_to_next_level
+  inventory
+  level
+  luck
+  max_health
+  stats
+  {abstract}apply_perks(heal: bool)
+  {abstract}assign_inventory(inventory)
+  {abstract}assign_world(world)
+  {abstract}give_item(item)
+  {abstract}pickup_gem(gem: IExperienceGem)
+  {abstract}upgrade_item(item)
+}
+class "IPlayerStats" as VampireSurvivors.business.progression.interfaces.IPlayerStats {
+  attack_damage
+  attack_speed
+  cooldown
+  health
+  luck
+  movement_speed
+}
+class "IRootComponent" as VampireSurvivors.presentation.interfaces.IRootComponent {
+  active
+  {abstract}set_active(state: bool)
+  {abstract}update(display: 'IDisplay')
+}
+class "IText" as VampireSurvivors.presentation.interfaces.IText {
+  text
+  {abstract}change(text: str) -> None
+}
+class "ITileMap" as VampireSurvivors.business.world.interfaces.ITileMap {
+  {abstract}get(row, col) -> int
+}
+class "IUIComponent" as VampireSurvivors.presentation.interfaces.IUIComponent {
+  color
+  original_properties
+  rect
+  {abstract}change_color(new_color: tuple[int, int, int])
+  {abstract}draw()
+}
+class "IUpdatable" as VampireSurvivors.business.entities.interfaces.IUpdatable {
+  {abstract}update(world)
+}
+class "IUpdatable" as VampireSurvivors.business.world.interfaces.IUpdatable {
+  {abstract}update(world: IGameWorld)
+}
+class "IUpgrade" as VampireSurvivors.business.progression.interfaces.IUpgrade {
+  description
+  values
+  {abstract}apply(item: IInventoryItem)
+}
+class "IUpgradePerk" as VampireSurvivors.business.progression.interfaces.IUpgradePerk {
+  {abstract}change_stat(name: str, value: int)
+}
+class "IUpgradeValue" as VampireSurvivors.business.progression.interfaces.IUpgradeValue {
+  stat
+  type
+  value
+}
+class "IUpgradeable" as VampireSurvivors.business.progression.interfaces.IUpgradeable {
+  level
+  upgrades
+  {abstract}upgrade()
+}
+class "IUserInterfaceHandler" as VampireSurvivors.presentation.interfaces.IUserInterfaceHandler {
+  {abstract}add_menu(menu: IMenu) -> None
+  {abstract}get_menu(name: str) -> IMenu
+  {abstract}remove_menu(menu: IMenu) -> None
+  {abstract}update(display: IDisplay)
+}
+class "IWeapon" as VampireSurvivors.business.progression.interfaces.IWeapon {
+  cooldown
+  damage
+  power
+  range
+  speed
+  {abstract}attack(origin, world, player_stats)
+  {abstract}change_stat(name: str, new_value: float | int)
+}
+class "IWeaponFactory" as VampireSurvivors.business.weapons.interfaces.IWeaponFactory {
+  {abstract}create_weapon(name: str)
+}
+class "IWeaponStats" as VampireSurvivors.business.weapons.interfaces.IWeaponStats {
+  cooldown
+  damage
+  power
+  range
+  speed
+  {abstract}change_stat(name: str, new_value: float | int)
+}
+class "ImageComponent" as VampireSurvivors.presentation.userinterface.image_component.ImageComponent {
+  image
+  draw() -> Surface
+  resize_image(new_size: Vector2)
+}
+class "InputHandler" as VampireSurvivors.presentation.input_handler.InputHandler {
+  add_event(event)
+  process_input()
+  reset_events()
+}
+class "<color:red>InvalidMovementSpeed</color>" as VampireSurvivors.business.exceptions.InvalidMovementSpeed {
+  message
+}
+class "<color:red>InvalidPerkName</color>" as VampireSurvivors.business.exceptions.InvalidPerkName {
+}
+class "<color:red>InvalidStatNameException</color>" as VampireSurvivors.business.exceptions.InvalidStatNameException {
+}
+class "<color:red>InvalidStatValueException</color>" as VampireSurvivors.business.exceptions.InvalidStatValueException {
+  message
+}
+class "<color:red>InvalidWeaponName</color>" as VampireSurvivors.business.exceptions.InvalidWeaponName {
+}
+class "Inventory" as VampireSurvivors.business.progression.inventory.Inventory {
+  DEFAULT_LIMIT : int
+  item_count
+  limit
+  add_item(item: IInventoryItem)
+  get_item(name: str)
+  get_items()
+  get_perks()
+  get_weapons()
+}
+class "InventoryDAO" as VampireSurvivors.persistance.interfaces.InventoryDAO {
+  {abstract}add_item(item)
+  {abstract}clear_inventory()
+  {abstract}get_inventory()
+}
+class "InventoryItem" as VampireSurvivors.business.progression.item.InventoryItem {
+  TYPES : dict
+  item_type
+  level
+  name
+  upgrades
+  get_next_upgrade()
+  get_stat(name: str)
+  upgrade()
+}
+class "ItemDataHandler" as VampireSurvivors.business.handlers.item_data_handler.ItemDataHandler {
+  get_all_items()
+  get_item_type(name: str)
+  get_item_upgrades(item_name: str)
+}
+class "ItemFactory" as VampireSurvivors.business.progression.item_factory.ItemFactory {
+  create_item(name: str)
+}
+class "JSONAttackDao" as VampireSurvivors.persistance.dao.json_attacks.JSONAttackDao {
+  add_attack(attack)
+  clear_attacks()
+  get_all_attacks()
+}
+class "JSONCollectibleDAO" as VampireSurvivors.persistance.dao.json_collectibles.JSONCollectibleDAO {
+  add_collectible(collectible)
+  clear_collectibles()
+  get_all_collectibles()
+}
+class "JSONInventoryDAO" as VampireSurvivors.persistance.dao.json_inventory.JSONInventoryDAO {
+  add_item(item: InventoryItem)
+  clear_inventory()
+  get_inventory()
+}
+class "JSONMonsterDAO" as VampireSurvivors.persistance.dao.json_monster.JSONMonsterDAO {
+  add_monster(monster)
+  clear_monsters()
+  get_all_monsters()
+}
+class "JSONPlayerDAO" as VampireSurvivors.persistance.dao.json_player.JSONPlayerDAO {
+  add_player(player)
+  get_player()
+  get_time() -> int
+}
+class "Menu" as VampireSurvivors.presentation.menus.menu.Menu {
+  active
+  components
+  name
+  add_component(component)
+  remove_component(component)
+  set_active(state: bool)
+  update(display: IDisplay)
+}
+class "Monster" as VampireSurvivors.business.entities.monsters.monster.Monster {
+  attack_cooldown
+  can_move
+  damage
+  health
+  max_health
+  type
+  attack(target: IDamageable)
+  can_show_hp()
+  take_damage(amount)
+  update(world: IGameWorld)
+}
+class "MonsterDAO" as VampireSurvivors.persistance.interfaces.MonsterDAO {
+  {abstract}add_monster(monster)
+  {abstract}clear_monsters()
+  {abstract}get_all_monsters()
+}
+class "MonsterFactory" as VampireSurvivors.business.entities.monster_factory.MonsterFactory {
+  create_monster(monster_type: str, pos: Vector2)
+}
+class "MonsterSpawner" as VampireSurvivors.business.world.monster_spawner.MonsterSpawner {
+  spawn_monster(world)
+  update(world: IGameWorld)
+}
+class "MovableEntity" as VampireSurvivors.business.entities.entity.MovableEntity {
+  original_speed
+  speed
+  change_speed(speed: float)
+  move(direction: Vector2)
+  move_to_center()
+}
+class "PauseMenu" as VampireSurvivors.presentation.menus.pause.PauseMenu {
+  draw()
+  update(display)
+}
+class "Perk" as VampireSurvivors.business.progression.perk.Perk {
+  stats
+  change_stat(name: str, value: int)
+  get_stat(name: str)
+}
+class "PerkFactory" as VampireSurvivors.business.progression.perk_factory.PerkFactory {
+  create_perk(name: str)
+}
+class "Player" as VampireSurvivors.business.entities.player.Player {
+  damage
+  experience
+  experience_to_next_level
+  health
+  inventory
+  level
+  luck
+  max_health
+  stats
+  apply_perks(heal: bool)
+  assign_inventory(inventory)
+  assign_world(world: IGameWorld)
+  give_item(item: IInventoryItem)
+  move(direction)
+  pickup_gem(gem)
+  take_damage(amount)
+  update(world: IGameWorld)
+  upgrade_item(item: IInventoryItem)
+}
+class "PlayerDAO" as VampireSurvivors.persistance.interfaces.PlayerDAO {
+  {abstract}add_player(player)
+  {abstract}get_player()
+  {abstract}get_time()
+}
+class "PlayerSprite" as VampireSurvivors.presentation.sprite.PlayerSprite {
+  ASSET : str
+  advance_frame()
+}
+class "PlayerStats" as VampireSurvivors.business.progression.player_stats.PlayerStats {
+  BASE_ATTACK_COOLDOWN : int
+  BASE_ATTACK_DAMAGE : int
+  BASE_ATTACK_SPEED : int
+  BASE_HEALTH : int
+  BASE_LUCK : int
+  BASE_MOVEMENT_SPEED : int
+  attack_damage
+  attack_speed
+  cooldown
+  health
+  luck
+  movement_speed
+}
+class "PositionHandler" as VampireSurvivors.business.handlers.position_handler.PositionHandler {
+  is_position_within_boundaries(position)
+}
+class "RedGhost" as VampireSurvivors.business.entities.monsters.red_ghost.RedGhost {
+}
+class "RedGhostSprite" as VampireSurvivors.presentation.sprite.RedGhostSprite {
+  ASSET : str
+}
+class "<color:red>RetryGameException</color>" as VampireSurvivors.presentation.exceptions.RetryGameException {
+}
+class "<color:red>SavedGameException</color>" as VampireSurvivors.presentation.exceptions.SavedGameException {
+}
+class "Sprite" as VampireSurvivors.presentation.sprite.Sprite {
+  image
+  mask
+  rect
+  size
+  state
+  time_per_frame
+  time_until_next_frame
+  advance_frame()
+  flip(state: bool)
+  set_sprite_state(state: str)
+  take_damage()
+  update()
+  update_pos(pos: pygame.Vector2)
+}
+class "TestBullet" as VampireSurvivors.tests.test_bullet.TestBullet {
+  bullet
+  world
+  setUp()
+  test_damage_amount()
+  test_initial_health()
+  test_take_damage()
+  test_update_position()
+  test_update_position_horizontal()
+  test_update_position_non_zero_src()
+  test_update_position_vertical()
+}
+class "TestMonster" as VampireSurvivors.tests.test_monster.TestMonster {
+  monster
+  setUp()
+  test_attack()
+  test_attack_is_not_called_when_action_is_not_ready()
+}
+class "TestsItemDataHandler" as VampireSurvivors.tests.test_itemdata.TestsItemDataHandler {
+  test01_get_all_items()
+  test02_perk_object_is_perk_type()
+  test03_weapon_object_is_weapon_type()
+  test04_item_has_the_correct_upgrades()
+}
+class "TestsWeaponUpgrades" as VampireSurvivors.tests.test_weaponupgrades.TestsWeaponUpgrades {
+  test01_weapon_level_increases()
+  test02_weapon_type_is_weapon()
+  test03_weapon_can_level_up()
+  test04_gun_stats_are_correct()
+  test05_gun_stats_on_level_up_are_correct()
+  test06_gun_damage_changed()
+}
+class "Text" as VampireSurvivors.presentation.userinterface.text.Text {
+  DEFAULT_BOLD : bool
+  DEFAULT_FONT : str
+  active
+  text
+  change(text: str)
+  set_active(state)
+  update(display)
+}
+class "TileMap" as VampireSurvivors.business.world.tile_map.TileMap {
+  map_data
+  get(row, col) -> int
+}
+class "Tileset" as VampireSurvivors.presentation.tileset.Tileset {
+  tile_height
+  tile_width
+  tiles : list
+  get_tile(index)
+}
+class "UIComponent" as VampireSurvivors.presentation.userinterface.uicomponent.UIComponent {
+  active
+  color
+  opacity
+  original_properties
+  pos
+  rect
+  size
+  change_color(new_color)
+  change_opacity(opacity: int)
+  draw() -> Surface
+  move(pos: Vector2)
+  resize(size: Vector2)
+  set_active(state: bool)
+  update(display: IDisplay)
+}
+class "Upgrade" as VampireSurvivors.business.progression.upgrade.Upgrade {
+  ADD : int
+  DIVIDE : int
+  MULTIPLY : int
+  POWER : int
+  SUBTRACT : int
+  description
+  values
+  apply(item: IInventoryItem)
+}
+class "UpgradeMenu" as VampireSurvivors.presentation.menus.upgrade_menu.UpgradeMenu {
+  ADD_ITEM_CASE : int
+  UPGRADE_ITEM_CASE : int
+  draw()
+  render_options()
+  set_active(state)
+  update(display)
+}
+class "UpgradeValue" as VampireSurvivors.business.progression.upgrade.UpgradeValue {
+  stat
+  type
+  value
+}
+class "UserInterfaceHandler" as VampireSurvivors.presentation.handlers.userinterface_handler.UserInterfaceHandler {
+  add_menu(menu: IMenu)
+  get_menu(name: str)
+  remove_menu(menu: IMenu)
+  update(display: IDisplay)
+}
+class "Weapon" as VampireSurvivors.business.weapons.weapon.Weapon {
+  cooldown
+  cooldown_handler
+  damage
+  power
+  range
+  speed
+  change_stat(name: str, new_value: float | int)
+}
+class "WeaponFactory" as VampireSurvivors.business.weapons.weapon_factory.WeaponFactory {
+  create_weapon(name: str)
+}
+class "WeaponStats" as VampireSurvivors.business.weapons.weapon_stats.WeaponStats {
+  BASE_COOLDOWN : int
+  BASE_DAMAGE : int
+  BASE_POWER : int
+  BASE_RANGE : int
+  BASE_SPEED : int
+  cooldown
+  damage
+  power
+  range
+  speed
+  change_stat(name: str, new_value: int | float)
+}
+class "Whip" as VampireSurvivors.business.weapons.whip.Whip {
+  attack(origin, world, player_stats: IPlayerStats)
+}
+VampireSurvivors.business.entities.entity.MovableEntity --|> VampireSurvivors.business.entities.entity.Entity
+VampireSurvivors.business.entities.interfaces.IAttack --|> VampireSurvivors.business.entities.interfaces.ICanDealDamage
+VampireSurvivors.business.entities.interfaces.IAttack --|> VampireSurvivors.business.entities.interfaces.IUpdatable
+VampireSurvivors.business.entities.interfaces.IBullet --|> VampireSurvivors.business.entities.interfaces.IDistanceAttack
+VampireSurvivors.business.entities.interfaces.ICanMove --|> VampireSurvivors.business.entities.interfaces.IHasPosition
+VampireSurvivors.business.entities.interfaces.IChest --|> VampireSurvivors.business.entities.interfaces.ICollectible
+VampireSurvivors.business.entities.interfaces.ICollectible --|> VampireSurvivors.business.entities.interfaces.IHasPosition
+VampireSurvivors.business.entities.interfaces.ICollectible --|> VampireSurvivors.business.entities.interfaces.IPickeable
+VampireSurvivors.business.entities.interfaces.ICollectible --|> VampireSurvivors.business.entities.interfaces.IUpdatable
+VampireSurvivors.business.entities.interfaces.IDistanceAttack --|> VampireSurvivors.business.entities.interfaces.IAttack
+VampireSurvivors.business.entities.interfaces.IDistanceAttack --|> VampireSurvivors.business.entities.interfaces.ICanMove
+VampireSurvivors.business.entities.interfaces.IDistanceAttack --|> VampireSurvivors.business.entities.interfaces.IHasCharges
+VampireSurvivors.business.entities.interfaces.IExperienceGem --|> VampireSurvivors.business.entities.interfaces.ICollectible
+VampireSurvivors.business.entities.interfaces.IHasPosition --|> VampireSurvivors.business.entities.interfaces.IHasSprite
+VampireSurvivors.business.entities.interfaces.IHealingGem --|> VampireSurvivors.business.entities.interfaces.ICollectible
+VampireSurvivors.business.entities.interfaces.IMeleeAttack --|> VampireSurvivors.business.entities.interfaces.IAttack
+VampireSurvivors.business.entities.interfaces.IMeleeAttack --|> VampireSurvivors.business.entities.interfaces.IHasHitbox
+VampireSurvivors.business.entities.interfaces.IMonster --|> VampireSurvivors.business.entities.interfaces.ICanDealDamage
+VampireSurvivors.business.entities.interfaces.IMonster --|> VampireSurvivors.business.entities.interfaces.ICanMove
+VampireSurvivors.business.entities.interfaces.IMonster --|> VampireSurvivors.business.entities.interfaces.IDamageable
+VampireSurvivors.business.entities.interfaces.IMonster --|> VampireSurvivors.business.entities.interfaces.IUpdatable
+VampireSurvivors.business.entities.interfaces.IPlayer --|> VampireSurvivors.business.entities.interfaces.ICanDealDamage
+VampireSurvivors.business.entities.interfaces.IPlayer --|> VampireSurvivors.business.entities.interfaces.ICanMove
+VampireSurvivors.business.entities.interfaces.IPlayer --|> VampireSurvivors.business.entities.interfaces.IDamageable
+VampireSurvivors.business.entities.interfaces.IPlayer --|> VampireSurvivors.business.entities.interfaces.IUpdatable
+VampireSurvivors.business.progression.interfaces.IInventoryItem --|> VampireSurvivors.business.progression.interfaces.IUpgradeable
+VampireSurvivors.business.progression.interfaces.IUpgradePerk --|> VampireSurvivors.business.progression.interfaces.IInventoryItem
+VampireSurvivors.business.progression.interfaces.IWeapon --|> VampireSurvivors.business.progression.interfaces.IInventoryItem
+VampireSurvivors.business.world.interfaces.IChestSpawner --|> VampireSurvivors.business.world.interfaces.IUpdatable
+VampireSurvivors.business.world.interfaces.IMonsterSpawner --|> VampireSurvivors.business.world.interfaces.IUpdatable
+VampireSurvivors.presentation.interfaces.IButton --|> VampireSurvivors.presentation.interfaces.IClickable
+VampireSurvivors.presentation.interfaces.IButton --|> VampireSurvivors.presentation.interfaces.IDynamicUIComponent
+VampireSurvivors.presentation.interfaces.IDynamicText --|> VampireSurvivors.presentation.interfaces.IDynamicUIComponent
+VampireSurvivors.presentation.interfaces.IDynamicUIComponent --|> VampireSurvivors.presentation.interfaces.IUIComponent
+VampireSurvivors.presentation.interfaces.IImageComponent --|> VampireSurvivors.presentation.interfaces.IDynamicUIComponent
+VampireSurvivors.presentation.interfaces.IMenu --|> VampireSurvivors.presentation.interfaces.IComponentHolder
+VampireSurvivors.presentation.interfaces.IText --|> VampireSurvivors.presentation.interfaces.IRootComponent
+VampireSurvivors.presentation.interfaces.IUIComponent --|> VampireSurvivors.presentation.interfaces.IRootComponent
+VampireSurvivors.presentation.sprite.AttackWhipSprite --|> VampireSurvivors.presentation.sprite.Sprite
+VampireSurvivors.presentation.sprite.BossSprite --|> VampireSurvivors.presentation.sprite.Sprite
+VampireSurvivors.presentation.sprite.BulletSprite --|> VampireSurvivors.presentation.sprite.Sprite
+VampireSurvivors.presentation.sprite.ChestSprite --|> VampireSurvivors.presentation.sprite.Sprite
+VampireSurvivors.presentation.sprite.ExperienceGemSprite --|> VampireSurvivors.presentation.sprite.Sprite
+VampireSurvivors.presentation.sprite.GhostSprite --|> VampireSurvivors.presentation.sprite.Sprite
+VampireSurvivors.presentation.sprite.HealingGemSprite --|> VampireSurvivors.presentation.sprite.Sprite
+VampireSurvivors.presentation.sprite.PlayerSprite --|> VampireSurvivors.presentation.sprite.Sprite
+VampireSurvivors.presentation.sprite.RedGhostSprite --|> VampireSurvivors.presentation.sprite.Sprite
+@enduml
