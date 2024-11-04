@@ -71,6 +71,8 @@ class Monster(MovableEntity, IMonster):
         return self.__monster_type
 
     def update(self, world: IGameWorld):
+        self.attack(world.player)
+
         direction = self.__get_direction_towards_the_player(world)
         if direction.magnitude == 0 or not self.can_move:
             return
@@ -86,8 +88,6 @@ class Monster(MovableEntity, IMonster):
             self.sprite.flip(True)
         elif direction.y > 0:
             self.sprite.flip(False)
-
-        self.attack(world.player)
 
         super().update(world)
 
