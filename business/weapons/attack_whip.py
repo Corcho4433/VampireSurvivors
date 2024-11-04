@@ -36,6 +36,7 @@ class AttackWhip(Entity, IMeleeAttack):
 
     def update(self, world):
         super().update(world)
+        self.process_attack(world)
         self._sprite.advance_frame()
         self.__current_sprite_time += 1 / FPS
 

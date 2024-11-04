@@ -29,7 +29,6 @@ class Perk(InventoryItem, IUpgradePerk):
                 self.__player_stats.attack_damage = value
             case 'movement_speed':
                 self.__player_stats.movement_speed = value
-                print(self.__player_stats.movement_speed, value)
 
     @property
     def stats(self):

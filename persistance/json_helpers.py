@@ -3,9 +3,11 @@
 import os
 import json
 
+from settings import WORLD_WIDTH, WORLD_HEIGHT
+
 DEFAULT_JSON_STRUCTURE = {
     "player":{
-        "pos": [0, 0],
+        "pos": [WORLD_WIDTH // 2, WORLD_HEIGHT // 2],
         "inventory": [{
             "name":'gun',
             "type":1,

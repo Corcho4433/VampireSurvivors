@@ -11,11 +11,6 @@ class Inventory(IInventory):
     def __init__(self):
         self.__items = {}
 
-        #self.add_item(PerkFactory.create_perk("spinach"))
-        #self.add_item(PerkFactory.create_perk("clover"))
-        #self.add_item(PerkFactory.create_perk("hollow_heart"))
-        #self.add_item(WeaponFactory.create_weapon('gun'))
-
     @property
     def limit(self) -> int:
         return self.DEFAULT_LIMIT

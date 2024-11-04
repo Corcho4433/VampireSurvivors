@@ -7,12 +7,17 @@ from business.world.interfaces import IGameWorld
 class GameWorldMock(IGameWorld):
     """The game world mock"""
 
+    def __init__(self):
+        self.__attacks = []
+        self.__monsters = []
+        self.__total_damage = 0
+
     def add_damage(self, damage: int):
-        pass
+        self.__total_damage += damage
 
     @property
     def total_damage(self):
-        return 0
+        return self.__total_damage
 
     def assign_player(self, player, clock_time: int):
         pass
@@ -29,10 +34,10 @@ class GameWorldMock(IGameWorld):
         pass
 
     def add_monster(self, monster):
-        pass
+        self.__monsters.append(monster)
 
     def remove_monster(self, monster):
-        pass
+        self.__monsters.append(monster)
 
     def add_collectible(self, collectible):
         pass
@@ -41,10 +46,10 @@ class GameWorldMock(IGameWorld):
         pass
 
     def add_attack(self, attack):
-        pass
+        self.__attacks.append(attack)
 
     def remove_attack(self, attack):
-        pass
+        self.__attacks.remove(attack)
 
     def update(self):
         pass
@@ -59,11 +64,11 @@ class GameWorldMock(IGameWorld):
 
     @property
     def monsters(self) -> list:
-        return []
+        return self.__monsters[:]
 
     @property
     def attacks(self) -> list:
-        return []
+        return self.__attacks[:]
 
     @property
     def collectibles(self) -> list:

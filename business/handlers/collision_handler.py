@@ -21,10 +21,6 @@ class CollisionHandler:
         bullet_attack_masks = {attack.sprite: attack.sprite.mask for attack in attacks if isinstance(attack, IDistanceAttack)}
         monster_masks = {monster.sprite: monster.sprite.mask for monster in monsters}
 
-        for attack in attacks:
-            if isinstance(attack, IMeleeAttack):
-                attack.process_attack(world)
-
         for attack_sprite, attack_mask in bullet_attack_masks.items():
             for monster_sprite, monster_mask in monster_masks.items():
                 # Check for overlap using masks
@@ -60,7 +56,6 @@ class CollisionHandler:
                     player.pickup_gem(collectible)
                     collectible.pick()
                 if isinstance(collectible, IChest):
-                    print(collectible)
                     player.give_item(collectible.item)
                     player.apply_perks(heal=False)
                     collectible.pick()

@@ -121,7 +121,7 @@ class UpgradeMenu(Menu):
 
         return choosen
 
-    
+
     def render_options(self):
         """Renders the options for the upgrade menu"""
         self.__clean_objects()
