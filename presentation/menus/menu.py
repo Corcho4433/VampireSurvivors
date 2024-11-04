@@ -33,3 +33,7 @@ class Menu(IMenu):
     @property
     def components(self):
         return self.__components
+
+    @property
+    def active(self):
+        return self.__active

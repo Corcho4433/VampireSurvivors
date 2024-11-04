@@ -12,8 +12,14 @@ from presentation.userinterface.dynamic_text import DynamicText
 from business.world.interfaces import IGameWorld
 from business.progression.interfaces import IUpgrade
 
+from business.progression.item_factory import ItemFactory
+from business.handlers.item_data_handler import ItemDataHandler
+
 class UpgradeMenu(Menu):
     """An upgrades menu"""
+
+    ADD_ITEM_CASE = 1
+    UPGRADE_ITEM_CASE = 2
 
     def __init__(self, world: IGameWorld):
         super().__init__("Upgrade")
@@ -36,8 +42,8 @@ class UpgradeMenu(Menu):
 
             if button.is_hovering():
                 origin = button.original_properties['color']
-                pos = Vector2(button.pos.x + ((pos.x + size.x * .05) - button.pos.x) * factor, button.pos.y + ((pos.y - size.y*0.0125) - button.pos.y) * factor)
-                size = Vector2(button.size.x + (size.x * 0.9 - button.size.x) * factor, button.size.y + (size.y * 1.025 - button.size.y) * factor)
+                pos = Vector2(button.pos.x + ((pos.x - size.x * .05) - button.pos.x) * factor, button.pos.y + ((pos.y - size.y*0.0125) - button.pos.y) * factor)
+                size = Vector2(button.size.x + (size.x * 1.1 - button.size.x) * factor, button.size.y + (size.y * 1.025 - button.size.y) * factor)
 
                 button.change_color((origin[0] + 25, origin[2] + 25, origin[2] + 25))
             else:
@@ -59,12 +65,20 @@ class UpgradeMenu(Menu):
                 break
 
     def __handle_button_presses(self, data: tuple[str]):
-        item = self.__world.player.inventory.get_item(data[0])
+        match data[1]:
+            case self.ADD_ITEM_CASE:
+                new_item = ItemFactory.create_item(data[0])
 
-        if item:
-            item.upgrade()
-        
-        self.__world.player.apply_perks(heal=True)
+                self.__world.player.inventory.add_item(new_item)
+                self.__world.player.apply_perks(heal=True)
+            case self.UPGRADE_ITEM_CASE:
+                item = self.__world.player.inventory.get_item(data[0])
+
+                if item:
+                    item.upgrade()
+
+                self.__world.player.apply_perks(heal=True)
+
 
     def draw(self):
         title = DynamicText("UPGRADE MENU", Vector2(settings.SCREEN_WIDTH // 2, 30), bold=True)
@@ -85,16 +99,21 @@ class UpgradeMenu(Menu):
             self.remove_component(object_component)
 
     def __parse_items(self) -> list[tuple]:
-        player = self.__world.player
-        items = player.inventory.get_items()
+        items = ItemDataHandler.get_all_items()
         choices = []
         choosen = []
 
-        for i in range(len(items)):
-            item = items[i]
-            choices.append((item.name, item.get_next_upgrade()))
+        for item_index in enumerate(items):
+            item = items[item_index[0]]
+            obj_type = self.ADD_ITEM_CASE
 
-        for i in range(min(3, len(items))):
+            has_item = self.__world.player.inventory.get_item(item[0])
+            if has_item is not None:
+                obj_type = self.UPGRADE_ITEM_CASE
+
+            choices.append((item[0], obj_type))
+
+        for _ in range(min(3, len(items))):
             new_choice = random.choice(choices)
 
             choices.remove(new_choice)
@@ -115,17 +134,26 @@ class UpgradeMenu(Menu):
         for upgrade_to_show in possible_upgrades:
             count += 1
 
-            type_upgrade = upgrade_to_show[0]
-            upgrade_object = upgrade_to_show[1]
-            item = player.inventory.get_item(type_upgrade)
+            item_name = upgrade_to_show[0].replace("_", " ")
+            action_type = upgrade_to_show[1]
+            item = player.inventory.get_item(upgrade_to_show[0])
 
-            y_pos = 100 + 270 * (count)/len(possible_upgrades)
+            y_pos = 100 + 300 * (count)/len(possible_upgrades)
+            level_text = "Obtain Item"
+            description = f"Unlock the item {item_name.capitalize()}"
 
-            new_text = DynamicText(f"{type_upgrade.capitalize()}: Level {item.level} > Level {item.level + 1}", Vector2(settings.SCREEN_WIDTH // 2, y_pos - 10), 24)
-            new_button = Button(Vector2(0, y_pos), Vector2(settings.SCREEN_WIDTH, 60), (0, 0, 20))
-            description = upgrade_object.description if isinstance(upgrade_object, IUpgrade) else 'MAX UPGRADES'
+            if item and action_type == self.UPGRADE_ITEM_CASE:
+                level_text = f"{item_name.capitalize()}: Level {item.level} > Level {item.level + 1}"
 
-            new_button.attach_text(Text(description, new_button))
+                if item.get_next_upgrade():
+                    description = item.get_next_upgrade().description
+                else:
+                    description = "MAX LEVEL"
+
+            new_text = DynamicText(level_text, Vector2(settings.SCREEN_WIDTH // 2, y_pos - 10), 24)
+            new_button = Button(Vector2(settings.SCREEN_WIDTH//4, y_pos), Vector2(settings.SCREEN_WIDTH // 2, 60), (0, 0, 20))
+
+            new_button.attach_text(Text(description, new_button, 20))
 
             self.__upgrade_buttons.append((new_button, upgrade_to_show))
             self.add_component(new_text)

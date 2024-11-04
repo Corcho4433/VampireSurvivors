@@ -1,0 +1,84 @@
+{
+    "gun": {
+        "type":1,
+        "upgrades":[{   
+            "description": "Increases the speed of the bullet by 30%",
+            "values": [
+                {"type":1, "stat":"speed", "value":1.3}
+            ]
+        },{   
+            "description": "Increases the damage of the bullet by 50%",
+            "values": [
+                {"type":1, "stat":"damage", "value":1.5}
+            ]
+        },{   
+            "description": "Increases the firing rate by 50%",
+            "values": [
+                {"type":3, "stat":"cooldown", "value":0.25}
+            ]
+        }, {   
+            "description": "Increases the speed of the bullet by 30%",
+            "values": [
+                {"type":1, "stat":"speed", "value":1.3}
+            ]
+        },{   
+            "description": "Increases the damage of the bullet by 50%",
+            "repeats":2,
+            "values": [
+                {"type":1, "stat":"damage", "value":1.5}
+            ]
+        }
+    ]},
+    "whip": {
+        "type":1,
+        "upgrades":[{   
+            "description": "Increases the damage of the whip by 3 units",
+            "repeats":2,
+            "values": [
+                {"type":2, "stat":"damage", "value":3}
+            ]
+        }, {   
+            "description": "Increases the damage dealt by 150%",
+            "repeats":2,
+            "values": [
+                {"type":1, "stat":"damage", "value":2.5}
+            ]
+        },{   
+            "description": "Increases the rate of the attacks by 0.25s",
+            "repeats":2,
+            "values": [
+                {"type":3, "stat":"cooldown", "value":0.25}
+            ]
+        }
+    ]},
+    "hollow_heart": {
+        "type":2,
+        "upgrades":[{   
+            "description": "Max health increases by 20%",
+            "repeats":5,
+            "values": [
+                {"type":1, "stat":"health", "value":1.2}
+            ]
+        }
+    ]},
+    "spinach": {
+        "type":2,
+        "upgrades":[{   
+            "description": "Base damage up by 10%",
+            "repeats": 5,
+            "values": [
+                {"type":1, "stat":"damage", "value":1.1}
+            ]
+        }
+    ]},
+    "clover": {
+        "type":2,
+        "upgrades":[{   
+            "description": "Increase the players luck by 10%",
+            "repeats":5,
+            "values": [
+                {"type":1, "stat":"luck", "value":1.1}
+            ]
+        }
+    ]}
+}

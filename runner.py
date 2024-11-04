@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Runs the game"""
 import logging
-
 import pygame
+import settings
 
 from business.world.game_world import GameWorld
 from business.world.monster_spawner import MonsterSpawner
@@ -11,6 +11,8 @@ from business.world.tile_map import TileMap
 from game import Game
 from presentation.display import Display
 from presentation.input_handler import InputHandler
+from presentation.exceptions import RetryGameException
+from persistance.json_helpers import reset_file
 
 
 def initialize_game_world(display):
@@ -44,7 +46,11 @@ def main():
     player = game.create_player()
     player.assign_inventory(game.create_inventory())
 
-    game.run(player)
+    try:
+        game.run(player)
+    except RetryGameException:
+        reset_file(settings.SAVE_FILE_PATH)
+        main()
 
     # Properly quit Pygame
     pygame.quit() #pylint: disable=E1101

@@ -14,10 +14,13 @@ from persistance.json_helpers import reset_file
 from persistance.dao.json_player import JSONPlayerDAO
 from persistance.dao.json_monster import JSONMonsterDAO
 from persistance.dao.json_inventory import JSONInventoryDAO
+from business.handlers.item_data_handler import ItemDataHandler
 from persistance.dao.json_collectibles import JSONCollectibleDAO
 
 from presentation.exceptions import SavedGameException
 from presentation.interfaces import IDisplay, IInputHandler
+
+ItemDataHandler.get_all_items()
 
 class Game:
     """
@@ -84,7 +87,7 @@ class Game:
         self.__player_dao.add_player(player)
 
     def __load_data(self, player):
-        self.__world.assign_player(player)
+        self.__world.assign_player(player, self.__player_dao.get_time())
 
         for monster in self.__monster_dao.get_all_monsters():
             self.__world.add_monster(monster)

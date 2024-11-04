@@ -4,14 +4,14 @@
 
 from business.progression.upgrade import Upgrade, UpgradeValue
 from business.handlers.interfaces import IDataHandler
-from persistance.upgrade_data_handler import UpgradeDataHandler
+from business.handlers.item_data_handler import ItemDataHandler
 
 class DataHandler(IDataHandler):
     """The general data handler used in game to build objects using data"""
 
     @staticmethod
     def build_upgrades_for_item(item_name: str):
-        item_upgrade_data = UpgradeDataHandler.get_item_upgrades(item_name)
+        item_upgrade_data = ItemDataHandler.get_item_upgrades(item_name)
 
         upgrades = []
         for item_upgrade in item_upgrade_data:
@@ -31,4 +31,4 @@ class DataHandler(IDataHandler):
 
     @staticmethod
     def build_monsters_from_last_save_file():
-        pass #monster_data = IUpgradeDataHandler.get_monsters_in_last_session()
+        pass #monster_data = ItemDataHandler.get_monsters_in_last_session()

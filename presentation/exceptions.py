@@ -2,3 +2,6 @@
 
 class SavedGameException(Exception):
     """Exception raised when the game has to close and save"""
+
+class RetryGameException(Exception):
+    """Exception raised when the game has to close and save"""

@@ -33,6 +33,7 @@ class Bullet(MovableEntity, IBullet):
 
     @property
     def damage(self):
+        print("bullet damage:", self.__damage)
         return self.__damage
 
     def use_charge(self, amount=1):

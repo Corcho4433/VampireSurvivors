@@ -5,6 +5,18 @@ import pygame
 import settings
 from presentation.tileset import Tileset
 
+def mask_to_surface(mask, color=(255, 0, 0), alpha=100):
+    # Create a new surface matching the mask's size
+    mask_surface = pygame.Surface(mask.get_size(), pygame.SRCALPHA)
+    mask_surface.fill((0, 0, 0, 0))  # Start with a fully transparent surface
+
+    # Fill the surface where the mask is active
+    for x in range(mask.get_size()[0]):
+        for y in range(mask.get_size()[1]):
+            if mask.get_at((x, y)):
+                mask_surface.set_at((x, y), (*color, alpha))  # Use the specified color and transparency
+
+    return mask_surface
 
 class Sprite(pygame.sprite.Sprite):
     """A class representing a sprite."""
@@ -18,6 +30,13 @@ class Sprite(pygame.sprite.Sprite):
         self.__next_frame_time = 0
         self.__sprite_state = "idle"
         self.__original_image: pygame.Surface = image
+        self.__mask = pygame.mask.from_surface(self.__original_image, threshold=0)
+
+    @property
+    def mask(self):
+        """The mask of the sprite"""
+
+        return self.__mask
 
     @property
     def image(self) -> pygame.Surface:
@@ -145,11 +164,11 @@ class PlayerSprite(Sprite):
 class GhostSprite(Sprite):
     """A class representing the monster sprite."""
 
-    ASSET = "./assets/monster.png"
+    ASSET = "./assets/ghost.png"
 
     def __init__(self, pos: pygame.Vector2):
         image: pygame.Surface = pygame.image.load(GhostSprite.ASSET).convert_alpha()
-        image = pygame.transform.scale(image, (128,128))
+        image = pygame.transform.scale(image, (64,64))
         rect: pygame.rect = image.get_rect(center=(int(pos.x), int(pos.y)))
 
         super().__init__(image, rect)
@@ -157,11 +176,11 @@ class GhostSprite(Sprite):
 class RedGhostSprite(Sprite):
     """A class representing the red ghost sprite."""
 
-    ASSET = "./assets/ghost.png"
+    ASSET = "./assets/red_ghost.png"
 
     def __init__(self, pos: pygame.Vector2):
         image: pygame.Surface = pygame.image.load(RedGhostSprite.ASSET).convert_alpha()
-        image = pygame.transform.scale(image, (128,128))
+        image = pygame.transform.scale(image, (64,64))
         rect: pygame.rect = image.get_rect(center=(int(pos.x), int(pos.y)))
 
         super().__init__(image, rect)

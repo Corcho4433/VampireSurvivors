@@ -5,8 +5,9 @@ from pygame import Vector2
 from presentation.sprite import ChestSprite
 from business.entities.collectibles.collectible import Collectible
 from business.entities.interfaces import IChest, IInventoryItem
-from business.progression.perk_factory import PerkFactory
-from business.weapons.weapon_factory import WeaponFactory
+from business.progression.item_factory import ItemFactory
+
+from business.handlers.item_data_handler import ItemDataHandler
 
 class Chest(Collectible, IChest):
     """Represents a chest in the game world."""
@@ -18,13 +19,9 @@ class Chest(Collectible, IChest):
         self.__assign_item()
 
     def __assign_item(self):
-        choice = random.choice([1,2])
-        if choice == 1:
-            perk = random.choice(["hollow_heart", "clover", "spinach"])
-            self.__item = PerkFactory.create_perk(perk)
-        elif choice == 2:
-            weapon = random.choice(["whip", "gun"])
-            self.__item = WeaponFactory.create_weapon(weapon)
+        item_selected = random.choice(ItemDataHandler.get_all_items())
+
+        self.__item = ItemFactory.create_item(item_selected[0])
 
     @property
     def item(self):

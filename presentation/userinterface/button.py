@@ -1,5 +1,5 @@
 """
-    This module defines the root classes used for User Interface
+    This module defines the button class used in user interface
 """
 
 import pygame

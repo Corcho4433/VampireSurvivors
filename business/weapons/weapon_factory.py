@@ -21,12 +21,12 @@ class WeaponFactory(IWeaponFactory):
 
     @staticmethod
     def __create_gun():
-        stats = WeaponStats()
+        stats = WeaponStats(damage=1, cooldown=1)
 
         return Gun(stats, DataHandler.build_upgrades_for_item('gun'))
 
     @staticmethod
     def __create_whip():
-        stats = WeaponStats()
+        stats = WeaponStats(damage=3, cooldown=2)
 
         return Whip(stats, DataHandler.build_upgrades_for_item('whip'))

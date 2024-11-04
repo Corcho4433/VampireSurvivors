@@ -61,6 +61,11 @@ class IWeapon(IInventoryItem):
 
     @property
     @abstractmethod
+    def cooldown(self):
+        """The cooldown handler for teh weapon"""
+
+    @property
+    @abstractmethod
     def damage(self):
         """The amount of damage an attack does
         
@@ -123,6 +128,10 @@ class IInventory(ABC):
     @abstractmethod
     def get_weapons(self):
         """Returns all the weapons of the player"""
+
+    @abstractmethod
+    def get_perks(self):
+        """Returns all the perks of the player"""
 
 class IPlayerStats(ABC):
     """The player's stats"""
@@ -225,3 +234,12 @@ class IPerkFactory(ABC):
     @abstractmethod
     def create_perk(name: str):
         """Creates a perk using a name as base"""
+
+
+class IItemFactory(ABC):
+    """An item factory object that creates items"""
+
+    @staticmethod
+    @abstractmethod
+    def create_item(name: str):
+        """Creates an item given the name of it"""

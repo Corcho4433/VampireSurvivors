@@ -8,7 +8,7 @@ class PlayerStats(IPlayerStats):
 
     BASE_LUCK = 1
     BASE_HEALTH = 1
-    BASE_ATTACK_DAMAGE = 10
+    BASE_ATTACK_DAMAGE = 1
     BASE_ATTACK_SPEED = 1
     BASE_ATTACK_COOLDOWN = 2
     BASE_MOVEMENT_SPEED = 1

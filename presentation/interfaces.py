@@ -122,6 +122,14 @@ class IUIComponent(IRootComponent):
                 new_color: tuple[int, int, int]
         """
 
+    @abstractmethod
+    def draw(self):
+        """Draw the component on a surface
+        
+            Returns:
+                Surface: the drawn surface
+        """
+
 class IDynamicUIComponent(IUIComponent):
     """UI component with position and """
 
@@ -132,6 +140,10 @@ class IDynamicUIComponent(IUIComponent):
     @abstractmethod
     def resize(self, size):
         """Change the size of the UI element"""
+
+    @abstractmethod
+    def change_opacity(self, opacity):
+        """Change the opacity of the UI element"""
 
     @property
     @abstractmethod
@@ -151,8 +163,22 @@ class IDynamicUIComponent(IUIComponent):
                 Vector2: The size of the element on the screen
         """
 
+    @property
+    @abstractmethod
+    def opacity(self):
+        """The opacity of the ui element on screen
+
+            Returns:
+                int: The opacity of the element on the screen
+        """
+
 class IMenu(IComponentHolder):
     """A general menu for interfaces"""
+
+    @property
+    @abstractmethod
+    def active(self):
+        """Whether or not the menu can be rendered"""
 
     @property
     @abstractmethod
@@ -236,3 +262,16 @@ class IButton(IDynamicUIComponent, IClickable):
 
 class IDynamicText(IDynamicUIComponent):
     """A text with a background object"""
+
+class IImageComponent(IDynamicUIComponent):
+    """A dynamic component that also holds an image"""
+
+    @property
+    @abstractmethod
+    def image(self):
+        """The image attached to the component"""
+
+    @abstractmethod
+    def resize_image(self, new_size):
+        """Change the size the image covers inside the original frame 
+        (by default 90% of the original image size)"""

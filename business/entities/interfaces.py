@@ -49,6 +49,15 @@ class IDamageable(ABC):
             int: The health of the entity.
         """
 
+    @property
+    @abstractmethod
+    def max_health(self):
+        """The max health of the entity
+
+            Returns:
+                int: The maximum health of the enemy
+        """
+
     @abstractmethod
     def take_damage(self, amount: int):
         """Take damage.
@@ -136,6 +145,23 @@ class IMonster(IUpdatable, ICanMove, IDamageable, ICanDealDamage):
     @abstractmethod
     def type(self):
         """The monster type"""
+
+    @abstractmethod
+    def can_show_hp(self) -> bool:
+        """Whether or not the monsters's health bar is visible
+        
+            Return:
+                bool: visible or not
+        """
+
+    @property
+    @abstractmethod
+    def can_move(self) -> bool:
+        """Whether or not the entity can move
+
+            Returns:
+                bool: Can move or not
+        """
 
 
 class IHasCharges:

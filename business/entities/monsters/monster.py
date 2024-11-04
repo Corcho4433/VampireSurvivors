@@ -6,18 +6,21 @@ from business.entities.entity import MovableEntity
 from business.entities.interfaces import IDamageable, IMonster
 from business.handlers.cooldown_handler import CooldownHandler
 from business.world.interfaces import IGameWorld
-from business.handlers.collision_handler import CollisionHandler
+from business.handlers.cooldown_handler import CooldownHandler
 from presentation.sprite import Sprite
 
 class Monster(MovableEntity, IMonster):
     """A monster entity in the game."""
 
-    def __init__(self, pos: Vector2, sprite: Sprite, mov_speed: int, monster_type: str):
+    def __init__(self, pos: Vector2, sprite: Sprite, mov_speed: int, monster_type: str, health: int=10):
         super().__init__(pos, mov_speed, sprite)
-        self.__health: int = 10
+        self.__health: int = health
+        self.__max_health = health
         self.__damage = 10
-        self.__attack_range = 50
+        self.__attack_range = 60
         self.__attack_cooldown = CooldownHandler(0.5)
+        self.__dmg_taken_cooldown = CooldownHandler(2.5)
+        self.__can_move_cooldown = CooldownHandler(mov_speed / 480)
         self.__monster_type = monster_type
         self._logger.debug("Created %s", self)
 
@@ -43,11 +46,21 @@ class Monster(MovableEntity, IMonster):
 
         return Vector2(x, y)
 
-    #def __movement_collides_with_entities(
-    #    self, dx: float, dy: float, entities: List[IHasSprite]
-    #) -> bool:
-    #    new_position = self.sprite.rect.move(dx, dy).inflate(-10, -10)
-    #    return any(e.sprite.rect.colliderect(new_position) for e in entities)
+    def __movement_collides_with_entities(self, delta: Vector2, entities: list[IMonster], player) -> bool:
+        for entity in entities:
+            if entity == self:
+                continue
+
+            if self.sprite.rect.colliderect(entity.sprite.rect) and entity.can_move:
+                other_to_plr = entity.pos.distance_to(player.pos)
+                self_to_plr = self.pos.distance_to(player.pos)
+
+                if other_to_plr > self_to_plr:
+                    self.__can_move_cooldown.put_on_cooldown()
+
+                    return Vector2(0, 0)
+
+        return delta
 
     @property
     def type(self) -> str:
@@ -55,27 +68,19 @@ class Monster(MovableEntity, IMonster):
 
     def update(self, world: IGameWorld):
         direction = self.__get_direction_towards_the_player(world)
-        if direction.magnitude == 0:
+        if direction.magnitude == 0 or not self.can_move:
             return
 
-        colliding_pairs = CollisionHandler.get_monster_colliding_pairs(world)
-        colliding_monsters = [monster for pair in colliding_pairs for monster in pair]
+        if self.pos.distance_to(world.player.pos) < 25:
+            return
 
-        if not self in colliding_monsters:
-            self.move(direction)
-        elif self in colliding_monsters:
-            for monster, other in colliding_pairs:
-                if monster == self or other == self:
-                    monster = min(
-                        [monster, other],
-                        key=lambda monster: (monster.pos.distance_to(other.pos)),
-                    )
+        new_dir = self.__movement_collides_with_entities(direction, world.monsters, world.player)
+        if new_dir:
+            self.move(new_dir)
 
-                    monster.move(direction * .5)
-
-        if direction.x <= 0:
+        if direction.x < 0:
             self.sprite.flip(True)
-        else:
+        elif direction.y > 0:
             self.sprite.flip(False)
 
         self.attack(world.player)
@@ -93,6 +98,18 @@ class Monster(MovableEntity, IMonster):
     def health(self) -> int:
         return self.__health
 
+    @property
+    def can_move(self) -> bool:
+        return self.__can_move_cooldown.is_action_ready()
+
+    @property
+    def max_health(self) -> int:
+        return self.__max_health
+
     def take_damage(self, amount):
         self.__health = max(0, self.__health - abs(amount))
+        self.__dmg_taken_cooldown.put_on_cooldown()
         self.sprite.take_damage()
+
+    def can_show_hp(self):
+        return not self.__dmg_taken_cooldown.is_action_ready()

@@ -40,6 +40,3 @@ class DeathHandler:
                 world.remove_collectible(collectible)
             if not DeathHandler.__is_entity_within_world_boundaries(collectible):
                 world.remove_collectible(collectible)
-
-        if world.player.health <= 0:
-            raise DeadPlayerException

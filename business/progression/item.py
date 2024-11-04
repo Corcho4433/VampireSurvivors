@@ -19,7 +19,6 @@ class InventoryItem(IInventoryItem):
     def upgrade(self):
         next_upgrade = self.get_next_upgrade()
 
-        print(next_upgrade)
         if next_upgrade:
             next_upgrade.apply(self)
 

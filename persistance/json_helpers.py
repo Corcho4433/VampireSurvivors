@@ -12,7 +12,8 @@ DEFAULT_JSON_STRUCTURE = {
             "level":1
         }],
         "level":1,
-        "experience":0
+        "experience":0,
+        "time":0,
     },
 
     "map_info":{
@@ -32,4 +33,4 @@ def reset_file(path: str):
     """Resets the file to be the default file"""
 
     with open(path, "w", encoding="utf-8") as outfile:
-        json.dump(DEFAULT_JSON_STRUCTURE, outfile)
+        json.dump(DEFAULT_JSON_STRUCTURE, outfile, indent=4)

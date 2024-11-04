@@ -23,18 +23,18 @@ class PerkFactory(IPerkFactory):
         stats = PlayerStats(health=1.2)
         upgrades = DataHandler.build_upgrades_for_item("hollow_heart")
 
-        return Perk("Hollow Heart", stats, upgrades)
+        return Perk("hollow_heart", stats, upgrades)
 
     @staticmethod
     def __create_spinach() -> Perk:
         stats = PlayerStats(attack_damage=1.2)
         upgrades = DataHandler.build_upgrades_for_item("spinach")
 
-        return Perk("Spinach", stats, upgrades)
+        return Perk("spinach", stats, upgrades)
 
     @staticmethod
     def __create_clover() -> Perk:
         stats = PlayerStats(luck=1.2)
         upgrades = DataHandler.build_upgrades_for_item("clover")
 
-        return Perk("Clover", stats, upgrades)
+        return Perk("clover", stats, upgrades)

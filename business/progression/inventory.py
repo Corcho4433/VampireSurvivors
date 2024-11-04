@@ -30,14 +30,20 @@ class Inventory(IInventory):
     def add_item(self, item: IInventoryItem):
         if self.item_count + 1 > self.limit:
             return
+
         try:
             if self.__items[item.name] is None:
                 self.__items[item.name] = item
         except KeyError:
             self.__items[item.name] = item
+        except AttributeError as exception_error_text:
+            print("Error when adding item", exception_error_text)
 
     def get_item(self, name: str):
-        return self.__items[name]
+        try:
+            return self.__items[name]
+        except KeyError:
+            return None
 
     def get_perks(self):
         items = []

@@ -1,4 +1,6 @@
-"""Defines a class used by dynamic texts"""
+"""
+    Defines a class used by dynamic texts
+"""
 
 from pygame import Vector2
 from presentation.userinterface.uicomponent import UIComponent
@@ -11,9 +13,6 @@ class DynamicText(Text):
         self.__component = UIComponent(pos, Vector2(), (255, 255, 255), 0)
 
         super().__init__(text, self.__component, font_size, color, font=font, bold=bold)
-
-    #def update(self, display):
-    #    super().update(display)
 
     def __str__(self):
         return f'DYNAMICTEXT::{self.text}'

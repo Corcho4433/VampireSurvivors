@@ -2,7 +2,7 @@
 
 from abc import ABC, abstractmethod
 
-from business.entities.interfaces import IBullet, IExperienceGem, IMonster, IPlayer
+from business.entities.interfaces import IMonster, IPlayer
 from business.entities.interfaces import ICollectible
 
 
@@ -12,8 +12,23 @@ class IGameWorld(ABC):
     The game world is the environment in which the game entities exist.
     """
 
-    def assign_player(self, player):
-        """Assign a player to the world"""
+    @abstractmethod
+    def add_damage(self, damage: int):
+        """Add a damage amount to the total damage of the game"""
+
+    @property
+    @abstractmethod
+    def total_damage(self):
+        """The total damage dealt in the game"""
+
+    @abstractmethod
+    def assign_player(self, player, clock_time: int):
+        """Assign a player to the world
+        
+            Args:
+                player (Player): The player instance to give the world
+                clock_time (int=0): The clock time to start with
+        """
 
     @property
     @abstractmethod
@@ -210,3 +225,15 @@ class IClock(ABC):
     @abstractmethod
     def time(self):
         """The current time of the clock"""
+
+    @abstractmethod
+    def count(self):
+        """Count the time passed, equal to method update"""
+
+    @abstractmethod
+    def set_time(self, new_time: int):
+        """Should only be called by data classes
+        
+            Args:
+                new_time (int): The new time of the clock
+        """

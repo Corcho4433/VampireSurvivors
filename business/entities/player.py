@@ -24,7 +24,6 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
         super().__init__(pos, 300, PlayerSprite(pos))
 
         self.__stats = PlayerStats(health=100)
-        self.__last_shot_time = CooldownHandler(self.__stats.cooldown)
         self.__world: IGameWorld = None
         self.__inventory : Inventory = None
         self.__experience = experience
@@ -66,7 +65,7 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
     def health(self) -> int:
         #print(self.__stats.health)
         return self.__stats.health
-    
+
     @property
     def max_health(self) -> int:
         return self.__max_health
@@ -118,12 +117,18 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
     def give_item(self, item: IInventoryItem):
         self.__inventory.add_item(item)
 
+    def move(self, direction):
+        super().move(direction)
+
+        if direction.x < 0:
+            self.sprite.flip(True)
+        elif direction.x > 0:
+            self.sprite.flip(False)
+
     def update(self, world: IGameWorld):
         super().update(world)
 
         if not PositionHandler.is_position_within_boundaries(self.pos):
             self.move_to_center()
 
-        if self.__last_shot_time.is_action_ready() and world.simulation_speed > 0:
-            self.__attack_at_nearest_enemy(world)
-            self.__last_shot_time.put_on_cooldown()
+        self.__attack_at_nearest_enemy(world)

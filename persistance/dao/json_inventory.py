@@ -83,7 +83,6 @@ class JSONInventoryDAO(InventoryDAO):
                 "level": item.level,
             }
 
-            print(new_item)
             data['player']['inventory'].append(new_item)
 
             with open(self.__path, 'w', encoding="utf-8") as data_file:

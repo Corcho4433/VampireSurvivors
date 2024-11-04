@@ -14,13 +14,35 @@ class CollisionHandler:
         return an_entity.sprite.rect.colliderect(another_entity.sprite.rect)
 
     @staticmethod
-    def __handle_attacks(attacks: List[IBullet], monsters: List[IMonster]):
-        for attack in attacks:
-            for monster in monsters:
-                if CollisionHandler.__collides_with(attack, monster):
-                    monster.take_damage(attack.damage)
-                    if isinstance(attack, IDistanceAttack):
-                        attack.use_charge()
+    def __handle_attacks(world):
+        attacks: List[IBullet] = world.attacks
+        monsters: List[IMonster] = world.monsters
+
+        attack_masks = {attack.sprite: attack.sprite.mask for attack in attacks}
+        monster_masks = {monster.sprite: monster.sprite.mask for monster in monsters}
+
+        for attack_sprite, attack_mask in attack_masks.items():
+            for monster_sprite, monster_mask in monster_masks.items():
+                # Check for overlap using masks
+
+                if attack_mask.overlap(monster_mask, (monster_sprite.rect.x - attack_sprite.rect.x, monster_sprite.rect.y - attack_sprite.rect.y)):
+                    attack = next((b for b in attacks if b.sprite == attack_sprite), None)
+                    monster = next((m for m in monsters if m.sprite == monster_sprite), None)
+
+                    if attack and monster:
+                        monster.take_damage(attack.damage)  # Monster takes damage from the bullet
+                        world.add_damage(attack.damage)
+
+                        if isinstance(attack, IDistanceAttack):
+                            attack.use_charge()
+
+
+        #for attack in attacks:
+        #    for monster in monsters:
+        #        if CollisionHandler.__collides_with(attack, monster):
+        #            monster.take_damage(attack.damage)
+        #            if isinstance(attack, IDistanceAttack):
+        #                attack.use_charge()
 
     @staticmethod
     def __handle_monsters(monsters: List[IMonster], player: IPlayer):
@@ -34,6 +56,7 @@ class CollisionHandler:
                     player.pickup_gem(collectible)
                     collectible.pick()
                 if isinstance(collectible, IChest):
+                    print(collectible)
                     player.give_item(collectible.item)
                     player.apply_perks(heal=False)
                     collectible.pick()
@@ -45,7 +68,7 @@ class CollisionHandler:
         Args:
             world (IGameWorld): The game world.
         """
-        CollisionHandler.__handle_attacks(world.attacks, world.monsters)
+        CollisionHandler.__handle_attacks(world)
         CollisionHandler.__handle_monsters(world.monsters, world.player)
         CollisionHandler.__handle_collectibles(world.collectibles, world.player)
 

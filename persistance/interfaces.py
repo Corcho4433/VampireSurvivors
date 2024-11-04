@@ -2,13 +2,23 @@
 
 from abc import ABC, abstractmethod
 
-class IUpgradeDataHandler(ABC):
+class IItemDataHandler(ABC):
     """General JSON data parser"""
 
     @staticmethod
     @abstractmethod
     def get_item_upgrades(item_name: str):
         """Gets the data for an item's upgrades"""
+
+    @staticmethod
+    @abstractmethod
+    def get_all_items():
+        """A list of all the items in-game"""
+
+    @staticmethod
+    @abstractmethod
+    def get_item_type(name: str):
+        """The type of a given item"""
 
 class MonsterDAO(ABC):
     """A monster Data-Access-Object used to save data for monsters"""
@@ -64,6 +74,10 @@ class PlayerDAO(ABC):
     @abstractmethod
     def get_player(self):
         """Get the player from the DAO data"""
+
+    @abstractmethod
+    def get_time(self):
+        """Get the time of the last session"""
 
     @abstractmethod
     def add_player(self, player):

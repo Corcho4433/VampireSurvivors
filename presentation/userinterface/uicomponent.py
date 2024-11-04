@@ -26,11 +26,16 @@ class UIComponent(IDynamicUIComponent):
     def set_active(self, state: bool):
         self.__active = state
 
+    def draw(self) -> Surface:
+        color = (self.__color[0], self.__color[1], self.__color[2], self.__opacity)
+        shape_surf = Surface(self.__rect.size, SRCALPHA)
+        draw.rect(shape_surf, color, shape_surf.get_rect())
+
+        return shape_surf
+
     def update(self, display: IDisplay):
         try:
-            color = (self.__color[0], self.__color[1], self.__color[2], self.__opacity)
-            shape_surf = Surface(self.__rect.size, SRCALPHA)
-            draw.rect(shape_surf, color, shape_surf.get_rect())
+            shape_surf = self.draw()
 
             display.screen.blit(shape_surf, self.__rect)
         except error as err:
@@ -48,6 +53,12 @@ class UIComponent(IDynamicUIComponent):
         new_color = (min(255, new_color[0]), min(255, new_color[1]), min(255, new_color[2]))
         self.__color = new_color
 
+    def change_opacity(self, opacity: int):
+        if opacity > 255 or opacity < 0:
+            return
+
+        self.__opacity = opacity
+
     @property
     def active(self) -> bool:
         return self.__active
@@ -63,6 +74,10 @@ class UIComponent(IDynamicUIComponent):
     @property
     def color(self) -> tuple[int, int, int]:
         return self.__color
+
+    @property
+    def opacity(self) -> int:
+        return self.__opacity
 
     @property
     def rect(self) -> Rect:

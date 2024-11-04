@@ -40,7 +40,6 @@ class Upgrade(IUpgrade):
         values = self.values
 
         for upgrade_value in values:
-            print(upgrade_value.stat)
             if item.get_stat(upgrade_value.stat):
                 base = item.get_stat(upgrade_value.stat)
 

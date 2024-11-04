@@ -11,6 +11,7 @@ from presentation.handlers.userinterface_handler import UserInterfaceHandler
 from presentation.menus.pause import PauseMenu
 from presentation.menus.hud import HUD
 from presentation.menus.upgrade_menu import UpgradeMenu
+from presentation.menus.game_over import GameOver
 
 
 class Display(IDisplay):
@@ -63,24 +64,32 @@ class Display(IDisplay):
                 self.__screen.blit(tile_image, (x, y))
 
     def __draw_player_health_bar(self):
-        # Get the player's health
-        player = self.__world.player
+        self.__draw_health_bar_for_entity(self.__world.player)
 
-        # Define the health bar dimensions
+    def __draw_health_bar_for_entity(self, entity):
         bar_width = settings.TILE_WIDTH
         bar_height = 5
-        bar_x = player.sprite.rect.centerx - bar_width // 2 - self.camera.camera_rect.left
-        bar_y = player.sprite.rect.bottom + 5 - self.camera.camera_rect.top
+        bar_x = entity.sprite.rect.centerx - bar_width // 2 - self.camera.camera_rect.left
+        bar_y = entity.sprite.rect.bottom + 3 - self.camera.camera_rect.top
 
         # Draw the background bar (red)
+        bg_rect = pygame.Rect(bar_x - 1, bar_y - 1, bar_width + 2, bar_height + 2)
+        pygame.draw.rect(self.__screen, (0, 0, 0), bg_rect)
+
         bg_rect = pygame.Rect(bar_x, bar_y, bar_width, bar_height)
         pygame.draw.rect(self.__screen, (255, 0, 0), bg_rect)
 
         # Draw the health bar (green)
-        health_percentage = player.health / player.max_health 
+        health_percentage = entity.health / entity.max_health
         health_width = int(bar_width * health_percentage)
         health_rect = pygame.Rect(bar_x, bar_y, health_width, bar_height)
         pygame.draw.rect(self.__screen, (0, 255, 0), health_rect)
+
+        text_size = 15
+        font_obj = pygame.font.SysFont(None, text_size)
+        rendered = font_obj.render(f"{round(entity.health)} ({round(entity.health/entity.max_health * 100)}%)", True, (255, 255, 255))
+        rect = rendered.get_rect(center=(bar_x + bar_width // 2, bar_y + bar_height + text_size // 2))
+        self.__screen.blit(rendered, rect)
 
     def __draw_player(self):
         adjusted_rect = self.camera.apply(self.__world.player.sprite.rect)
@@ -97,6 +106,7 @@ class Display(IDisplay):
         self.__interface_handler.add_menu(HUD(self.__world))
         self.__interface_handler.add_menu(PauseMenu(self.__world))
         self.__interface_handler.add_menu(UpgradeMenu(self.__world))
+        self.__interface_handler.add_menu(GameOver(self.__world))
 
     def get_menu(self, name: str):
         return self.__interface_handler.get_menu(name)
@@ -119,6 +129,9 @@ class Display(IDisplay):
             if self.camera.camera_rect.colliderect(monster.sprite.rect):
                 adjusted_rect = self.camera.apply(monster.sprite.rect)
                 self.__screen.blit(monster.sprite.image, adjusted_rect)
+
+                if monster.can_show_hp():
+                    self.__draw_health_bar_for_entity(monster)
 
         # Draw the bullets
         for attack in self.__world.attacks:

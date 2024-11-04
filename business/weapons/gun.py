@@ -12,11 +12,11 @@ class Gun(Weapon):
         super().__init__("gun", upgrades, stats)
 
     def attack(self, origin, world, player_stats: IPlayerStats):
-        if not world.monsters:
+        if not world.monsters or not self.cooldown.is_action_ready():
             return
 
         # Find the nearest monster
-
+        self.cooldown.put_on_cooldown()
         bullet = Bullet(origin, self.__aim_at_target(origin, world), self.damage * player_stats.attack_damage)
         bullet.change_speed((bullet.original_speed + self.power)* self.speed)
 

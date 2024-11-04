@@ -20,6 +20,11 @@ class IWeaponStats(ABC):
     def power(self):
         """The amplified power of an attack"""
 
+    @property
+    @abstractmethod
+    def cooldown(self):
+        """The cooldown of a weapon"""
+
     @abstractmethod
     def change_stat(self, name: str, new_value: float | int):
         """Changes a statistic to match a new value"""

@@ -6,10 +6,20 @@ from business.exceptions import InvalidStatValueException, InvalidStatNameExcept
 class WeaponStats(IWeaponStats):
     """The stats of a weapon used internally"""
 
-    def __init__(self):
-        self.__damage = 1
-        self.__speed = 1
-        self.__power = 0
+    BASE_DAMAGE = 1
+    BASE_SPEED = 1
+    BASE_POWER = 0
+    BASE_COOLDOWN = 10
+
+    def __init__(self, damage=BASE_DAMAGE, speed=BASE_SPEED, power=BASE_DAMAGE, cooldown=BASE_COOLDOWN):
+        self.__damage = damage
+        self.__speed = speed
+        self.__power = power
+        self.__cooldown = cooldown
+
+    @property
+    def cooldown(self):
+        return self.__cooldown
 
     @property
     def damage(self):
@@ -34,5 +44,7 @@ class WeaponStats(IWeaponStats):
                 self.__speed = new_value
             case 'power':
                 self.__power = new_value
+            case 'cooldown':
+                self.__cooldown = new_value
             case _:
                 raise InvalidStatNameException

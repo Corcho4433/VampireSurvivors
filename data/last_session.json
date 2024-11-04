@@ -1,1 +1,32 @@
-{"player": {"pos": [0, 0], "inventory": [{"name": "gun", "type": 1, "level": 1}], "level": 1, "experience": 0}, "map_info": {"monsters": {}, "collectibles": {}, "attacks": {}}}
+{
+    "player": {
+        "pos": [
+            859.2462120245881,
+            229.98214331265893
+        ],
+        "inventory": [
+            {
+                "type": 1,
+                "name": "gun",
+                "level": 1
+            }
+        ],
+        "level": 1,
+        "experience": 0,
+        "time": 4.2833333333333234
+    },
+    "map_info": {
+        "monsters": [
+            {
+                "pos": [
+                    1160.0,
+                    1276.0
+                ],
+                "type": "default",
+                "health": 10
+            }
+        ],
+        "collectibles": [],
+        "attacks": {}
+    }
+}
