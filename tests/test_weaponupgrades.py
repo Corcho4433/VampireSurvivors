@@ -7,7 +7,7 @@ from business.weapons.weapon_factory import WeaponFactory
 from business.exceptions import InvalidWeaponName
 
 class TestsWeaponUpgrades(unittest.TestCase):
-    def test01_weapon_level_increases(self):
+    def test01_wrong_weapon_raises_error(self):
         with self.assertRaises(InvalidWeaponName):
             WeaponFactory.create_weapon('vater_boiler_skibidi_master')
 
