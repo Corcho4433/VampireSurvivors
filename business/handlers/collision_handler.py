@@ -35,9 +35,7 @@ class CollisionHandler:
                     collectible.pick()
                 if isinstance(collectible, IChest):
                     player.give_item(collectible.item)
-                    print(f"se le dio el item {collectible.item.name}")
                     player.apply_perks()
-                    print(f"se aplico el item {collectible.item.name}")
                     collectible.pick()
 
     @staticmethod

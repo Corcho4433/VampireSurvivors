@@ -30,8 +30,12 @@ class Inventory(IInventory):
     def add_item(self, item: IInventoryItem):
         if self.item_count + 1 > self.limit:
             return
-
-        self.__items[item.name] = item
+        
+        try:
+            if self.__items[item.name] is None:
+                self.__items[item.name] = item
+        except KeyError:
+            self.__items[item.name] = item
 
     def get_item(self, name: str):
         return self.__items[name]
