@@ -35,7 +35,7 @@ class CollisionHandler:
                     collectible.pick()
                 if isinstance(collectible, IChest):
                     player.give_item(collectible.item)
-                    player.apply_perks()
+                    player.apply_perks(heal=False)
                     collectible.pick()
 
     @staticmethod

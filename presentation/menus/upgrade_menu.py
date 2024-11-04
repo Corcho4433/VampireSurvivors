@@ -64,7 +64,7 @@ class UpgradeMenu(Menu):
         if item:
             item.upgrade()
         
-        self.__world.player.apply_perks()
+        self.__world.player.apply_perks(heal=True)
 
     def draw(self):
         title = DynamicText("UPGRADE MENU", Vector2(settings.SCREEN_WIDTH // 2, 30), bold=True)

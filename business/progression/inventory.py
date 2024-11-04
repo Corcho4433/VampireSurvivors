@@ -30,7 +30,6 @@ class Inventory(IInventory):
     def add_item(self, item: IInventoryItem):
         if self.item_count + 1 > self.limit:
             return
-        
         try:
             if self.__items[item.name] is None:
                 self.__items[item.name] = item

@@ -99,7 +99,8 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
         for weapon in self.__inventory.get_weapons():
             weapon.attack(self.pos, world, self.stats)
 
-    def apply_perks(self):
+    def apply_perks(self, heal: bool):
+        current_health = self.__stats.health
         self.__stats = PlayerStats(health=100)
 
         perks = self.__inventory.get_perks()
@@ -107,10 +108,12 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
             self.__stats = self.__stats * perk.stats
 
         self.__max_health = self.__stats.health
+        if not heal:
+            self.__stats.health = current_health
 
     def assign_world(self, world: IGameWorld):
         self.__world = world
-        self.apply_perks()
+        self.apply_perks(heal=True)
 
     def give_item(self, item: IInventoryItem):
         self.__inventory.add_item(item)
