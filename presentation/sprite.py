@@ -154,6 +154,18 @@ class GhostSprite(Sprite):
 
         super().__init__(image, rect)
 
+class RedGhostSprite(Sprite):
+    """A class representing the red ghost sprite."""
+
+    ASSET = "./assets/ghost.png"
+
+    def __init__(self, pos: pygame.Vector2):
+        image: pygame.Surface = pygame.image.load(RedGhostSprite.ASSET).convert_alpha()
+        image = pygame.transform.scale(image, (128,128))
+        rect: pygame.rect = image.get_rect(center=(int(pos.x), int(pos.y)))
+
+        super().__init__(image, rect)
+
 class BulletSprite(Sprite):
     """A class representing the bullet sprite."""
 
