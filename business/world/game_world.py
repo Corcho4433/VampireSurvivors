@@ -89,8 +89,8 @@ class GameWorld(IGameWorld):
 
             if self.__monster_spawner_cooldown.is_action_ready():
                 reduced_spawn_time = min(
-                    (self.clock_seconds / 600) * self.DEFAULT_MONSTER_SPAWN_TIME,
-                    self.DEFAULT_MONSTER_SPAWN_TIME - 0.05)
+                    (self.clock_seconds / 100) * self.DEFAULT_MONSTER_SPAWN_TIME,
+                    self.DEFAULT_MONSTER_SPAWN_TIME - 0.02)
 
                 self.__monster_spawner_cooldown.put_on_cooldown()
                 self.__monster_spawner_cooldown.change_time(self.DEFAULT_MONSTER_SPAWN_TIME - reduced_spawn_time)

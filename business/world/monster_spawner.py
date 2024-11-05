@@ -3,6 +3,8 @@
 import logging
 import random
 
+from settings import FPS
+
 from pygame import Vector2
 
 import settings
@@ -25,15 +27,21 @@ class MonsterSpawner(IMonsterSpawner):
         choices = ["default"]
         for _ in range(int(self.__clock.time/180)):
             choices.append("red_ghost")
-        for _ in range(int(self.__clock.time/300)):
-            self.__final_boss_flag += 1
-        pos = self.__get_random_position()
-        monster = MonsterFactory.create_monster(random.choice(choices), pos)
-        world.add_monster(monster)
-        if self.__final_boss_flag == 1:
+
+        self.__final_boss_flag += 1 / FPS
+
+        amount_by_clock = (self.__clock.time / 120)
+
+        for _ in range(round(amount_by_clock)):
+            pos = self.__get_random_position()
+            monster = MonsterFactory.create_monster(random.choice(choices), pos)
+            world.add_monster(monster)
+
+        if self.__final_boss_flag > 300:
             boss = MonsterFactory.create_monster("boss", pos)
             world.add_monster(boss)
             self.__final_boss_flag = 0
+
         self.__logger.debug(f"Spawning {monster} at (%d, %d)", pos.x, pos.y)
 
     def __get_random_position(self):
