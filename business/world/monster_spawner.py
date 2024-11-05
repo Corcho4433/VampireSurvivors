@@ -11,6 +11,7 @@ import settings
 from business.entities.monster_factory import MonsterFactory
 from business.world.interfaces import IGameWorld, IMonsterSpawner
 from business.world.clock import Clock
+from business.handlers.cooldown_handler import CooldownHandler
 
 class MonsterSpawner(IMonsterSpawner):
     """Spawns monsters in the game world."""
@@ -18,7 +19,7 @@ class MonsterSpawner(IMonsterSpawner):
     def __init__(self):
         self.__logger = logging.getLogger(__name__)
         self.__clock = Clock()
-        self.__final_boss_flag = 0
+        self.__final_boss_cooldown : CooldownHandler = CooldownHandler(300)
 
     def update(self, world: IGameWorld):
         self.spawn_monster(world)
@@ -28,9 +29,7 @@ class MonsterSpawner(IMonsterSpawner):
         for _ in range(int(self.__clock.time/180)):
             choices.append("red_ghost")
 
-        self.__final_boss_flag += 1 / FPS
-
-        amount_by_clock = (self.__clock.time / 120)
+        amount_by_clock = (self.__clock.time / 240) + 1
 
         for _ in range(round(amount_by_clock)):
             pos = self.__get_random_position()
@@ -39,10 +38,10 @@ class MonsterSpawner(IMonsterSpawner):
 
             self.__logger.debug(f"Spawning {monster} at (%d, %d)", pos.x, pos.y)
 
-        if self.__final_boss_flag > 300:
+        if self.__final_boss_cooldown.is_action_ready():
             boss = MonsterFactory.create_monster("boss", pos)
             world.add_monster(boss)
-            self.__final_boss_flag = 0
+            self.__final_boss_cooldown.put_on_cooldown()
 
 
     def __get_random_position(self):
