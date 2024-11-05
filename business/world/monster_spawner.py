@@ -37,12 +37,13 @@ class MonsterSpawner(IMonsterSpawner):
             monster = MonsterFactory.create_monster(random.choice(choices), pos)
             world.add_monster(monster)
 
+            self.__logger.debug(f"Spawning {monster} at (%d, %d)", pos.x, pos.y)
+
         if self.__final_boss_flag > 300:
             boss = MonsterFactory.create_monster("boss", pos)
             world.add_monster(boss)
             self.__final_boss_flag = 0
 
-        self.__logger.debug(f"Spawning {monster} at (%d, %d)", pos.x, pos.y)
 
     def __get_random_position(self):
         return Vector2(random.randint(0, settings.WORLD_WIDTH),
