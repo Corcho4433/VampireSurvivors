@@ -1,73 +1,24 @@
 {
     "player": {
         "pos": [
-            726.272737090068,
-            1380.297795923037
+            840,
+            840
         ],
         "inventory": [
             {
                 "type": 1,
                 "name": "gun",
-                "level": 25
-            },
-            {
-                "type": 2,
-                "name": "clover",
-                "level": 4
-            },
-            {
-                "type": 1,
-                "name": "whip",
-                "level": 1
-            },
-            {
-                "type": 2,
-                "name": "wings",
-                "level": 2
-            },
-            {
-                "type": 2,
-                "name": "hollow_heart",
                 "level": 1
             }
         ],
-        "level": 4,
-        "experience": 3,
-        "time": 128.13333333332744,
-        "health": 108.04791666666716
+        "level": 1,
+        "experience": 0,
+        "time": 0,
+        "health": 100
     },
     "map_info": {
         "monsters": [],
-        "collectibles": [
-            {
-                "pos": [
-                    1555.0,
-                    182.0
-                ],
-                "type": "chest"
-            },
-            {
-                "pos": [
-                    1031.0,
-                    1441.0
-                ],
-                "type": "experience"
-            },
-            {
-                "pos": [
-                    339.0,
-                    1564.0
-                ],
-                "type": "experience"
-            },
-            {
-                "pos": [
-                    1023.0,
-                    1087.0
-                ],
-                "type": "healing"
-            }
-        ],
+        "collectibles": [],
         "attacks": {}
     }
 }
