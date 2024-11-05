@@ -56,11 +56,11 @@ class UpgradeMenu(Menu):
             button.move(pos)
 
             if button.is_clicked():
+                self.__handle_button_presses(upgrade_data)
+
                 self.__world.set_upgrade_menu_active(False)
                 if upgrade_data == 'skip':
                     break
-
-                self.__handle_button_presses(upgrade_data)
 
                 break
 
