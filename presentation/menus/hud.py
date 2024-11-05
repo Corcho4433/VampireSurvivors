@@ -22,7 +22,6 @@ class HUD(Menu):
         self.__last_change = time.get_ticks()
         self.__clock: DynamicText = None
         self.__items = []
-        self.__last_inventory = []
 
         self.draw()
 
@@ -51,7 +50,7 @@ class HUD(Menu):
         self.__bar_fill.resize(Vector2(size_x + (goal_x_size - size_x) * factor, 20))
         self.__clock.change(str(timedelta(seconds=round(self.__world.clock_seconds))))
 
-        self.__update_inventory()
+        #self.__update_inventory()
 
     def draw(self):
         self.__exp_text = DynamicText("XP: 0/1 | Level: 1", Vector2(90, 11), 30)
@@ -64,13 +63,13 @@ class HUD(Menu):
         self.add_component(self.__exp_text)
         self.add_component(self.__clock)
 
-    def __update_inventory(self):
+    def update_inventory(self):
+        """Update the inventory UI"""
+
         full_inventory = self.__world.player.inventory.get_items()
 
         for item_component in self.__items:
             self.remove_component(item_component)
-
-            del item_component
 
         self.__items = []
 

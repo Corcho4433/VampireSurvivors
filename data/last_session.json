@@ -1,91 +1,22 @@
 {
     "player": {
         "pos": [
-            1150.7102742045556,
-            1171.5178978376084
+            629.1421356237311,
+            1211.6547622084388
         ],
         "inventory": [
             {
                 "type": 1,
                 "name": "gun",
                 "level": 1
-            },
-            {
-                "type": 1,
-                "name": "whip",
-                "level": 1
-            },
-            {
-                "type": 2,
-                "name": "wings",
-                "level": 2
-            },
-            {
-                "type": 2,
-                "name": "clover",
-                "level": 2
-            },
-            {
-                "type": 2,
-                "name": "hollow_heart",
-                "level": 1
             }
         ],
-        "level": 3,
+        "level": 1,
         "experience": 0,
-        "time": 144.65000000000725
+        "time": 8.950000000000024
     },
     "map_info": {
-        "monsters": [
-            {
-                "pos": [
-                    858.0,
-                    1172.0
-                ],
-                "type": "default",
-                "health": 4
-            },
-            {
-                "pos": [
-                    828.0,
-                    1196.0
-                ],
-                "type": "default",
-                "health": 4
-            },
-            {
-                "pos": [
-                    765.0,
-                    1174.0
-                ],
-                "type": "default",
-                "health": 3
-            },
-            {
-                "pos": [
-                    753.0,
-                    1238.0
-                ],
-                "type": "default",
-                "health": 2
-            },
-            {
-                "pos": [
-                    1239.0,
-                    934.0
-                ],
-                "type": "default",
-                "health": 8
-            },
-            {
-                "pos": [
-                    291.0,
-                    1161.0
-                ],
-                "type": "default",
-                "health": 8
-            }
-        ],
+        "monsters": [],
         "collectibles": [],
         "attacks": {}
     }

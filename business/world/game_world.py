@@ -52,6 +52,7 @@ class GameWorld(IGameWorld):
     def assign_player(self, player: IPlayer, clock_time: int=0):
         self.__player = player
         self.__clock.set_time(clock_time)
+        self.__display.get_menu('HUD').update_inventory()
 
     @property
     def clock_seconds(self):
@@ -109,6 +110,7 @@ class GameWorld(IGameWorld):
         if state:
             self.__pause()
         else:
+            self.__display.get_menu('HUD').update_inventory()
             self.__resume()
 
     @property
@@ -130,6 +132,7 @@ class GameWorld(IGameWorld):
 
     def remove_collectible(self, collectible: IPickeable):
         self.__collectibles.remove(collectible)
+        self.__display.get_menu('HUD').update_inventory()
 
         del collectible
 
