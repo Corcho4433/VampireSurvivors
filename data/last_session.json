@@ -1,8 +1,8 @@
 {
     "player": {
         "pos": [
-            783.0166837632491,
-            529.5368862987859
+            1150.7102742045556,
+            1171.5178978376084
         ],
         "inventory": [
             {
@@ -18,24 +18,75 @@
             {
                 "type": 2,
                 "name": "wings",
+                "level": 2
+            },
+            {
+                "type": 2,
+                "name": "clover",
+                "level": 2
+            },
+            {
+                "type": 2,
+                "name": "hollow_heart",
                 "level": 1
             }
         ],
-        "level": 2,
+        "level": 3,
         "experience": 0,
-        "time": 64.24999999999764
+        "time": 144.65000000000725
     },
     "map_info": {
-        "monsters": [],
-        "collectibles": [
+        "monsters": [
             {
                 "pos": [
-                    877.0,
-                    1492.0
+                    858.0,
+                    1172.0
                 ],
-                "type": "chest"
+                "type": "default",
+                "health": 4
+            },
+            {
+                "pos": [
+                    828.0,
+                    1196.0
+                ],
+                "type": "default",
+                "health": 4
+            },
+            {
+                "pos": [
+                    765.0,
+                    1174.0
+                ],
+                "type": "default",
+                "health": 3
+            },
+            {
+                "pos": [
+                    753.0,
+                    1238.0
+                ],
+                "type": "default",
+                "health": 2
+            },
+            {
+                "pos": [
+                    1239.0,
+                    934.0
+                ],
+                "type": "default",
+                "health": 8
+            },
+            {
+                "pos": [
+                    291.0,
+                    1161.0
+                ],
+                "type": "default",
+                "health": 8
             }
         ],
+        "collectibles": [],
         "attacks": {}
     }
 }

@@ -25,9 +25,11 @@ class Inventory(IInventory):
     def add_item(self, item: IInventoryItem):
         if self.item_count + 1 > self.limit:
             return
-
         try:
-            if self.__items[item.name] is None:
+            if self.get_item(item.name) is None:
+                self.__items[item.name] = item
+            else:
+                item.upgrade()
                 self.__items[item.name] = item
         except KeyError:
             self.__items[item.name] = item

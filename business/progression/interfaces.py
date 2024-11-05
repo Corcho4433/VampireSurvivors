@@ -12,15 +12,15 @@ class IUpgradeable(ABC):
 
     @abstractmethod
     def upgrade(self):
-        """Upgrades the weapon by one level"""
+        """Upgrades the item by one level"""
 
     @property
     @abstractmethod
     def level(self):
-        """The level of the weapon
+        """The level of the item
 
             Returns:
-                int: the level of the weapon
+                int: the level of the item
         """
 
 class IInventoryItem(IUpgradeable):
