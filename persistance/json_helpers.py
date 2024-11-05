@@ -16,6 +16,7 @@ DEFAULT_JSON_STRUCTURE = {
         "level":1,
         "experience":0,
         "time":0,
+        "health":100,
     },
 
     "map_info":{

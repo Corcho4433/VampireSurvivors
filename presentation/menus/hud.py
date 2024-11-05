@@ -5,6 +5,7 @@ from pygame import Vector2, time
 from settings import SCREEN_WIDTH
 
 from presentation.menus.menu import Menu
+from presentation.userinterface.text import Text
 from presentation.userinterface.uicomponent import UIComponent
 from presentation.userinterface.dynamic_text import DynamicText
 from presentation.userinterface.image_component import ImageComponent
@@ -90,12 +91,12 @@ class HUD(Menu):
             if not item.get_next_upgrade():
                 shown_level = "MAX"
 
-            new_bg = UIComponent(Vector2(count * 57 + 10, 50), Vector2(54, 54), (0,0,0), 45)
-            new_component = ImageComponent(f"./assets/{item.name}.png", Vector2(count * 59 + 10, 50), Vector2(50, 50))
-            new_text = DynamicText(shown_level, Vector2(count * 59 + 45, 95), 18)
+            new_component = ImageComponent(f"./assets/{item.name}.png", Vector2(count * 57 + 10, 50), Vector2(50, 50))
+            new_bg = UIComponent(new_component.pos + Vector2(-4, 0), Vector2(54, 54), (0,0,0), 45)
+            new_text = DynamicText(shown_level, new_component.pos + Vector2(25, 48), 18)
 
-            #new_component.change_color((0,0,0))
-            #new_component.change_opacity(100)
+            new_component.change_color((0,0,0))
+            new_component.change_opacity(100)
 
             self.__items.append(new_bg)
             self.__items.append(new_text)

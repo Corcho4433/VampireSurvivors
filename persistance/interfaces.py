@@ -80,6 +80,10 @@ class PlayerDAO(ABC):
         """Get the time of the last session"""
 
     @abstractmethod
+    def get_health(self):
+        """Get the health of the last session"""
+
+    @abstractmethod
     def add_player(self, player):
         """Add the player to the DAO data"""
 

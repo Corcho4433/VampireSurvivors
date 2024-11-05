@@ -34,6 +34,18 @@ class JSONPlayerDAO(PlayerDAO):
 
             return self.get_player()
 
+    def get_health(self):
+        try:
+            with open(self.__path, 'r', encoding="utf-8") as data_file:
+                data = json.load(data_file)
+                player_data = data['player']
+
+                return player_data['health']
+        except ValueError:
+            create_json_file(self.__path)
+
+            return self.get_player()
+
     def get_time(self) -> int:
         try:
             with open(self.__path, 'r', encoding="utf-8") as data_file:
@@ -63,6 +75,7 @@ class JSONPlayerDAO(PlayerDAO):
             data['player']['level'] = player.level
             data['player']['experience'] = player.experience
             data['player']['pos'] = [player.pos.x, player.pos.y]
+            data['player']['health'] = player.health
             data['player']['time'] = Clock().time
 
             with open(self.__path, 'w', encoding="utf-8") as data_file:

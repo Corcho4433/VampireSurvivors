@@ -25,12 +25,12 @@ class Text(IText):
         self.__font = font
         self.__bold = bold
         self.__align = align
+        self.__font_obj = pygame.font.SysFont(self.__font, int(self.__font_size * 0.75), self.__bold)
 
     def update(self, display):
         x_div, y_div = 1 / self.__align[0], 1 / self.__align[1]
 
-        font = pygame.font.SysFont(self.__font, int(self.__font_size * 0.75), self.__bold)
-        text_object = font.render(self.__text, True, self.__color)
+        text_object = self.__font_obj.render(self.__text, True, self.__color)
         pos = self.__component.pos
         size = self.__component.size
         rect = text_object.get_rect(center=(pos.x + size.x//x_div, pos.y + size.y//y_div))

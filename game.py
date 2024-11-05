@@ -96,6 +96,7 @@ class Game:
             self.__world.add_collectible(collectible)
 
         player.assign_world(self.__world)
+        player.take_damage(player.health-self.__player_dao.get_health())
 
     def run(self, player):
         """Starts the game loop."""

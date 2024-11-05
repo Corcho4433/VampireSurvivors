@@ -1,19 +1,19 @@
 {
     "player": {
         "pos": [
-            719.9924787916815,
-            467.4817840015774
+            726.272737090068,
+            1380.297795923037
         ],
         "inventory": [
             {
                 "type": 1,
                 "name": "gun",
-                "level": 2
+                "level": 25
             },
             {
                 "type": 2,
                 "name": "clover",
-                "level": 3
+                "level": 4
             },
             {
                 "type": 1,
@@ -31,30 +31,43 @@
                 "level": 1
             }
         ],
-        "level": 3,
-        "experience": 0,
-        "time": 65.06666666666426
+        "level": 4,
+        "experience": 3,
+        "time": 128.13333333332744,
+        "health": 108.04791666666716
     },
     "map_info": {
-        "monsters": [
+        "monsters": [],
+        "collectibles": [
             {
                 "pos": [
-                    1173.0,
-                    697.0
+                    1555.0,
+                    182.0
                 ],
-                "type": "default",
-                "health": 4
+                "type": "chest"
             },
             {
                 "pos": [
-                    1400.0,
-                    692.0
+                    1031.0,
+                    1441.0
                 ],
-                "type": "default",
-                "health": 4
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    339.0,
+                    1564.0
+                ],
+                "type": "experience"
+            },
+            {
+                "pos": [
+                    1023.0,
+                    1087.0
+                ],
+                "type": "healing"
             }
         ],
-        "collectibles": [],
         "attacks": {}
     }
 }

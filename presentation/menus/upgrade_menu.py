@@ -70,14 +70,14 @@ class UpgradeMenu(Menu):
                 new_item = ItemFactory.create_item(data[0])
 
                 self.__world.player.inventory.add_item(new_item)
-                self.__world.player.apply_perks(heal=True)
+                self.__world.player.apply_perks(heal=False)
             case self.UPGRADE_ITEM_CASE:
                 item = self.__world.player.inventory.get_item(data[0])
 
                 if item:
                     item.upgrade()
 
-                self.__world.player.apply_perks(heal=True)
+                self.__world.player.apply_perks(heal=False)
 
 
     def draw(self):

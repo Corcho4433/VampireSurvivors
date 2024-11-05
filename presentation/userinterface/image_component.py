@@ -30,7 +30,8 @@ class ImageComponent(UIComponent, IImageComponent):
         #color = (self.color[0], self.color[1], self.color[2], self.opacity)
         shape_surf = Surface(self.rect.size, SRCALPHA)
 
-        shape_surf.blit(self.__image, self.image.get_rect())
+        img_rect = self.image.get_rect()
+        shape_surf.blit(self.__image, img_rect)
 
         return shape_surf
 
