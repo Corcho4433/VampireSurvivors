@@ -13,6 +13,7 @@ from business.progression.player_stats import PlayerStats
 from business.progression.interfaces import IInventoryItem
 from business.entities.collectibles.experience_gem import ExperienceGem
 from business.entities.collectibles.healing_gem import HealingGem
+from business.entities.interfaces import IChaoticGem
 from business.handlers.position_handler import PositionHandler
 from presentation.sprite import PlayerSprite
 
@@ -95,6 +96,8 @@ class Player(MovableEntity, IPlayer, IDamageable, ICanDealDamage):
             self.__gain_experience(gem.amount)
         if isinstance(gem, HealingGem):
             self.__heal_from(gem.amount)
+        if isinstance(gem, IChaoticGem):
+            self.__gain_experience(self.experience_to_next_level - self.experience)
 
     def __gain_experience(self, amount: int):
         self.__experience += amount

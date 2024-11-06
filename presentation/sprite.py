@@ -200,6 +200,18 @@ class RedGhostSprite(Sprite):
 
         super().__init__(image, rect)
 
+class EvilFireMonsterSprite(Sprite):
+    """A class representing the evil fire monster"""
+
+    ASSET = "./assets/monster_defensa.png"
+
+    def __init__(self, pos: pygame.Vector2):
+        image: pygame.Surface = pygame.image.load(EvilFireMonsterSprite.ASSET).convert_alpha()
+        image = pygame.transform.scale(image, (64,64))
+        rect: pygame.rect = image.get_rect(center=(int(pos.x), int(pos.y)))
+
+        super().__init__(image, rect)
+
 class BossSprite(Sprite):
     """A class representing the player sprite."""
 
@@ -300,6 +312,19 @@ class HealingGemSprite(Sprite):
         rect: pygame.rect = image.get_rect(center=(int(pos.x), int(pos.y)))
 
         super().__init__(image, rect)
+
+class ChaoticGemSprite(Sprite):
+    """A class representing the chaotic gem sprite."""
+
+    ASSET = "./assets/chaos_gem.png"
+
+    def __init__(self, pos: pygame.Vector2):
+        image: pygame.Surface = pygame.image.load(ChaoticGemSprite.ASSET).convert_alpha()
+        image = pygame.transform.scale(image, (32,32))
+        rect: pygame.rect = image.get_rect(center=(int(pos.x), int(pos.y)))
+
+        super().__init__(image, rect)
+
 
 class ChestSprite(Sprite):
     """A class representing the chest sprite."""

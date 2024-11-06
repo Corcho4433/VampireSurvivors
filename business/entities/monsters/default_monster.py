@@ -9,4 +9,4 @@ class DefaultMonster(Monster):
     """The default monster in game"""
 
     def __init__(self, pos: Vector2):
-        super().__init__(pos, GhostSprite(pos), 120, "default")
+        super().__init__(pos, GhostSprite(pos), 60, "default")

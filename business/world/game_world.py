@@ -9,6 +9,7 @@ from business.handlers.cooldown_handler import CooldownHandler
 from business.world.collectible_factory import CollectibleFactory
 #from business.weapons.weapon_factory import WeaponFactory
 from business.world.clock import Clock
+from business.entities.monsters.evil_fire_monster import EvilFireMonster
 
 from presentation.interfaces import IDisplay
 
@@ -27,6 +28,7 @@ class GameWorld(IGameWorld):
 
         self.__monster_spawner_cooldown: CooldownHandler = CooldownHandler(self.DEFAULT_MONSTER_SPAWN_TIME)
         self.__chest_spawner_cooldown: CooldownHandler = CooldownHandler(random.randint(40,70))
+        self.__slow_down_cooldown: CooldownHandler = CooldownHandler(5)
         self.__world_simulation_speed: int = 1
         self.__display: IDisplay = display
         self.__upgrading: bool = False
@@ -124,8 +126,26 @@ class GameWorld(IGameWorld):
         if monster in self.__monsters:
             self.__monsters.remove(monster)
 
+        if isinstance(monster, EvilFireMonster):
+            self.__rage_nearby_enemies(monster.pos)
+
         CollectibleFactory.create_random_gem(monster, self)
         del monster
+
+    def slow_down_enemies(self):
+        """Slow down all the enemies in the world"""
+
+        if self.__slow_down_cooldown.is_action_ready():
+            self.__slow_down_cooldown.put_on_cooldown()
+
+            print('hola slow')
+            for monster in self.__monsters:
+                monster.apply_slow()
+
+    def __rage_nearby_enemies(self, pos):
+        for monster in self.__monsters:
+            if pos.distance_to(monster.pos) < settings.TILE_WIDTH * 4:
+                monster.apply_rage()
 
     def add_collectible(self, collectible: IPickeable):
         self.__collectibles.append(collectible)

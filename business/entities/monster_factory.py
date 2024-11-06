@@ -1,6 +1,7 @@
 """Defines the monster factory that creates all kinds of monsters"""
 
 from pygame import Vector2
+from business.entities.monsters.evil_fire_monster import EvilFireMonster
 from business.entities.monsters.default_monster import DefaultMonster
 from business.entities.monsters.red_ghost import RedGhost
 from business.entities.monsters.boss import Boss
@@ -18,3 +19,5 @@ class MonsterFactory(IMonsterFactory):
                 return RedGhost(pos)
             case "boss":
                 return Boss(pos)
+            case "fire":
+                return EvilFireMonster(pos)

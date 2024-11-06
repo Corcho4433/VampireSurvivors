@@ -141,6 +141,23 @@ class ICanMove(IHasPosition):
 class IMonster(IUpdatable, ICanMove, IDamageable, ICanDealDamage):
     """Interface for monster entities."""
 
+    @abstractmethod
+    def apply_slow(self):
+        """Slow down the monster for 2 seconds"""
+    
+    @abstractmethod
+    def apply_rage(self):
+        """Apply the rage effect the monster for 2 seconds"""
+
+    @property
+    @abstractmethod
+    def accuracy(self):
+        """The attack accuracy for the monster
+        
+            Returns:
+                int: The accuracy in a 0-100 number
+        """
+
     @property
     @abstractmethod
     def type(self):
@@ -239,6 +256,9 @@ class ICollectible(IUpdatable, IHasPosition, IPickeable):
                 str: "ExperienceGem"
         """
 
+class IGem(ICollectible):
+    """A collectible classified as gem"""
+
 class IChest(ICollectible):
     """Interface for chest entities"""
 
@@ -251,7 +271,7 @@ class IChest(ICollectible):
             IInventoryItem: The item the chest drops.
         """
 
-class IExperienceGem(ICollectible):
+class IExperienceGem(IGem):
     """Interface for experience gem entities."""
 
     @property
@@ -263,8 +283,12 @@ class IExperienceGem(ICollectible):
             int: The amount of experience the gem gives.
         """
 
+class IChaoticGem(IGem):
+    """Interface for an experience gem that de-spawns and gives 
+    exactly the amount of exp to level up"""
 
-class IHealingGem(ICollectible):
+
+class IHealingGem(IGem):
     """Interface for healing gem entities."""
 
     @property

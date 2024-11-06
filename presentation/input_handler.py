@@ -5,7 +5,7 @@ from pygame import Vector2
 
 from business.handlers.position_handler import PositionHandler
 
-from pygame import K_w as Key_w, K_d as Key_d, K_a as Key_a, K_s as Key_s, KEYDOWN, K_ESCAPE #pylint: disable=E0611
+from pygame import K_w as Key_w, K_d as Key_d, K_a as Key_a, K_s as Key_s, KEYDOWN,K_r as Key_r, K_ESCAPE #pylint: disable=E0611
 
 from business.world.game_world import GameWorld
 from presentation.interfaces import IInputHandler
@@ -49,8 +49,13 @@ class InputHandler(IInputHandler):
         for event in self.__events:
             if event.type == KEYDOWN and event.key == K_ESCAPE:
                 self.__world.toggle_pause()
+                self.__events.remove(event)
 
-            self.__events.remove(event)
+    def __check_slow_ability(self):
+        for event in self.__events:
+            if event.type == KEYDOWN and event.key == Key_r:
+                self.__world.slow_down_enemies()
+                self.__events.remove(event)
 
     def add_event(self, event):
         self.__events.append(event)
@@ -63,4 +68,5 @@ class InputHandler(IInputHandler):
         direction = self.__get_player_direction_inputs(keys)
 
         self.__check_pause()
+        self.__check_slow_ability()
         self.__world.player.move(direction)

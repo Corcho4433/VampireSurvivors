@@ -1,24 +1,169 @@
 {
     "player": {
         "pos": [
-            840,
-            840
+            501.2380198656223,
+            644.3296444185045
         ],
         "inventory": [
             {
+                "type": 2,
+                "name": "hollow_heart",
+                "level": 3
+            },
+            {
                 "type": 1,
                 "name": "gun",
-                "level": 1
+                "level": 2
+            },
+            {
+                "type": 2,
+                "name": "wings",
+                "level": 6
             }
         ],
-        "level": 1,
+        "level": 11,
         "experience": 0,
-        "time": 0,
-        "health": 100
+        "time": 116.483333333328,
+        "health": 59.78541666666827
     },
     "map_info": {
-        "monsters": [],
-        "collectibles": [],
+        "monsters": [
+            {
+                "pos": [
+                    502.0,
+                    1169.0
+                ],
+                "type": "default",
+                "health": 4
+            },
+            {
+                "pos": [
+                    502.0,
+                    1169.0
+                ],
+                "type": "default",
+                "health": 5
+            },
+            {
+                "pos": [
+                    502.0,
+                    1194.0
+                ],
+                "type": "default",
+                "health": 5
+            },
+            {
+                "pos": [
+                    501.0,
+                    1189.0
+                ],
+                "type": "default",
+                "health": 5
+            },
+            {
+                "pos": [
+                    502.0,
+                    1194.0
+                ],
+                "type": "default",
+                "health": 5
+            },
+            {
+                "pos": [
+                    501.0,
+                    1189.0
+                ],
+                "type": "default",
+                "health": 3
+            },
+            {
+                "pos": [
+                    501.0,
+                    1169.0
+                ],
+                "type": "default",
+                "health": 6
+            },
+            {
+                "pos": [
+                    501.0,
+                    1170.0
+                ],
+                "type": "default",
+                "health": 6
+            },
+            {
+                "pos": [
+                    672.0,
+                    999.0
+                ],
+                "type": "default",
+                "health": 6
+            },
+            {
+                "pos": [
+                    768.0,
+                    752.0
+                ],
+                "type": "default",
+                "health": 6
+            },
+            {
+                "pos": [
+                    502.0,
+                    914.0
+                ],
+                "type": "fire",
+                "health": 12
+            },
+            {
+                "pos": [
+                    804.0,
+                    813.0
+                ],
+                "type": "fire",
+                "health": 12
+            },
+            {
+                "pos": [
+                    502.0,
+                    1112.0
+                ],
+                "type": "fire",
+                "health": 13
+            },
+            {
+                "pos": [
+                    878.0,
+                    287.0
+                ],
+                "type": "default",
+                "health": 7
+            }
+        ],
+        "collectibles": [
+            {
+                "pos": [
+                    1542.0,
+                    154.0
+                ],
+                "type": "chest"
+            },
+            {
+                "pos": [
+                    904.0,
+                    889.0
+                ],
+                "type": "chest"
+            },
+            {
+                "pos": [
+                    886.0,
+                    1410.0
+                ],
+                "type": "chaos"
+            }
+        ],
         "attacks": {}
     }
 }

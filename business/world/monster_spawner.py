@@ -26,6 +26,9 @@ class MonsterSpawner(IMonsterSpawner):
 
     def spawn_monster(self, world):
         choices = ["default"]
+        if self.__clock.time > 30:
+            choices.append("fire")
+
         for _ in range(int(self.__clock.time/180)):
             choices.append("red_ghost")
 
