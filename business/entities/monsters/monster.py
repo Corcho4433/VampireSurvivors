@@ -42,12 +42,13 @@ class Monster(MovableEntity, IMonster):
             attack_mod *= 3
 
         if self.pos.distance_to(target.pos) < self.__attack_range:
+            self.__attack_cooldown.put_on_cooldown()
             chance = randint(0, 100)
+
             if self.accuracy < chance:
                 return False
 
             target.take_damage(self.damage * attack_mod)
-            self.__attack_cooldown.put_on_cooldown()
 
             return True
         
